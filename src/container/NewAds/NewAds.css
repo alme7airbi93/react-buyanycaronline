@@ -1,0 +1,30 @@
+.news_ads_details , .find_details{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    margin: 30px 10px 10px 0;
+    height: 100%;
+}
+
+.news_ads_details h5 , .find_details h5 {
+    color: #fff;
+    font-weight: 600;
+}
+
+.news_select_btn{
+    height: 40px;
+    border: 0;
+    width: 100%;
+    outline: 0;
+    color: #000;
+    border-radius: 0;
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+
+.search_btn {
+    width: 100%;
+    border: 1px solid #D11717;
+    background-color: #D11717;
+    color: #fff;
+}

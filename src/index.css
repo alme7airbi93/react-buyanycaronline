@@ -1,0 +1,19 @@
+body{
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  background-color: #2a2a2a;
+  color: #fff;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+hr{
+  background-color: rgb(255, 255, 255);
+}

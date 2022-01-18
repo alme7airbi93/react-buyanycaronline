@@ -1,0 +1,17 @@
+.main-login-div{
+    background-color: #2a2a2a;
+    width: 100%;
+    min-height: 80vh;
+}
+
+.login-row-div{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    color: #fff;
+    margin-top: 40px;
+    padding: 25px;
+}
+
+.login-row-div p {
+    color: #DC3545;
+}

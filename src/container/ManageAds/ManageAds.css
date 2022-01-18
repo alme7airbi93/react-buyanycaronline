@@ -1,0 +1,40 @@
+.main_manage_ads{
+    min-height: 100vh;
+    color: #fff;
+}
+
+.car_details {
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    margin: 30px 10px 10px 0;
+}
+
+.car_details p {
+    font-size: 15px;
+    color: #555555;
+}
+
+.car_details span{
+    color: #fff;
+}
+
+.car_details h5{
+    color: #555555;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.photo_details{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    margin: 30px 10px 10px 0;
+}
+
+.publish_details{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    margin: 30px 10px 10px 0;
+}

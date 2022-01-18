@@ -1,0 +1,67 @@
+.home-main-div{
+    background-image: url(../../assets/img/bg.jpg);
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    padding-bottom: 30px;
+}
+
+.first-section-btn{
+    padding: 8px 40px;
+    border: 1px solid #D11717;
+    background-color: #D11717;
+    color: #fff;
+}
+
+.first-section-btn:hover{
+    border: 1px solid #D11717;
+    background-color: #D11717;
+    color: #fff;
+}
+
+.find-vehicle-div{
+    padding: 75px 25px;
+    background-color: rgba(22, 30, 33, 0.9);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.home-select-btn{
+    border: 0;
+    outline: 0;
+    width: 180px;
+    height: 40px;
+    background: rgba(255, 255, 255, .1);
+    color: rgba(255, 255, 255, .55);
+    border-radius: 0;
+    font-size: 12px;
+    padding: 0 24px 0 14px;
+    margin-bottom: 20px;
+}
+
+.home-select-div{
+    padding: 30px;
+}
+.home-row-div{
+    padding-top: 100px;
+}
+
+.adv_search_btn{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    margin-top: 10px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+.adv_search_btn:hover{
+    color: #fff;
+}
+.show_search{
+    display: block;
+}
+.hide_search{
+    display: none;
+}
