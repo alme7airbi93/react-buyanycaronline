@@ -7,14 +7,12 @@ const CarDetails = () => {
         <div className='car_details_main'>
             <Container>
                 <Row className={'justify-content-center'}>
-
                     <Col md={3} className={'car_title'}>
                         <h5>Car.title</h5>
                         <hr />
                         <p> Price: <span> car.price </span> </p>
                         <p> Created Date: <span> car.create_at</span></p>
                     </Col>
-
                     <Col md={6} className={'car_title'}>
                         <div className={'d-flex justify-content-around'}>
                             <div>
@@ -31,7 +29,6 @@ const CarDetails = () => {
                             </div>
                         </div>
                     </Col>
-
                     <Col md={2} className={'car_title'}>
                         <p>Viewed This: <span>car.visitcount</span></p>
                     </Col>

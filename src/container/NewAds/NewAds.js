@@ -27,7 +27,6 @@ const NewAds = () => {
                             </Form.Group>
                         </Form>
                     </Col>
-
                     <Col md={3} className="find_details">
                         <h5>FIND</h5>
                         <hr/>

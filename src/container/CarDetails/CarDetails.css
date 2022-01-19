@@ -4,7 +4,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .car_title{
     background-color: rgba(22, 30, 33, 1);
     border: 1px solid rgb(36, 49, 54);
@@ -16,8 +15,6 @@
     font-size: 15px;
     color: #555555;
 }
-
 .car_title span , .car_desc span{
     color: #fff;
 }
-
