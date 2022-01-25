@@ -1,5 +1,4 @@
 import React from 'react';
-import "../../assets/style.css";
 import {Col, Container, Row} from "react-bootstrap";
 
 const BoatDetails = () => {

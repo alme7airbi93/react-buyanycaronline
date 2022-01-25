@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import "./Header.css";
 import {Modal, Button, InputGroup, FormControl, Form, Nav, Navbar} from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const Header = () => {
     //useState-hooks
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
+    const navigate = useNavigate();
 
     //modal-formInput-useState
     const [registerData, setRegisterData] = useState({})
@@ -44,6 +45,15 @@ const Header = () => {
     const loginDataHandler = (e) => {
         e.preventDefault();
         console.log(loginData)
+    }
+
+    const logoutHandler = () => {
+        localStorage.clear()
+        navigate('/')
+    }
+
+    const profileHandler = () => {
+        navigate('/user-profile')
     }
 
     const loginModal = (
@@ -136,6 +146,28 @@ const Header = () => {
         </Modal>
     )
 
+    const userId = localStorage.getItem('userId')
+
+    let btn;
+    if(userId){
+        btn = (
+            <div className="col-md-5 d-flex justify-content-end headers-button">
+                <button type="button" onClick={logoutHandler} >LOGOUT</button>
+                <button type="button" onClick={profileHandler}> GO TO PROFILE</button>
+            </div>
+        )
+    }
+    else{
+        btn = (
+            <div className="col-md-5 d-flex justify-content-end headers-button">
+                <button type="button" onClick={handleShow} >LOGIN</button>
+                <span> | </span>
+                <button type="button" onClick={handleShow2}>REGISTER</button>
+            </div>
+        )
+    }
+
+
     return (
         <>
             {loginModal}
@@ -148,11 +180,7 @@ const Header = () => {
                 <div className="col-md-5 d-flex justify-content-center">
                     <NavLink to={'/'} > <img src={Logo} alt="logo" /> </NavLink>
                 </div>
-                <div className="col-md-5 d-flex justify-content-end headers-button">
-                    <button type="button" onClick={handleShow} >LOGIN</button>
-                    <span> | </span>
-                    <button type="button" onClick={handleShow2}>REGISTER</button>
-                </div>
+                    {btn}
                 </div>
                 </div>
             </div>
