@@ -28,7 +28,7 @@ const ManageAds = () => {
                             <div className="photo_details">
                                 <h5>Photo</h5>
                                 <br />
-                                <input type="file" id="img" name="img" accept="image/*" />
+                                <img src={'#'} alt={'photo'} />
                             </div>
 
                             <div className="publish_details">

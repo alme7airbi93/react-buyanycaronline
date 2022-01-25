@@ -21,6 +21,9 @@ import ManageAds from "./container/ManageAds/ManageAds";
 import MonitorPage from "./container/MonitorPage/MonitorPage";
 import Error from "./container/404Error/Error";
 
+//protectedRoutes
+import {CustomerProtectedRoutes, AdminProtectedRoutes, ModeratorsProtectedRoutes} from "./lib/ProtectedRoutes";
+
 const App = () => {
   return (
     <>
@@ -32,10 +35,26 @@ const App = () => {
                 <Route exact path='/car-detail' element={<CarDetails />} />
                 <Route exact path='/boat-search' element={<BoatSearch />} />
                 <Route exact path='/boat-detail' element={<BoatDetails />} />
-                <Route exact path='/user-profile' element={<UserProfile />} />
-                <Route exact path='/new-ads' element={<NewAds />} />
-                <Route exact path='/manage-ads' element={<ManageAds />} />
-                <Route exact path='/monitor-page' element={<MonitorPage />} />
+                <Route exact path='/user-profile' element={
+                        <CustomerProtectedRoutes>
+                        <UserProfile />
+                        </CustomerProtectedRoutes>
+                    } />
+                <Route exact path='/new-ads' element={
+                        <CustomerProtectedRoutes>
+                        <NewAds />
+                        </CustomerProtectedRoutes>
+                    } />
+                <Route exact path='/manage-ads' element={
+                    <AdminProtectedRoutes>
+                        <ManageAds />
+                    </AdminProtectedRoutes>
+                    } />
+                <Route exact path='/monitor-page' element={
+                    <ModeratorsProtectedRoutes>
+                        <MonitorPage />
+                    </ModeratorsProtectedRoutes>
+                    } />
                 <Route exact path='/about' element={<About />} />
                 <Route exact path='/contact' element={<Contact />} />
                 <Route exact path='/login' element={<Login />} />
