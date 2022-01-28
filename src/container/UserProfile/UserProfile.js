@@ -25,7 +25,7 @@ const UserProfile = () => {
                     <Col md={6} className='user_info'>
                         <h5>Manage Ads</h5>
                         <hr />
-                        <h5>You hve not published any advertisement yet</h5>
+                        <h5>You have not published any advertisement yet</h5>
                         <br />
 
                         <div className='d-flex justify-content-between'>

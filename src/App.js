@@ -1,6 +1,6 @@
 import React from 'react';
 //import Router
-import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route  } from 'react-router-dom';
 
 //import Navbar and Footer
 import Header from './components/Header/Header';
@@ -22,7 +22,7 @@ import MonitorPage from "./container/MonitorPage/MonitorPage";
 import Error from "./container/404Error/Error";
 
 //protectedRoutes
-import {CustomerProtectedRoutes, AdminProtectedRoutes, ModeratorsProtectedRoutes} from "./lib/ProtectedRoutes";
+import {CustomerProtectedRoutes, AdminModeratorProtectedRoutes} from "./lib/ProtectedRoutes";
 
 const App = () => {
   return (
@@ -46,14 +46,14 @@ const App = () => {
                         </CustomerProtectedRoutes>
                     } />
                 <Route exact path='/manage-ads' element={
-                    <AdminProtectedRoutes>
+                    <AdminModeratorProtectedRoutes>
                         <ManageAds />
-                    </AdminProtectedRoutes>
+                    </AdminModeratorProtectedRoutes>
                     } />
                 <Route exact path='/monitor-page' element={
-                    <ModeratorsProtectedRoutes>
+                    <AdminModeratorProtectedRoutes>
                         <MonitorPage />
-                    </ModeratorsProtectedRoutes>
+                    </AdminModeratorProtectedRoutes>
                     } />
                 <Route exact path='/about' element={<About />} />
                 <Route exact path='/contact' element={<Contact />} />

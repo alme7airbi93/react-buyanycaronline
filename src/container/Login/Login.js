@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
-import mockData, {ROLE} from "../../Mock";
+import mockData from "../../Mock";
 
 const Login = () => {
     const [loginData, setLoginData] = useState({})
@@ -27,15 +27,17 @@ const Login = () => {
         })
 
         if (found) {
-            localStorage.setItem("userId", found.id);
             switch (found.roles) {
                 case 'CUSTOMER':
+                    localStorage.setItem("userId", found.id);
                     navigate('/user-profile')
                     break;
                 case 'ADMIN':
+                    localStorage.setItem("adminId", found.id);
                     navigate('/monitor-page')
                     break;
                 case 'MODERATOR':
+                    localStorage.setItem("moderatorId", found.id);
                     navigate('/manage-ads')
                     break;
                 default:
@@ -57,7 +59,6 @@ const Login = () => {
                         <div className="col-md-8 login-row-div">
                             <h4>Login Form</h4>
                             <hr />
-                            {/*<p>Please login first to submit new advertisement</p>*/}
                             <Form onSubmit={loginDataHandler}>
 
                                 <InputGroup className="mb-3">
