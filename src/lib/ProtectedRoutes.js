@@ -4,7 +4,10 @@ import { Navigate } from 'react-router-dom';
 export const CustomerProtectedRoutes = ({  children }) => {
 
     const userId = localStorage.getItem('userId')
-    if (userId) {
+    const adminId = localStorage.getItem('adminId')
+    const moderatorId = localStorage.getItem('moderatorId')
+
+    if (userId || adminId || moderatorId) {
             return children
     }
     else {
@@ -12,10 +15,12 @@ export const CustomerProtectedRoutes = ({  children }) => {
     }
 };
 
-export const AdminProtectedRoutes = ({  children }) => {
+export const AdminModeratorProtectedRoutes = ({  children }) => {
 
-    const userId = localStorage.getItem('userId')
-    if (userId) {
+    const adminId = localStorage.getItem('adminId')
+    const moderatorId = localStorage.getItem('moderatorId')
+
+    if (adminId || moderatorId) {
             return children
     }
     else {
@@ -23,14 +28,4 @@ export const AdminProtectedRoutes = ({  children }) => {
     }
 };
 
-export const ModeratorsProtectedRoutes = ({  children }) => {
-
-    const userId = localStorage.getItem('userId')
-    if (userId) {
-            return children
-        }
-    else {
-        return <Navigate to="/login" />
-    }
-};
 

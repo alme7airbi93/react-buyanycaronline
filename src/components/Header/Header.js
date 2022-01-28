@@ -3,6 +3,7 @@ import "./Header.css";
 import {Modal, Button, InputGroup, FormControl, Form, Nav, Navbar} from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
 import {NavLink, useNavigate} from "react-router-dom";
+import mockData from "../../Mock";
 
 const Header = () => {
     //useState-hooks
@@ -44,7 +45,38 @@ const Header = () => {
     }
     const loginDataHandler = (e) => {
         e.preventDefault();
-        console.log(loginData)
+
+        const found = mockData.find((user) => {
+            if(user.email === loginData.email && user.password === loginData.password) {
+                return user
+            }
+        })
+
+        if (found) {
+            switch (found.roles) {
+                case 'CUSTOMER':
+                    localStorage.setItem("userId", found.id);
+                    navigate('/user-profile')
+                    setShow(false)
+                    break;
+                case 'ADMIN':
+                    localStorage.setItem("adminId", found.id);
+                    navigate('/monitor-page')
+                    setShow(false)
+                    break;
+                case 'MODERATOR':
+                    localStorage.setItem("moderatorId", found.id);
+                    navigate('/manage-ads')
+                    setShow(false)
+                    break;
+                default:
+                    navigate('/login')
+                    break;
+            }
+        }
+        else {
+            console.log('login failed')
+        }
     }
 
     const logoutHandler = () => {
@@ -147,9 +179,11 @@ const Header = () => {
     )
 
     const userId = localStorage.getItem('userId')
+    const adminId = localStorage.getItem('adminId')
+    const moderatorId = localStorage.getItem('moderatorId')
 
     let btn;
-    if(userId){
+    if(userId || adminId || moderatorId){
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
                 <button type="button" onClick={logoutHandler} >LOGOUT</button>
