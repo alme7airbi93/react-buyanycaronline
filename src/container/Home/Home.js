@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import "./Home.css";
 import {useNavigate} from "react-router-dom";
-import {Button, Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
+import Select from 'react-select'
 
 const Home = () => {
 
@@ -22,6 +23,11 @@ const Home = () => {
         rowClass = "col-md-3";
         toggleClass = "hide_search";
     }
+
+    const options = [
+        { value: 'corolla', label: 'corolla' },
+        { value: 'civic', label: 'civic' },
+    ]
 
     return (
         <React.Fragment>
@@ -44,76 +50,31 @@ const Home = () => {
                                     <div className="container">
                                     <div className="row home-select-div">
                                         <div className={rowClass}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT MOTORS</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Motors'} options={options} />
                                         </div>
                                         <div className={rowClass}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT MAKE</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Make'} options={options} />
                                         </div>
                                         <div className={rowClass}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT MODEL</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Model'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT PRICE</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Price'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT YEAR</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Year'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT COLOR</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Color'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT TRANSMISSION</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Transmission'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT FUELTYPE</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select FuelType'} options={options} />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Form.Select aria-label="Default select example" className="home-select-btn">
-                                                <option>SELECT CONDITION</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </Form.Select>
+                                            <Select placeholder={'Select Condition'} options={options} />
                                         </div>
                                         <div className="col-md-3">
                                             <Button className="first-section-btn">SEARCH</Button>

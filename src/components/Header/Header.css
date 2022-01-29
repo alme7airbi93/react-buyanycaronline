@@ -71,3 +71,52 @@
 .headers-button {
     margin-top: 15px;
 }
+
+.divider{
+    position: relative;
+}
+
+@media (max-width: 990px) {
+    .divider{
+        display: none;
+    }
+}
+
+.divider::after{
+    content: "";
+    border: 1px solid #838383;
+    position: absolute;
+    height: 40px;
+    bottom: 25px;
+    right: 26px;;
+}
+
+.divider::before{
+    content: "";
+    border: 1px solid #838383;
+    position: absolute;
+    height: 40px;
+    top: 32px;
+    right: 26px;
+}
+
+.social_btn {
+    width: 100%;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 6px 0;
+    margin-bottom: 20px;
+}
+
+.fb_btn{
+    background-color: #4267B2;
+}
+
+.twitter_btn{
+    background-color: #2a81d1;
+}
+
+.google_btn{
+    background-color: #c72b2b;
+}
