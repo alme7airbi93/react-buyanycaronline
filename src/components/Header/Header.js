@@ -3,6 +3,7 @@ import "./Header.css";
 import {Modal, Button, InputGroup, FormControl, Form, Nav, Navbar, Container, Row, Col} from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
 import {NavLink, useNavigate} from "react-router-dom";
+import { FaFacebookF } from 'react-icons/fa';
 import mockData from "../../Mock";
 
 const Header = () => {
@@ -89,6 +90,7 @@ const Header = () => {
     }
 
     const loginModal = (
+
         <Modal size={'lg'} show={show} backdrop="static" keyboard={false}>
             <div  className="modal_main_div">
                 <Modal.Header className="modal_header">
@@ -130,7 +132,9 @@ const Header = () => {
                                 <p className={'divider'}>or</p>
                             </Col>
 
+
                             <Col md={5} className={'social_btn_main'}>
+
                                 <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
                                 <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
                                 <button className={'social_btn google_btn'}>Sign in with Google+</button>
