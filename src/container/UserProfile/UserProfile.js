@@ -44,7 +44,6 @@ const UserProfile = () => {
                         <h5>New Ad?</h5>
                         <button className="search_btn">Click Here</button>
                     </Col>
-
                 </Row>
             </Container>
         </div>

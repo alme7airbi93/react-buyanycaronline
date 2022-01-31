@@ -1,8 +1,6 @@
 .main-carSearch-div{
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 40px;
 }
 .carSearch-find-div{
     background-color: rgba(22, 30, 33, 1);

@@ -46,11 +46,9 @@ const Login = () => {
             }
         }
         else {
-            console.log('login failed')
+            alert('incorrect email or password')
         }
     }
-
-
     return (
         <React.Fragment>
             <div className="main-login-div">

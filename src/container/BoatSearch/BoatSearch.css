@@ -1,8 +1,6 @@
 .main-boatSearch-div{
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 40px;
 }
 
 .boatSearch-find-div{
