@@ -1,8 +1,15 @@
 import React from 'react';
-import {Container, Row, Col, Form, Button, InputGroup, FormControl} from "react-bootstrap";
+import {Container, Row, Col, Form, Button} from "react-bootstrap";
 import "./NewAds.css";
+import Select from "react-select";
 
 const NewAds = () => {
+
+    const options = [
+        { value: 'corolla', label: 'corolla' },
+        { value: 'civic', label: 'civic' },
+    ]
+
     return (
         <div style={{height: "100vh"}}>
             <Container>
@@ -32,76 +39,39 @@ const NewAds = () => {
                         <hr/>
                         <Row  className="justify-content-center">
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT NAME</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Name'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT MODEL</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Model'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT YEAR</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Year'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT PRICE</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Price'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT ORDER</option>
-                                    <option value="highest">Highest</option>
-                                    <option value="lowest">Lowest</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Order'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT ORDER</option>
-                                    <option value="highest">Highest</option>
-                                    <option value="lowest">Lowest</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Order'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT ORDER</option>
-                                    <option value="highest">Highest</option>
-                                    <option value="lowest">Lowest</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                            </Col>
-                            <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT ORDER</option>
-                                    <option value="highest">Highest</option>
-                                    <option value="lowest">Lowest</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                            </Col>
-                            <Col md={10}>
-                                <Form.Select className="news_select_btn">
-                                    <option>SELECT ORDER</option>
-                                    <option value="highest">Highest</option>
-                                    <option value="lowest">Lowest</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <div className={'mb-3'}>
+                                    <Select placeholder={'Order'} options={options} />
+                                </div>
                             </Col>
                             <Col md={10}>
                                 <Button className="search_btn">SEARCH</Button>

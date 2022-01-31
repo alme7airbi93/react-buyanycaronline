@@ -41,13 +41,9 @@ const MonitorPage = () => {
                                 <p>Transmission: <span> car.transmission </span> </p>
                                 <p>Color: <span> car.color </span> </p>
                             </Col>
-                            <Col md={8}>
-
-                            </Col>
+                            <Col md={8} />
                         </Row>
-
                     </div>
-
                 </Col>
             </Row>
         </Container>

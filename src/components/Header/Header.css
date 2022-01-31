@@ -76,12 +76,6 @@
     position: relative;
 }
 
-@media (max-width: 990px) {
-    .divider{
-        display: none;
-    }
-}
-
 .divider::after{
     content: "";
     border: 1px solid #838383;
@@ -119,4 +113,15 @@
 
 .google_btn{
     background-color: #c72b2b;
+}
+@media (max-width: 992px) {
+    .divider{
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .social_btn_main{
+        margin-top: 20px;
+    }
 }

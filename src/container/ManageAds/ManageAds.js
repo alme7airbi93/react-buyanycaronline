@@ -24,7 +24,7 @@ const ManageAds = () => {
                             <p>Color: <span> car.color </span> </p>
                         </Col>
 
-                        <Col md={7} >
+                        <Col md={7}>
                             <div className="photo_details">
                                 <h5>Photo</h5>
                                 <br />

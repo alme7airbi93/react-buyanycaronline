@@ -76,7 +76,7 @@ const Header = () => {
             }
         }
         else {
-            console.log('login failed')
+            alert('incorrect email or password')
         }
     }
 
@@ -90,7 +90,8 @@ const Header = () => {
     }
 
     const loginModal = (
-        <Modal size={'lg'} show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+
+        <Modal size={'lg'} show={show} backdrop="static" keyboard={false}>
             <div  className="modal_main_div">
                 <Modal.Header className="modal_header">
                     <Modal.Title>Login</Modal.Title>
@@ -131,7 +132,9 @@ const Header = () => {
                                 <p className={'divider'}>or</p>
                             </Col>
 
-                            <Col md={5}>
+
+                            <Col md={5} className={'social_btn_main'}>
+
                                 <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
                                 <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
                                 <button className={'social_btn google_btn'}>Sign in with Google+</button>
@@ -144,7 +147,7 @@ const Header = () => {
     )
 
     const RegisterModal = (
-        <Modal show={show2} onHide={handleClose2} backdrop="static" keyboard={false} >
+        <Modal size={'lg'} show={show2} backdrop="static" keyboard={false} >
             <div className="modal_main_div">
                 <Modal.Header className="modal_header">
                     <Modal.Title>Register</Modal.Title>
@@ -154,40 +157,57 @@ const Header = () => {
                     </h3>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={RegisterDataHandler}>
+                    <Container fluid>
+                        <Row className={'align-items-center'}>
+                            <Col md={6}>
+                                <Form onSubmit={RegisterDataHandler}>
 
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                type="email"
-                                placeholder="Enter Email"
-                                aria-label="email"
-                                name="email"
-                                onChange={registerChangeHandler}
-                                aria-describedby="basic-addon1"
-                            />
-                        </InputGroup>
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                type="password"
-                                placeholder="Enter Password"
-                                aria-label="password"
-                                name="password"
-                                onChange={registerChangeHandler}
-                                aria-describedby="basic-addon1"
-                            />
-                        </InputGroup>
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                type="password"
-                                placeholder="Enter Confirm Password"
-                                aria-label="password"
-                                name="confirmPassword"
-                                onChange={registerChangeHandler}
-                                aria-describedby="basic-addon1"
-                            />
-                        </InputGroup>
-                        <Button type="submit" className='w-100 modal_btn'>REGISTER</Button>
-                    </Form>
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            type="email"
+                                            placeholder="Enter Email"
+                                            aria-label="email"
+                                            name="email"
+                                            onChange={registerChangeHandler}
+                                            aria-describedby="basic-addon1"
+                                        />
+                                    </InputGroup>
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Enter Password"
+                                            aria-label="password"
+                                            name="password"
+                                            onChange={registerChangeHandler}
+                                            aria-describedby="basic-addon1"
+                                        />
+                                    </InputGroup>
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            type="password"
+                                            placeholder="Enter Confirm Password"
+                                            aria-label="password"
+                                            name="confirmPassword"
+                                            onChange={registerChangeHandler}
+                                            aria-describedby="basic-addon1"
+                                        />
+                                    </InputGroup>
+                                    <Button type="submit" className='w-100 modal_btn'>REGISTER</Button>
+                                </Form>
+                            </Col>
+
+                            <Col md={1}>
+                                <p className={'divider'}>or</p>
+                            </Col>
+
+                            <Col md={5} className={'social_btn_main'}>
+                                <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
+                                <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
+                                <button className={'social_btn google_btn'}>Sign in with Google+</button>
+                            </Col>
+                        </Row>
+                    </Container>
+
                 </Modal.Body>
             </div>
         </Modal>
@@ -221,7 +241,6 @@ const Header = () => {
         <>
             {loginModal}
             {RegisterModal}
-
             {/*header*/}
             <div className="header-div">
                 <div className="container">
@@ -249,17 +268,6 @@ const Header = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            {/*<nav className="navbar navbar-expand-lg Navbar-header">*/}
-            {/*    <button className="navbar-toggler" type="button" data-toggle="collapse"*/}
-            {/*            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"*/}
-            {/*            aria-label="Toggle navigation">*/}
-            {/*        <span className="navbar-toggler-icon"/>*/}
-            {/*    </button>*/}
-            {/*    <div className="collapse navbar-collapse " id="navbarNavAltMarkup">*/}
-
-            {/*    </div>*/}
-
-            {/*</nav>*/}
         </>
     );
 };

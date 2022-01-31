@@ -21,16 +21,16 @@ const CarDetails = () => {
                                 <p>Year: <span> car.year </span></p>
                                 <p>Price: <span> car.price </span></p>
                                 <p>Transmission: <span> car.transmission </span></p>
-                                <p>FuelType: <span> car.fueltype </span></p>
+                                <p>FuelType: <span> car.fuelType </span></p>
                             </div>
                             <div>
-                                <p>Description: <span>car.discription</span></p>
+                                <p>Description: <span>car.description</span></p>
                                 <p>Features: <span>car.feature</span></p>
                             </div>
                         </div>
                     </Col>
                     <Col md={2} className={'car_title'}>
-                        <p>Viewed This: <span>car.visitcount</span></p>
+                        <p>Viewed This: <span>car.visitCount</span></p>
                     </Col>
                 </Row>
             </Container>

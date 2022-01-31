@@ -1,6 +1,6 @@
 import React from 'react';
 import "./CarSearch.css";
-import {Button, Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import Select from "react-select";
 
 const CarSearch = () => {

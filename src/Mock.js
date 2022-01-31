@@ -24,5 +24,4 @@ const mockData = [
         roles: ROLE.CUSTOMER
     },
 ]
-
 export default mockData;
