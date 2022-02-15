@@ -1,8 +1,6 @@
 .user_info_main{
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: 100px;
 }
 
 .user_info {

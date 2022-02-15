@@ -1,8 +1,18 @@
 import React from 'react';
 import {Container, Row, Col} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 import "./UserProfile.css";
 
+
 const UserProfile = () => {
+
+    const navigate = useNavigate();
+
+    const profileHandler = () => {
+        navigate('/new-ads')
+    }
+
+
     return (
         <div className={'user_info_main'}>
             <Container>
@@ -42,7 +52,7 @@ const UserProfile = () => {
                     </Col>
                     <Col md={2} className='user_info'>
                         <h5>New Ad?</h5>
-                        <button className="search_btn">Click Here</button>
+                        <button className="search_btn" onClick={profileHandler}>Click Here</button>
                     </Col>
                 </Row>
             </Container>
