@@ -54,9 +54,10 @@ const Home = () => {
         }
     })
 
-    const setVehicleHandle = (value) => {
+    const setVehicleHandle = (value) => {       
         setVehicle(value)
         setMake('')
+        setModelFirst('')
     } 
 
     const setMakeHandle = (value ) => {         
@@ -65,13 +66,13 @@ const Home = () => {
     }   
     
     const setFirstModelHandle = (value) => {
-        setModelFirst(value)
+        setModelFirst(value)      
     }
     
     const options = [
         { value: 'corolla', label: 'corolla' },
         { value: 'civic', label: 'civic' },
-    ]   
+    ]
 
     return (
         <React.Fragment>
@@ -95,14 +96,14 @@ const Home = () => {
                                     <div className="row home-select-div">
                                         <div className={rowClass}>
                                             <Select 
-                                                placeholder = {'Select Motor'}
+                                                placeholder = {'Select Motors'}
                                                 options={vehicle_options} 
                                                 onChange={(e) => setVehicleHandle(e)}
                                                 isSearchable={false}  />
                                         </div>
                                         <div className={rowClass}>
-                                            <Select
-                                                placeholder = {'Select Makes'}
+                                            <Select                                                
+                                                placeholder = {vehicleValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Makes' : 'Select Types'}
                                                 options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicleValue.value )))}                                                 
                                                 onChange={(e) => setMakeHandle(e)} 
                                                 value= {makeValue}
@@ -110,7 +111,7 @@ const Home = () => {
                                         </div>
                                         <div className={rowClass}>
                                             <Select 
-                                                placeholder={'Select Model'} 
+                                                placeholder = {makeValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Models' : 'Select Types'}                                                
                                                 onChange={(e) => setFirstModelHandle(e)}
                                                 options={model_first_level_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
                                                 value= {modelFirstValue}

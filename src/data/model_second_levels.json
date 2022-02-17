@@ -1,11 +1,6 @@
 {
   "RECORDS": [
     {
-      "id": "0",
-      "model_first_level_id": "0",
-      "model_second_level_name": "All"
-    },
-    {
       "id": "1",
       "model_first_level_id": "1",
       "model_second_level_name": "Other"

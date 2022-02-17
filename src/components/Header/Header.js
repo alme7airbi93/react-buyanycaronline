@@ -5,6 +5,7 @@ import Logo from "../../assets/img/logo.jpg";
 import {NavLink, useNavigate} from "react-router-dom";
 import { FaFacebookF } from 'react-icons/fa';
 import mockData from "../../Mock";
+import {Register, Login, GoogleSignin} from '../../firebase';
 
 const Header = () => {
     //useState-hooks
@@ -23,10 +24,6 @@ const Header = () => {
     const handleShow2 = () => setShow2(true);
 
     //Register
-    const RegisterDataHandler = (e) => {
-        e.preventDefault();
-        console.log(registerData)
-    }
     const registerChangeHandler = (e) => {
         const {name, value} = e.target;
         setRegisterData({
@@ -35,6 +32,22 @@ const Header = () => {
         })
     }
 
+    const RegisterDataHandler = (e) => {
+        e.preventDefault();
+
+        Register(registerData.email, registerData.password)
+            .then((userCredential) => {                
+                const user = userCredential.user; 
+                setShow(false);               
+                navigate('/login')
+                console.log(user, 'Register Success!!!')             
+            })
+            .catch((error) => {                
+                const errorMessage = error.message; 
+                console.log(errorMessage, 'Register Fail!!!!')              
+            });;
+    }
+    
     //login
     const loginChangeHandler = (e) => {
         const {name, value} = e.target;
@@ -47,37 +60,49 @@ const Header = () => {
     const loginDataHandler = (e) => {
         e.preventDefault();
 
-        const found = mockData.find((user) => {
-            if(user.email === loginData.email && user.password === loginData.password) {
-                return user
-            }
-        })
+        Login(loginData.email, loginData.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setShow(false);
+                navigate('/car-search');
+                console.log(user, 'Login Success!!!')                     
+            })
+            .catch((error) => {                
+                const errorMessage = error.message;
+                console.log(errorMessage, 'Login Fail!!!!')
+            });
 
-        if (found) {
-            switch (found.roles) {
-                case 'CUSTOMER':
-                    localStorage.setItem("userId", found.id);
-                    navigate('/user-profile')
-                    setShow(false)
-                    break;
-                case 'ADMIN':
-                    localStorage.setItem("adminId", found.id);
-                    navigate('/monitor-page')
-                    setShow(false)
-                    break;
-                case 'MODERATOR':
-                    localStorage.setItem("moderatorId", found.id);
-                    navigate('/manage-ads')
-                    setShow(false)
-                    break;
-                default:
-                    navigate('/login')
-                    break;
-            }
-        }
-        else {
-            alert('incorrect email or password')
-        }
+        // const found = mockData.find((user) => {
+        //     if(user.email === loginData.email && user.password === loginData.password) {
+        //         return user
+        //     }
+        // })
+
+        // if (found) {
+        //     switch (found.roles) {
+        //         case 'CUSTOMER':
+        //             localStorage.setItem("userId", found.id);
+        //             navigate('/user-profile')
+        //             setShow(false)
+        //             break;
+        //         case 'ADMIN':
+        //             localStorage.setItem("adminId", found.id);
+        //             navigate('/monitor-page')
+        //             setShow(false)
+        //             break;
+        //         case 'MODERATOR':
+        //             localStorage.setItem("moderatorId", found.id);
+        //             navigate('/manage-ads')
+        //             setShow(false)
+        //             break;
+        //         default:
+        //             navigate('/login')
+        //             break;
+        //     }
+        // }
+        // else {
+        //     alert('incorrect email or password')
+        // }
     }
 
     const logoutHandler = () => {
@@ -87,6 +112,10 @@ const Header = () => {
 
     const profileHandler = () => {
         navigate('/user-profile')
+    }    
+
+    const googleSigninHandle = () => {
+        GoogleSignin()
     }
 
     const loginModal = (
@@ -137,7 +166,7 @@ const Header = () => {
 
                                 <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
                                 <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
-                                <button className={'social_btn google_btn'}>Sign in with Google+</button>
+                                <button className={'social_btn google_btn'} onClick = {googleSigninHandle}>Sign in with Google+</button>
                             </Col>
                         </Row>
                     </Container>
@@ -203,7 +232,7 @@ const Header = () => {
                             <Col md={5} className={'social_btn_main'}>
                                 <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
                                 <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
-                                <button className={'social_btn google_btn'}>Sign in with Google+</button>
+                                <button className={'social_btn google_btn'} onClick = {googleSigninHandle}>Sign in with Google+</button>
                             </Col>
                         </Row>
                     </Container>

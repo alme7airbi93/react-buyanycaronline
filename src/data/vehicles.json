@@ -1,10 +1,6 @@
 {
   "RECORDS": [
     {
-      "id": "0",
-      "vehicle_name": "All"
-    },
-    {
       "id": "1",
       "vehicle_name": "Used Cars for sale"
     },

@@ -1,11 +1,6 @@
 {
   "RECORDS": [
     {
-      "id": "0",
-      "vehicle_id": "0",
-      "make_name": "All"
-    },
-    {
       "id": "1",
       "vehicle_id": "1",
       "make_name": "Acura"
