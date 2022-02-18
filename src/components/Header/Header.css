@@ -17,7 +17,7 @@
 }
 .headers-button span {
     line-height: 14px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .headers-button button:hover{
@@ -70,6 +70,7 @@
 /*responsive*/
 .headers-button {
     margin-top: 15px;
+    align-items: center;
 }
 
 .divider{
