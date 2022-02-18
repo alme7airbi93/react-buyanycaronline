@@ -118,10 +118,7 @@ const Header = () => {
                     navigate('/login')
                     break;
             }
-        }
-        else {
-            alert('incorrect email or password')
-        }      
+        }           
     }
 
     const logoutHandler = () => {

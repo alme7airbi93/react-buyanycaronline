@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
-import mockData from "../../Mock";
+import { GetUser } from '../../firebase/User';
+import { Login } from '../../firebase/Auth'; 
 
-const Login = () => {
+const UserLogin = () => {
     const [loginData, setLoginData] = useState({})
     const navigate = useNavigate();
 
@@ -20,35 +21,40 @@ const Login = () => {
     const loginDataHandler = (e) => {
         e.preventDefault();
 
-        const found = mockData.find((user) => {
-            if(user.email === loginData.email && user.password === loginData.password) {
-                return user
-            }
-        })
+        
+        Login(loginData.email, loginData.password)
+            .then((userCredential) => {
+                const user = userCredential.user;                
+                GetUser(user.email)
+                    .then((response) => { 
+                        setLocalStorage(response.data());
+                    })                         
+            }) 
+    }
 
-        if (found) {
-            switch (found.roles) {
+    const setLocalStorage = (data) => {
+        if (data) {
+            switch (data.roles) {
                 case 'CUSTOMER':
-                    localStorage.setItem("userId", found.id);
-                    navigate('/user-profile')
+                    localStorage.setItem("user", JSON.stringify(data));
+                    navigate('/user-profile')                   
                     break;
                 case 'ADMIN':
-                    localStorage.setItem("adminId", found.id);
-                    navigate('/monitor-page')
+                    localStorage.setItem("admin", JSON.stringify(data));
+                    navigate('/monitor-page')                   
                     break;
                 case 'MODERATOR':
-                    localStorage.setItem("moderatorId", found.id);
-                    navigate('/manage-ads')
+                    localStorage.setItem("moderator", JSON.stringify(data));
+                    navigate('/manage-ads')                    
                     break;
                 default:
                     navigate('/login')
                     break;
             }
         }
-        else {
-            alert('incorrect email or password')
-        }
     }
+
+
     return (
         <React.Fragment>
             <div className="main-login-div">
@@ -89,4 +95,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default UserLogin;
