@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {NavLink} from "react-router-dom";
 import "./styles.css";
+import { UserContext } from "../Header";
 
-export default function Dropdown(props) {  
+export default function Dropdown() {  
   const [isActive, setIsActive] = useState(false);
 
   const onClickHandle = (e) => {
@@ -14,11 +15,13 @@ export default function Dropdown(props) {
     setIsActive(false);
   }
 
+  const userData = useContext(UserContext);  
+
   return (
     <div className="container">
       <div className="menu-container">
         <button onClick={(e) => onClickHandle(e)} className="menu-trigger">
-          <span>{props.userData.displayName}</span>
+          <span>{userData.surname}</span>
         </button>
         <nav
           

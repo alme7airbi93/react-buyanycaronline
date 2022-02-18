@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 export const UserRoutes = ({Component}) => {
-    const userId = localStorage.getItem('userId')
-    const adminId = localStorage.getItem('adminId')
-    const moderatorId = localStorage.getItem('moderatorId')
+    const user = localStorage.getItem('user')
+    const admin = localStorage.getItem('admin')
+    const moderator = localStorage.getItem('moderator')
 
-    if (userId || adminId || moderatorId) {
+    if (user || admin || moderator) {
         return <Component />
     }
     else {
@@ -15,9 +15,9 @@ export const UserRoutes = ({Component}) => {
 }
 
 export const CustomerRoutes = ({Component}) => {
-    const userId = localStorage.getItem('userId')
+    const user = localStorage.getItem('user')
 
-    if (userId) {
+    if (user) {
         return <Component />
     }
     else {
@@ -26,10 +26,10 @@ export const CustomerRoutes = ({Component}) => {
 }
 
 export const AdminModeratorRoutes = ({Component}) => {
-    const adminId = localStorage.getItem('adminId')
-    const moderatorId = localStorage.getItem('moderatorId')
+    const admin = localStorage.getItem('admin')
+    const moderator = localStorage.getItem('moderator')
 
-    if (adminId || moderatorId) {
+    if (admin || moderator) {
         return <Component />
     }
     else {

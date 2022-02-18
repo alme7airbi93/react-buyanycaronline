@@ -1,13 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, createContext} from 'react';
 import "./Header.css";
-import {Modal, Button, InputGroup, FormControl, Form, Nav, Navbar, Container, Row, Col} from "react-bootstrap";
+import {
+    Modal, 
+    Button, 
+    InputGroup, 
+    FormControl, 
+    Form, 
+    Nav, 
+    Navbar, 
+    Container, 
+    Row, 
+    Col
+} from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
-import {NavLink, useNavigate} from "react-router-dom";
-import { FaFacebookF } from 'react-icons/fa';
-import mockData from "../../Mock";
-import {Register, Login, GoogleSignin, Signout, UpdateProfile} from '../../firebase/Auth'; 
-import {auth} from '../../firebase';
+import { NavLink, useNavigate } from "react-router-dom";
+import { Register, Login, GoogleSignin, Signout, UpdateProfile } from '../../firebase/Auth'; 
+import { auth } from '../../firebase';
+import { AddUser, GetUser } from '../../firebase/User';
 import Dropdown from './Dropdown';
+
+
+export const UserContext = createContext();
 
 const Header = () => {
     //useState-hooks
@@ -17,8 +30,7 @@ const Header = () => {
 
     //modal-formInput-useState
     const [registerData, setRegisterData] = useState({})
-    const [loginData, setLoginData] = useState({})
-    const [userData, setUserData] = useState({})
+    const [loginData, setLoginData] = useState({})    
 
     //Modal-functions
     const handleClose = () => setShow(false);
@@ -39,11 +51,20 @@ const Header = () => {
         e.preventDefault();
         const updateData = {displayName: registerData.name}
 
+        const docID = registerData.email;
+        const data = {            
+            roles: "CUSTOMER",
+            phone: "123456789",
+            surname: registerData.surname
+        }
+
+        AddUser(docID, data);
+
         Register(registerData.email, registerData.password)
             .then((userCredential) => {  
-                UpdateProfile(auth.currentUser, updateData);              
+                UpdateProfile(auth.currentUser, updateData);
                 const user = userCredential.user; 
-                if(Object.keys(user).length !== 0 && user.constructor !== Object) {
+                if(Object.keys(user).length !== 0 && user.constructor !== Object) {                    
                     setShow2(false);               
                     navigate('/login')
                 }
@@ -67,51 +88,45 @@ const Header = () => {
 
         Login(loginData.email, loginData.password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                setUserData(user)
-                setShow(false);
-                navigate('/car-search');                                   
-            })
-            .catch((error) => {                
-                const errorMessage = error.message;                
-            });
+                const user = userCredential.user;                
+                GetUser(user.email)
+                    .then((response) => { 
+                        setLocalStorage(response.data());
+                    })                         
+            })           
+    } 
 
-        // const found = mockData.find((user) => {
-        //     if(user.email === loginData.email && user.password === loginData.password) {
-        //         return user
-        //     }
-        // })
-
-        // if (found) {
-        //     switch (found.roles) {
-        //         case 'CUSTOMER':
-        //             localStorage.setItem("userId", found.id);
-        //             navigate('/user-profile')
-        //             setShow(false)
-        //             break;
-        //         case 'ADMIN':
-        //             localStorage.setItem("adminId", found.id);
-        //             navigate('/monitor-page')
-        //             setShow(false)
-        //             break;
-        //         case 'MODERATOR':
-        //             localStorage.setItem("moderatorId", found.id);
-        //             navigate('/manage-ads')
-        //             setShow(false)
-        //             break;
-        //         default:
-        //             navigate('/login')
-        //             break;
-        //     }
-        // }
-        // else {
-        //     alert('incorrect email or password')
-        // }
+    const setLocalStorage = (data) => {
+        if (data) {
+            switch (data.roles) {
+                case 'CUSTOMER':
+                    localStorage.setItem("user", JSON.stringify(data));
+                    navigate('/user-profile')
+                    setShow(false)
+                    break;
+                case 'ADMIN':
+                    localStorage.setItem("admin", JSON.stringify(data));
+                    navigate('/monitor-page')
+                    setShow(false)
+                    break;
+                case 'MODERATOR':
+                    localStorage.setItem("moderator", JSON.stringify(data));
+                    navigate('/manage-ads')
+                    setShow(false)
+                    break;
+                default:
+                    navigate('/login')
+                    break;
+            }
+        }
+        else {
+            alert('incorrect email or password')
+        }      
     }
 
     const logoutHandler = () => {
-        Signout().then(() => {
-            setUserData({})
+        Signout().then(() => {            
+            localStorage.clear()
             navigate('/')
         })        
     }
@@ -124,15 +139,15 @@ const Header = () => {
         GoogleSignin()
             .then((result) => {                
                 const user = result.user;
-                setUserData(user);
-                setShow(false);
-                navigate('/car-search');                                           
+                GetUser(user.email)
+                    .then((response) => { 
+                        setLocalStorage(response.data());
+                    })
             }).catch((error) => {               
                 const errorMessage = error.message;
                 console.log(errorMessage, 'error!!')
             });            
-    }
-    console.log(userData, '44444444444444444444')
+    }    
 
     const loginModal = (
 
@@ -208,10 +223,10 @@ const Header = () => {
                                 <Form onSubmit={RegisterDataHandler}>
                                     <InputGroup className="mb-3">
                                         <FormControl
-                                            type="name"
-                                            placeholder="Enter Name"
-                                            aria-label="name"
-                                            name="name"
+                                            type="surname"
+                                            placeholder="Enter SurName"
+                                            aria-label="surname"
+                                            name="surname"
                                             onChange={registerChangeHandler}
                                             aria-describedby="basic-addon1"
                                         />
@@ -268,12 +283,15 @@ const Header = () => {
         </Modal>
     )    
 
+    const user = JSON.parse(localStorage.getItem('user'));
+    const admin = JSON.parse(localStorage.getItem('admin'));
+    const moderator = JSON.parse(localStorage.getItem('moderator'));    
     let btn;
 
-    if(Object.keys(userData).length !== 0 && userData.constructor !== Object) {
+    if(user || admin || moderator) {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
-                <Dropdown userData = {userData} />
+                <Dropdown />
                 <span> | </span>
                 <button type="button" onClick={logoutHandler} >LOGOUT</button>                
             </div>
@@ -289,7 +307,7 @@ const Header = () => {
     }
 
     return (
-        <>
+        <UserContext.Provider value={user || admin || moderator}>
             {loginModal}
             {RegisterModal}
             {/*header*/}
@@ -319,7 +337,7 @@ const Header = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-        </>
+        </UserContext.Provider>
     );
 };
 export default Header;
