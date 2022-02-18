@@ -1,7 +1,7 @@
 import {doc, setDoc, getDoc, db} from './index';
 
-export function AddUser(data) { 
-    return setDoc(doc(db, "users", data.username), data);
+export function AddUser(docID, data) { 
+    return setDoc(doc(db, "users", docID), data);
 }
 
 export function GetUser(id) {

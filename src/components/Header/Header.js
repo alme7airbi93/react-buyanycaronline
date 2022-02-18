@@ -51,14 +51,14 @@ const Header = () => {
         e.preventDefault();
         const updateData = {displayName: registerData.name}
 
-        const data = {
-            username: registerData.email,
+        const docID = registerData.email;
+        const data = {            
             roles: "CUSTOMER",
             phone: "123456789",
             surname: registerData.surname
         }
 
-        AddUser(data);
+        AddUser(docID, data);
 
         Register(registerData.email, registerData.password)
             .then((userCredential) => {  
