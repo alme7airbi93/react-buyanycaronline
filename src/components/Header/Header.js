@@ -5,7 +5,9 @@ import Logo from "../../assets/img/logo.jpg";
 import {NavLink, useNavigate} from "react-router-dom";
 import { FaFacebookF } from 'react-icons/fa';
 import mockData from "../../Mock";
-import {Register, Login, GoogleSignin} from '../../firebase';
+import {Register, Login, GoogleSignin, Signout, UpdateProfile} from '../../firebase/Auth'; 
+import {auth} from '../../firebase';
+import Dropdown from './Dropdown';
 
 const Header = () => {
     //useState-hooks
@@ -16,6 +18,7 @@ const Header = () => {
     //modal-formInput-useState
     const [registerData, setRegisterData] = useState({})
     const [loginData, setLoginData] = useState({})
+    const [userData, setUserData] = useState({})
 
     //Modal-functions
     const handleClose = () => setShow(false);
@@ -34,18 +37,20 @@ const Header = () => {
 
     const RegisterDataHandler = (e) => {
         e.preventDefault();
+        const updateData = {displayName: registerData.name}
 
         Register(registerData.email, registerData.password)
-            .then((userCredential) => {                
+            .then((userCredential) => {  
+                UpdateProfile(auth.currentUser, updateData);              
                 const user = userCredential.user; 
-                setShow(false);               
-                navigate('/login')
-                console.log(user, 'Register Success!!!')             
+                if(Object.keys(user).length !== 0 && user.constructor !== Object) {
+                    setShow2(false);               
+                    navigate('/login')
+                }
             })
             .catch((error) => {                
-                const errorMessage = error.message; 
-                console.log(errorMessage, 'Register Fail!!!!')              
-            });;
+                const errorMessage = error.message;                          
+            });
     }
     
     //login
@@ -63,13 +68,12 @@ const Header = () => {
         Login(loginData.email, loginData.password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                setUserData(user)
                 setShow(false);
-                navigate('/car-search');
-                console.log(user, 'Login Success!!!')                     
+                navigate('/car-search');                                   
             })
             .catch((error) => {                
-                const errorMessage = error.message;
-                console.log(errorMessage, 'Login Fail!!!!')
+                const errorMessage = error.message;                
             });
 
         // const found = mockData.find((user) => {
@@ -106,8 +110,10 @@ const Header = () => {
     }
 
     const logoutHandler = () => {
-        localStorage.clear()
-        navigate('/')
+        Signout().then(() => {
+            setUserData({})
+            navigate('/')
+        })        
     }
 
     const profileHandler = () => {
@@ -116,7 +122,17 @@ const Header = () => {
 
     const googleSigninHandle = () => {
         GoogleSignin()
+            .then((result) => {                
+                const user = result.user;
+                setUserData(user);
+                setShow(false);
+                navigate('/car-search');                                           
+            }).catch((error) => {               
+                const errorMessage = error.message;
+                console.log(errorMessage, 'error!!')
+            });            
     }
+    console.log(userData, '44444444444444444444')
 
     const loginModal = (
 
@@ -190,6 +206,16 @@ const Header = () => {
                         <Row className={'align-items-center'}>
                             <Col md={6}>
                                 <Form onSubmit={RegisterDataHandler}>
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            type="name"
+                                            placeholder="Enter Name"
+                                            aria-label="name"
+                                            name="name"
+                                            onChange={registerChangeHandler}
+                                            aria-describedby="basic-addon1"
+                                        />
+                                    </InputGroup>
 
                                     <InputGroup className="mb-3">
                                         <FormControl
@@ -240,22 +266,19 @@ const Header = () => {
                 </Modal.Body>
             </div>
         </Modal>
-    )
-
-    const userId = localStorage.getItem('userId')
-    const adminId = localStorage.getItem('adminId')
-    const moderatorId = localStorage.getItem('moderatorId')
+    )    
 
     let btn;
-    if(userId || adminId || moderatorId){
+
+    if(Object.keys(userData).length !== 0 && userData.constructor !== Object) {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
-                <button type="button" onClick={logoutHandler} >LOGOUT</button>
-                <button type="button" onClick={profileHandler}> GO TO PROFILE</button>
+                <Dropdown userData = {userData} />
+                <span> | </span>
+                <button type="button" onClick={logoutHandler} >LOGOUT</button>                
             </div>
         )
-    }
-    else{
+    } else {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
                 <button type="button" onClick={handleShow} >LOGIN</button>
@@ -265,7 +288,6 @@ const Header = () => {
         )
     }
 
-
     return (
         <>
             {loginModal}
@@ -273,12 +295,12 @@ const Header = () => {
             {/*header*/}
             <div className="header-div">
                 <div className="container">
-                <div className="row">
-                <div className="col-md-5 d-flex justify-content-center">
-                    <NavLink to={'/'} > <img src={Logo} alt="logo" /> </NavLink>
-                </div>
-                    {btn}
-                </div>
+                    <div className="row">
+                        <div className="col-md-5 d-flex justify-content-center">
+                            <NavLink to={'/'} > <img src={Logo} alt="logo" /> </NavLink>
+                        </div>                    
+                        {btn}                        
+                    </div>
                 </div>
             </div>
 

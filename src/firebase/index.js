@@ -1,5 +1,13 @@
 import {initializeApp} from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInWithRedirect   } from "firebase/auth";
+import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signInWithPopup, 
+    GoogleAuthProvider,
+    signOut,
+    updateProfile 
+ } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -13,24 +21,19 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig)
 
-const auth = getAuth(); 
-const provider = new GoogleAuthProvider();
 const firebaseApp = initializeApp(firebaseConfig);
 
-export function Register(email, password) {    
-    return createUserWithEmailAndPassword(auth, email, password)
-}
+const auth = getAuth(); 
+const provider = new GoogleAuthProvider();
+const storage = getStorage(firebaseApp);
 
-export function Login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)    
+export {
+    auth,
+    provider,
+    storage,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,  
+    signOut,
+    updateProfile 
 }
-
-export function GoogleSignin() {
-    return signInWithPopup(auth, provider)
-        .then((result) => {
-            signInWithRedirect(auth, provider);
-           
-        })
-}
-
-export const storage = getStorage(firebaseApp);
