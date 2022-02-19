@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Navigate } from 'react-router-dom';
+import UserContext from '../context/Context';
 
-export const UserRoutes = ({Component}) => {
-    const user = localStorage.getItem('user')
-    const admin = localStorage.getItem('admin')
-    const moderator = localStorage.getItem('moderator')
+export const UserRoutes = ({Component}) => { 
 
-    if (user || admin || moderator) {
+    const {user, setUser}  = useContext(UserContext);
+    const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0]  
+
+    if (role === "CUSTOMER" || role === "ADMIN" || role === "MODERATOR") {
         return <Component />
     }
     else {
@@ -15,9 +16,11 @@ export const UserRoutes = ({Component}) => {
 }
 
 export const CustomerRoutes = ({Component}) => {
-    const user = localStorage.getItem('user')
 
-    if (user) {
+    const {user, setUser}  = useContext(UserContext);
+    const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0]  
+
+    if (role === "CUSTOMER") {
         return <Component />
     }
     else {
@@ -26,10 +29,10 @@ export const CustomerRoutes = ({Component}) => {
 }
 
 export const AdminModeratorRoutes = ({Component}) => {
-    const admin = localStorage.getItem('admin')
-    const moderator = localStorage.getItem('moderator')
+    const {user, setUser}  = useContext(UserContext);
+    const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0]  
 
-    if (admin || moderator) {
+    if (role === "ADMIN" || role === "MODERATOR") {
         return <Component />
     }
     else {

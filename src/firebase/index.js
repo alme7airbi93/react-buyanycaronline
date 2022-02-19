@@ -6,10 +6,10 @@ import {
     signInWithPopup, 
     GoogleAuthProvider,
     signOut,
-    updateProfile 
+    onAuthStateChanged, 
  } from "firebase/auth";
 
- import {getFirestore , doc, setDoc, getDoc} from "firebase/firestore"; 
+ import {getFirestore , doc, setDoc, getDoc, addDoc, collection} from "firebase/firestore"; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyARSq5cUJvpXMTWcM_xjWZEqmOVN-TLHqw",
@@ -33,8 +33,10 @@ export {
     signInWithEmailAndPassword,
     signInWithPopup,  
     signOut,
-    updateProfile,
+    onAuthStateChanged,
     doc,
+    addDoc,
+    collection,
     setDoc,
     getDoc,
     db
