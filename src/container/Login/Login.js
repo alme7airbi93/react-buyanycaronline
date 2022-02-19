@@ -1,58 +1,53 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import "./Login.css";
 import { useNavigate } from 'react-router-dom';
-import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
-import { GetUser } from '../../firebase/User';
-import { Login } from '../../firebase/Auth'; 
+import {Button, Form, FormControl, InputGroup, Alert} from "react-bootstrap";
+import UserContext from '../../context/Context'; 
+import { logInWithEmailAndPassword, GoogleSignin } from '../../firebase/Auth'; 
+
 
 const UserLogin = () => {
-    const [loginData, setLoginData] = useState({})
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+   
+    const [loginError, setloginError] = useState('');
     const navigate = useNavigate();
 
-    const loginChangeHandler = (e) => {
-        const {name, value} = e.target;
-
-        setLoginData({
-            ...loginData,
-            [name]: value
-        })
-    }
+    const {user, setUser}  = useContext(UserContext);   
 
     const loginDataHandler = (e) => {
         e.preventDefault();
-
-        
-        Login(loginData.email, loginData.password)
-            .then((userCredential) => {
-                const user = userCredential.user;                
-                GetUser(user.email)
-                    .then((response) => { 
-                        setLocalStorage(response.data());
-                    })                         
-            }) 
-    }
-
-    const setLocalStorage = (data) => {
-        if (data) {
-            switch (data.roles) {
-                case 'CUSTOMER':
-                    localStorage.setItem("user", JSON.stringify(data));
-                    navigate('/user-profile')                   
-                    break;
-                case 'ADMIN':
-                    localStorage.setItem("admin", JSON.stringify(data));
-                    navigate('/monitor-page')                   
-                    break;
-                case 'MODERATOR':
-                    localStorage.setItem("moderator", JSON.stringify(data));
-                    navigate('/manage-ads')                    
-                    break;
-                default:
-                    navigate('/login')
-                    break;
+        logInWithEmailAndPassword(email, password)
+        .then((data)=>{            
+            if(data.error !== ''){
+                setloginError(data.error);
             }
-        }
+            else{                
+                setUser(data.profile); 
+                document.cookie=`userToken=${data.token}`;
+                navigate('/user-profile');
+            }
+        });         
+    }    
+
+    // const googleSigninHandle = () => {            
+    //     GoogleSignin()
+    //         .then((data)=>{
+    //             setUser(data.profile);
+    //             document.cookie=`userToken=${data.token}`;
+    //             navigate('/user-profile');              
+    //         })
+    // }    
+
+    const validateEmail = (email) =>{        
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
     }
+
+    const isValid =
+        !validateEmail(email) ||
+        password === '';
 
 
     return (
@@ -64,14 +59,14 @@ const UserLogin = () => {
                             <h4>Login Form</h4>
                             <hr />
                             <Form onSubmit={loginDataHandler}>
-
                                 <InputGroup className="mb-3">
                                     <FormControl
                                         type={'email'}
                                         placeholder="Enter Email"
                                         name="email"
                                         aria-label="email"
-                                        onChange={loginChangeHandler}
+                                        value = {email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         aria-describedby="basic-addon1"
                                     />
                                 </InputGroup>
@@ -81,11 +76,13 @@ const UserLogin = () => {
                                         placeholder="Enter Password"
                                         name="password"
                                         aria-label="password"
-                                        onChange={loginChangeHandler}
+                                        value = {password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         aria-describedby="basic-addon1"
                                     />
                                 </InputGroup>
-                                <Button type="submit" className='w-100 modal_btn'>LOGIN</Button>
+                                {(loginError !== '') && <Alert variant='danger'>{loginError}</Alert>}
+                                <Button type="submit" disabled={isValid} className='w-100 modal_btn'>LOGIN</Button>
                             </Form>
                         </div>
                     </div>

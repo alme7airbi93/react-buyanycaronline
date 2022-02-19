@@ -4,26 +4,118 @@ import  {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signInWithPopup,
-    signOut, 
-    updateProfile  
+    signOut,  
+    onAuthStateChanged,  
+    doc,    
+    setDoc, 
+    getDoc, 
+    db 
 } from './index';
 
-export function Register(email, password) {    
+
+const collection_user = "users";
+
+const saveUser = async (docID, surname) => {
+    const data = {
+        roles: ["CUSTOMER"],
+        phone: "1234567890",
+        surname: surname
+    }
+    await setDoc(doc(db, collection_user, docID), data);
+}
+
+const getUser = (id) => {
+    return getDoc(doc(db, collection_user, id));
+}
+
+export const signUpWithEmailAndPassword = (email, password, surname) => {    
+
     return createUserWithEmailAndPassword(auth, email, password)
+        .then((data)=>{
+            return data.user.getIdToken();
+        })
+        .then((idtoken)=>{
+            const token = idtoken;
+            saveUser(email, surname);
+            return { token: token };
+        })
+        .catch((err)=>{
+            let error = '';
+            if(err.code === 'auth/email-already-in-use'){
+                error = 'Email already in use';
+            }
+            else{
+                error = 'The password needs to be at least 6 characters';
+            }
+            return { error: error };
+        });
 }
 
-export function UpdateProfile(currentUser, data) {    
-    return updateProfile(currentUser, data)
+export const logInWithEmailAndPassword =  (email, password) => {
+    let token = '';
+    return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {            
+            return userCredential.user.getIdToken();
+        })
+        .then((idtoken)=>{
+            token = idtoken;
+            return getUser(email);
+        })
+        .then((userData)=>{
+            return userData.data();
+        })
+        .then((data)=>{            
+            return {profile:data, error:'', token: token};
+        })
+        .catch((err) => {            
+            let error = ''
+            if(err.code !== ""){
+                error = "Email and Password incorrect"
+            }             
+            return {profile:'', error: error, token:''};
+        });
 }
 
-export function Login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)    
+export const logOut = ()=>{
+    signOut(auth).then(() => {
+        // Sign-out successful.
+    }).catch((error) => {
+        console.log(error)
+    });
 }
 
-export function Signout() {
-    return signOut(auth)
-}
+export const GoogleSignin = () => {    
+    let token = 0;
+    let user = {};
 
-export function GoogleSignin() {
-    return signInWithPopup(auth, provider)        
+    return signInWithPopup(auth, provider)
+        .then((result)=>{
+            user = result.user;            
+            return user.getIdToken(); 
+        })
+        .then((idtoken)=>{
+            token = idtoken;
+            return getUser(user.email)       
+        })
+        .then((result) => {            
+            const userData = result.data();
+            if (userData !== undefined) {
+                return {profile: userData, error: "", token: token};
+            }
+            else{       
+                saveUser(user.email, user.displayName)                   
+            }
+        })
+        .then(() => {
+            return getUser(user.email)                           
+        })
+        .then((result) => {
+            return result.data();            
+        })
+        .then((data) => {
+            return {profile: data, error: "", token: token};
+        })
+        .catch((error) => {            
+            return {profile:'', error: error.message, token:''};
+        });
 }

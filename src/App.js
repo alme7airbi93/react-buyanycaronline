@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 //import Router
 import { HashRouter as Router, Routes, Route  } from 'react-router-dom';
 
@@ -21,11 +21,17 @@ import UserProfile from "./container/UserProfile/UserProfile";
 import NewAds from "./container/NewAds/NewAds";
 import ManageAds from "./container/ManageAds/ManageAds";
 import MonitorPage from "./container/MonitorPage/MonitorPage";
+import UserContext from "./context/Context";
+
+
 
 const App = () => {
 
+  const [user, setUser] = useState({});
+  const value = {user, setUser};
+
   return (
-    <>
+    <UserContext.Provider value={value}>
         <Router>
             <Header />
             <Routes>
@@ -39,13 +45,13 @@ const App = () => {
                 <Route exact path='/new-ads' element={<CustomerRoutes Component={NewAds} />} />
                 <Route exact path='/manage-ads' element={<AdminModeratorRoutes Component={ManageAds} />} />
                 <Route exact path='monitor-page' element={<AdminModeratorRoutes Component={MonitorPage} />} />
-                <Route exact path='/contact' element={<Contact />} />
-                <Route exact path='/login' element={<Login />} />
+                <Route exact path='/contact' element={<Contact />} />   
+                <Route exact path='/login' element={<Login />} />             
                 <Route exact path='*' element={<Error />} />
             </Routes>
             <Footer />
         </Router>
-    </>
+    </UserContext.Provider>
   );
 }
 export default App;

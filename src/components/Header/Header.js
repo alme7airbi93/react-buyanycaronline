@@ -1,291 +1,67 @@
-import React, {useState, createContext} from 'react';
+import React, { useState, useContext } from 'react';
 import "./Header.css";
-import {
-    Modal, 
-    Button, 
-    InputGroup, 
-    FormControl, 
-    Form, 
-    Nav, 
-    Navbar, 
-    Container, 
-    Row, 
-    Col
-} from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Register, Login, GoogleSignin, Signout, UpdateProfile } from '../../firebase/Auth'; 
-import { auth } from '../../firebase';
-import { AddUser, GetUser } from '../../firebase/User';
-import Dropdown from './Dropdown';
+import { logOut, loginStateChanged } from '../../firebase/Auth'; 
+import Dropdown from '../Dropdown';
+import LoginModal from '../Modal/Login/LoginModal';
+import SignupModal from '../Modal/Signup/SignupModal';
+import  UserContext from "../../context/Context";
 
-
-export const UserContext = createContext();
 
 const Header = () => {
-    //useState-hooks
-    const [show, setShow] = useState(false);
-    const [show2, setShow2] = useState(false);
     const navigate = useNavigate();
+    const [loginShow, setLoginShow] = useState(false);
+    const [signupShow, setSignupShow] = useState(false);  
 
-    //modal-formInput-useState
-    const [registerData, setRegisterData] = useState({})
-    const [loginData, setLoginData] = useState({})    
+    const {user, setUser}  = useContext(UserContext); 
 
-    //Modal-functions
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const handleClose2 = () => setShow2(false);
-    const handleShow2 = () => setShow2(true);
-
-    //Register
-    const registerChangeHandler = (e) => {
-        const {name, value} = e.target;
-        setRegisterData({
-            ...registerData,
-            [name]: value
-        })
+    const closeLogin = ()=>{
+        setLoginShow(false);
     }
 
-    const RegisterDataHandler = (e) => {
+    const closeSignup = ()=>{
+        setSignupShow(false);
+    }
+
+    const loginShowHandle = (e) => {
         e.preventDefault();
-        const updateData = {displayName: registerData.name}
+        setLoginShow(true);
+    }
 
-        const docID = registerData.email;
-        const data = {            
-            roles: "CUSTOMER",
-            phone: "123456789",
-            surname: registerData.surname
-        }
-
-        AddUser(docID, data);
-
-        Register(registerData.email, registerData.password)
-            .then((userCredential) => {  
-                UpdateProfile(auth.currentUser, updateData);
-                const user = userCredential.user; 
-                if(Object.keys(user).length !== 0 && user.constructor !== Object) {                    
-                    setShow2(false);               
-                    navigate('/login')
-                }
-            })
-            .catch((error) => {                
-                const errorMessage = error.message;                          
-            });
+    const signupShowHandle = (e) => {
+        e.preventDefault();
+        setSignupShow(true);
     }
     
-    //login
-    const loginChangeHandler = (e) => {
-        const {name, value} = e.target;
-
-        setLoginData({
-            ...loginData,
-            [name]: value
+    const logoutHandler = ()=>{
+        logOut();        
+        deleteCookie('userToken');
+        navigate("/");
+    }  
+    
+    const getCookie = (cookieName) => {
+        let cookie = {};
+        document.cookie.split(';').forEach(function(el) {
+          let [key,value] = el.split('=');
+          cookie[key.trim()] = value;
         })
+        return cookie[cookieName];
     }
-    const loginDataHandler = (e) => {
-        e.preventDefault();
-
-        Login(loginData.email, loginData.password)
-            .then((userCredential) => {
-                const user = userCredential.user;                
-                GetUser(user.email)
-                    .then((response) => { 
-                        setLocalStorage(response.data());
-                    })                         
-            })           
-    } 
-
-    const setLocalStorage = (data) => {
-        if (data) {
-            switch (data.roles) {
-                case 'CUSTOMER':
-                    localStorage.setItem("user", JSON.stringify(data));
-                    navigate('/user-profile')
-                    setShow(false)
-                    break;
-                case 'ADMIN':
-                    localStorage.setItem("admin", JSON.stringify(data));
-                    navigate('/monitor-page')
-                    setShow(false)
-                    break;
-                case 'MODERATOR':
-                    localStorage.setItem("moderator", JSON.stringify(data));
-                    navigate('/manage-ads')
-                    setShow(false)
-                    break;
-                default:
-                    navigate('/login')
-                    break;
-            }
-        }           
+    
+    const deleteCookie = (name) => {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
-    const logoutHandler = () => {
-        Signout().then(() => {            
-            localStorage.clear()
-            navigate('/')
-        })        
-    }
+    const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0];
 
-    const profileHandler = () => {
-        navigate('/user-profile')
-    }    
-
-    const googleSigninHandle = () => {
-        GoogleSignin()
-            .then((result) => {                
-                const user = result.user;
-                GetUser(user.email)
-                    .then((response) => { 
-                        setLocalStorage(response.data());
-                    })
-            }).catch((error) => {               
-                const errorMessage = error.message;
-                console.log(errorMessage, 'error!!')
-            });            
-    }    
-
-    const loginModal = (
-
-        <Modal size={'lg'} show={show} backdrop="static" keyboard={false}>
-            <div  className="modal_main_div">
-                <Modal.Header className="modal_header">
-                    <Modal.Title>Login</Modal.Title>
-                    <h3 onClick={handleClose} style={{cursor: 'pointer'}}>
-                        x
-                    </h3>
-                </Modal.Header>
-                <Modal.Body>
-                    <Container fluid>
-                        <Row className={'align-items-center'}>
-                            <Col md={6}>
-                                <Form onSubmit={loginDataHandler}>
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type={'email'}
-                                            placeholder="Enter Email"
-                                            name="email"
-                                            aria-label="email"
-                                            onChange={loginChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type={'password'}
-                                            placeholder="Enter Password"
-                                            name="password"
-                                            aria-label="password"
-                                            onChange={loginChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-                                    <Button type="submit" className='w-100 modal_btn'>LOGIN</Button>
-                                </Form>
-                            </Col>
-
-                            <Col md={1}>
-                                <p className={'divider'}>or</p>
-                            </Col>
-
-
-                            <Col md={5} className={'social_btn_main'}>
-
-                                <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
-                                <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
-                                <button className={'social_btn google_btn'} onClick = {googleSigninHandle}>Sign in with Google+</button>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Modal.Body>
-            </div>
-        </Modal>
-    )
-
-    const RegisterModal = (
-        <Modal size={'lg'} show={show2} backdrop="static" keyboard={false} >
-            <div className="modal_main_div">
-                <Modal.Header className="modal_header">
-                    <Modal.Title>Register</Modal.Title>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <h3 onClick={handleClose2} style={{cursor: 'pointer'}}>
-                        x
-                    </h3>
-                </Modal.Header>
-                <Modal.Body>
-                    <Container fluid>
-                        <Row className={'align-items-center'}>
-                            <Col md={6}>
-                                <Form onSubmit={RegisterDataHandler}>
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type="surname"
-                                            placeholder="Enter SurName"
-                                            aria-label="surname"
-                                            name="surname"
-                                            onChange={registerChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type="email"
-                                            placeholder="Enter Email"
-                                            aria-label="email"
-                                            name="email"
-                                            onChange={registerChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type="password"
-                                            placeholder="Enter Password"
-                                            aria-label="password"
-                                            name="password"
-                                            onChange={registerChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-                                    <InputGroup className="mb-3">
-                                        <FormControl
-                                            type="password"
-                                            placeholder="Enter Confirm Password"
-                                            aria-label="password"
-                                            name="confirmPassword"
-                                            onChange={registerChangeHandler}
-                                            aria-describedby="basic-addon1"
-                                        />
-                                    </InputGroup>
-                                    <Button type="submit" className='w-100 modal_btn'>REGISTER</Button>
-                                </Form>
-                            </Col>
-
-                            <Col md={1}>
-                                <p className={'divider'}>or</p>
-                            </Col>
-
-                            <Col md={5} className={'social_btn_main'}>
-                                <button className={'social_btn fb_btn'}>Sign in with Facebook</button>
-                                <button className={'social_btn twitter_btn'}>Sign in with Twitter</button>
-                                <button className={'social_btn google_btn'} onClick = {googleSigninHandle}>Sign in with Google+</button>
-                            </Col>
-                        </Row>
-                    </Container>
-
-                </Modal.Body>
-            </div>
-        </Modal>
-    )    
-
-    const user = JSON.parse(localStorage.getItem('user'));
-    const admin = JSON.parse(localStorage.getItem('admin'));
-    const moderator = JSON.parse(localStorage.getItem('moderator'));    
+    
+    const userToken = getCookie('userToken');
+    
     let btn;
 
-    if(user || admin || moderator) {
+    if((role === "CUSTOMER" || role === "ADMIN" || role === "MODERATOR") && userToken) {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
                 <Dropdown />
@@ -296,17 +72,15 @@ const Header = () => {
     } else {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
-                <button type="button" onClick={handleShow} >LOGIN</button>
+                <button type="button" onClick={(e) => loginShowHandle(e)} >LOGIN</button>
                 <span> | </span>
-                <button type="button" onClick={handleShow2}>REGISTER</button>
+                <button type="button" onClick={(e) => {signupShowHandle(e)}}>REGISTER</button>
             </div>
         )
-    }
+    }    
 
     return (
-        <UserContext.Provider value={user || admin || moderator}>
-            {loginModal}
-            {RegisterModal}
+        <React.Fragment>           
             {/*header*/}
             <div className="header-div">
                 <div className="container">
@@ -318,6 +92,9 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+
+            <LoginModal  show={loginShow} handleCloseLogin={closeLogin}/>            
+            <SignupModal  show={signupShow} handleCloseSignup={closeSignup}/>
 
             {/*NavBar*/}
             <Navbar bg="light" expand="lg" className="Navbar-header">
@@ -334,7 +111,7 @@ const Header = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-        </UserContext.Provider>
+        </React.Fragment>
     );
 };
 export default Header;
