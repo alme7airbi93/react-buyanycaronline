@@ -19,6 +19,7 @@ import { signUpWithEmailAndPassword } from '../../../firebase/Auth';
 const SignupModal = (props) => {
 
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordMatchError, setpasswordMatchError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -31,7 +32,21 @@ const SignupModal = (props) => {
   
     useEffect(()=>{
         setShow(props.show);
-    },[props]);
+        if(email !=="" && validateEmail(email) === null) {
+            setEmailError('Please enter email exactly!')
+            setSignupError("");
+        } else {
+            setEmailError('')
+        }
+
+        if(confirmPassword !=="" && password !== confirmPassword) {
+            setpasswordMatchError("Please confrim password again!")
+            setSignupError("");
+        } else {
+            setpasswordMatchError("");
+        }
+        
+    },[confirmPassword, email, password, props]);
 
 
     const handleClose = ()=>{
@@ -68,8 +83,7 @@ const SignupModal = (props) => {
     }
 
     const isValid = 
-        password === "" ||
-        confirmPassword ==="" ||
+        password !== confirmPassword ||
         !validateEmail(email) || 
         name === '';
 
@@ -114,6 +128,7 @@ const SignupModal = (props) => {
                                             aria-describedby="basic-addon1"
                                         />
                                     </FormGroup>
+                                    {(emailError !== '') && <Alert variant='danger'>{emailError}</Alert>}
                                     <FormGroup className="mb-3">
                                     <FormLabel> Password</FormLabel>
                                         <FormControl

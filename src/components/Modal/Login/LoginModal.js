@@ -19,24 +19,32 @@ import { logInWithEmailAndPassword, GoogleSignin } from '../../../firebase/Auth'
 const LoginModal = (props) => {
 
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
 
     const [show, setShow] = useState(false);
     const [loginError, setloginError] = useState('');
     const navigate = useNavigate();
 
-    const {user, setUser}  = useContext(UserContext);
+    const {user, setUser}  = useContext(UserContext); 
 
     useEffect(()=>{
         setShow(props.show);
-    }, [props]);
+        if(email !=="" && validateEmail(email) === null) {
+            setEmailError('Please enter email exactly!')
+            setloginError("");
+        } else {
+            setEmailError('')
+        }       
+        
+    },[email, props]);
 
    
-    const handleClose = ()=>{
+    const handleClose = ()=>{        
         setShow(false);
         props.handleCloseLogin();
     }    
-
+    
     const loginDataHandler = (e) => {
         e.preventDefault();
         logInWithEmailAndPassword(email, password)
@@ -98,6 +106,7 @@ const LoginModal = (props) => {
                                             aria-describedby="basic-addon1"
                                         />
                                     </InputGroup>
+                                    {(emailError !== '') && <Alert variant='danger'>{emailError}</Alert>}
                                     <InputGroup className="mb-3">
                                         <FormControl
                                             type={'password'}
