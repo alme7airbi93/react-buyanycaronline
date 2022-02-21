@@ -20,6 +20,7 @@ const SignupModal = (props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordMatchError, setpasswordMatchError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
 
@@ -40,19 +41,25 @@ const SignupModal = (props) => {
    
 
     const RegisterDataHandler = (e) => {
-        e.preventDefault();
-        signUpWithEmailAndPassword(email, password, name)
-        .then((data)=>{
-            if(data.token)
-            {
-                navigate('/');
-                handleClose();
-            }
-            else{
-                setSignupError(data.error);
-            }
-        }); 
-    }
+        e.preventDefault();        
+        if(password === confirmPassword) {
+            signUpWithEmailAndPassword(email, password, name)
+            .then((data)=>{
+                if(data.token)
+                {
+                    navigate('/');
+                    handleClose();
+                }
+                else{
+                    setSignupError(data.error);
+                    setpasswordMatchError("");
+                }
+            }); 
+        } else {
+            setSignupError("");
+            setpasswordMatchError("Please confrim password again!")
+        }
+    }    
 
     const validateEmail = (email) =>{
         return email.match(
@@ -61,7 +68,8 @@ const SignupModal = (props) => {
     }
 
     const isValid = 
-        password !== confirmPassword ||
+        password === "" ||
+        confirmPassword ==="" ||
         !validateEmail(email) || 
         name === '';
 
@@ -130,6 +138,7 @@ const SignupModal = (props) => {
                                             aria-describedby="basic-addon1"
                                         />
                                     </FormGroup>
+                                    {(passwordMatchError !== '') && <Alert variant='danger'>{passwordMatchError}</Alert>}
                                     {(singupError !== '') && <Alert variant='danger'>{singupError}</Alert>}
                                     <Button type="submit" disabled={isValid} className='w-100 modal_btn'>REGISTER</Button>
                                 </Form>
