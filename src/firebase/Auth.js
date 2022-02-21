@@ -4,29 +4,10 @@ import  {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signInWithPopup,
-    signOut,  
-    onAuthStateChanged,  
-    doc,    
-    setDoc, 
-    getDoc, 
-    db 
+    signOut,
 } from './index';
 
-
-const collection_user = "users";
-
-const saveUser = async (docID, surname) => {
-    const data = {
-        roles: ["CUSTOMER"],
-        phone: "1234567890",
-        surname: surname
-    }
-    await setDoc(doc(db, collection_user, docID), data);
-}
-
-const getUser = (id) => {
-    return getDoc(doc(db, collection_user, id));
-}
+import {getUser, saveUser} from './User';
 
 export const signUpWithEmailAndPassword = (email, password, surname) => {    
 

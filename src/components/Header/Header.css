@@ -1,5 +1,10 @@
+.header-row {
+    justify-content: space-between;
+    align-items: center;
+}
+
 .header-div{
-    padding: 20px 15px 20px 15px;
+    padding: 25px 15px 25px 15px;
     background-color: #0e1315;
 }
 .headers-button button{
@@ -57,8 +62,7 @@
     align-items: center;
 }
 /*responsive*/
-.headers-button {
-    margin-top: 15px;
+.headers-button {    
     align-items: center;
 }
 

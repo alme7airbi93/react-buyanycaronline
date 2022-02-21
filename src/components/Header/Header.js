@@ -3,7 +3,7 @@ import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logOut, loginStateChanged } from '../../firebase/Auth'; 
+import { logOut } from '../../firebase/Auth'; 
 import Dropdown from '../Dropdown';
 import LoginModal from '../Modal/Login/LoginModal';
 import SignupModal from '../Modal/Signup/SignupModal';
@@ -64,9 +64,9 @@ const Header = () => {
     if((role === "CUSTOMER" || role === "ADMIN" || role === "MODERATOR") && userToken) {
         btn = (
             <div className="col-md-5 d-flex justify-content-end headers-button">
-                <Dropdown />
-                <span> | </span>
-                <button type="button" onClick={logoutHandler} >LOGOUT</button>                
+                <Dropdown onClick={logoutHandler}/>
+                {/* <span> | </span>
+                <button type="button" onClick={logoutHandler} >LOGOUT</button>                 */}
             </div>
         )
     } else {
@@ -84,8 +84,8 @@ const Header = () => {
             {/*header*/}
             <div className="header-div">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-5 d-flex justify-content-center">
+                    <div className="row header-row">
+                        <div className="col-md-5 justify-content-center">
                             <NavLink to={'/'} > <img src={Logo} alt="logo" /> </NavLink>
                         </div>                    
                         {btn}                        
