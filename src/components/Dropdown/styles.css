@@ -88,10 +88,16 @@ body {
 }
 
 .menu li a {
+    font-size: 14px;
+    font-weight: 700;
     text-decoration: none;
-    color: white;
+    color: rgba(255, 255, 255, .55);
     padding: 15px 20px;
     display: block;
+}
+
+.menu li a:hover {    
+    color: white;  
 }
 
 .fa-caret-down {

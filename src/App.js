@@ -44,7 +44,7 @@ const App = () => {
                 <Route exact path='/user-profile' element={<UserRoutes Component={UserProfile} />} />
                 <Route exact path='/new-ads' element={<CustomerRoutes Component={NewAds} />} />
                 <Route exact path='/manage-ads' element={<AdminModeratorRoutes Component={ManageAds} />} />
-                <Route exact path='monitor-page' element={<AdminModeratorRoutes Component={MonitorPage} />} />
+                <Route exact path='/monitor-page' element={<AdminModeratorRoutes Component={MonitorPage} />} />
                 <Route exact path='/contact' element={<Contact />} />   
                 <Route exact path='/login' element={<Login />} />             
                 <Route exact path='*' element={<Error />} />
