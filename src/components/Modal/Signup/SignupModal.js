@@ -52,9 +52,11 @@ const SignupModal = (props) => {
                 }
                 else{
                     setSignupError(data.error);
+                    setpasswordMatchError("");
                 }
             }); 
         } else {
+            setSignupError("");
             setpasswordMatchError("Please confrim password again!")
         }
     }    
