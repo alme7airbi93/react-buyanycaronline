@@ -22,10 +22,9 @@ export default function Dropdown(props) {
 
   const [user, setUser]  = useContext(UserContext);
 
-  const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0];
 
   const customerOptions = () => {
-    if(role === "CUSTOMER") {
+    if(user.roles.includes("CUSTOMER")) {
       return (
         <li>
           <NavLink to={'/new-ads'} onClick = {showDropdown}>NEW ADS</NavLink>
@@ -35,7 +34,7 @@ export default function Dropdown(props) {
   }
 
   const adminOptions = () => {
-    if(role === "ADMIN" || role === "MODERATOR") {
+    if(user.roles.includes("ADMIN") || user.roles.includes("MODERATOR")) {
       return (
         <>
           <li>
