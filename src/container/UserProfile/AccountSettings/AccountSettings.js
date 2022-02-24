@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import UserContext from "../../../context/Context";
+import {UserContext} from "../../../context/Context";
 
 
 const AccountSettings = () => {

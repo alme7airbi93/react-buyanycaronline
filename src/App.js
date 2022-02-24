@@ -21,7 +21,7 @@ import UserProfile from "./container/UserProfile/UserProfile";
 import NewAds from "./container/NewAds/NewAds";
 import ManageAds from "./container/ManageAds/ManageAds";
 import MonitorPage from "./container/MonitorPage/MonitorPage";
-import UserContext from "./context/Context";
+import {UserContext} from "./context/Context";
 
 
 

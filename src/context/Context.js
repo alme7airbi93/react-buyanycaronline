@@ -1,7 +1,11 @@
 import { createContext } from 'react';
 
-const UserContext = createContext({
+export const UserContext = createContext({
     setUser:()=>{}
 });
 
-export default UserContext;
+
+
+export const NewAdvertisement = createContext({
+    setAdvertisement:()=>{}
+});

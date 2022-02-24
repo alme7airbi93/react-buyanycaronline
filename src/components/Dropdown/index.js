@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import {NavLink} from "react-router-dom";
 import "./styles.css";
-import  UserContext from "../../context/Context";
+import {UserContext} from "../../context/Context";
 
 export default function Dropdown(props) {
   const [isActive, setIsActive] = useState(false);

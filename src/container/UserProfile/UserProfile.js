@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Container, Row, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./UserProfile.css";
-import UserContext from "../../context/Context";
+import {UserContext} from "../../context/Context";
 import AccountSettings from "./AccountSettings/AccountSettings";
 
 const UserProfile = () => {

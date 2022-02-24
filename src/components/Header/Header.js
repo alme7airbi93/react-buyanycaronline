@@ -7,7 +7,7 @@ import { logOut } from '../../firebase/Auth';
 import Dropdown from '../Dropdown';
 import LoginModal from '../Modal/Login/LoginModal';
 import SignupModal from '../Modal/Signup/SignupModal';
-import  UserContext from "../../context/Context";
+import {UserContext} from "../../context/Context";
 
 
 const Header = () => {
