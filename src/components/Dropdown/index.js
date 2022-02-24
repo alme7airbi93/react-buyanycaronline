@@ -53,7 +53,7 @@ export default function Dropdown(props) {
     <div className="container">
       <div className="menu-container">
         <button onClick={(e) => onClickHandle(e)} className="menu-trigger">
-          <span>{user.surname}</span>
+          <span>{user.surename}</span>
           <i className = {`fas fa-caret-down ${isActive ? "active" : "inactive"}`}></i>
         </button>
         <nav
