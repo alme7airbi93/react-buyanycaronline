@@ -1,11 +1,11 @@
 import {
-    Modal, 
-    Button, 
-    InputGroup, 
-    FormControl, 
-    Form,     
-    Container, 
-    Row, 
+    Modal,
+    Button,
+    InputGroup,
+    FormControl,
+    Form,
+    Container,
+    Row,
     Col,
     Alert
 } from "react-bootstrap";
@@ -14,7 +14,7 @@ import './login.css';
 import React, { useEffect, useState, useContext } from 'react';
 import UserContext from '../../../context/Context';
 import { useNavigate } from "react-router-dom";
-import { logInWithEmailAndPassword, GoogleSignin } from '../../../firebase/Auth'; 
+import { logInWithEmailAndPassword, GoogleSignin } from '../../../firebase/Auth';
 
 const LoginModal = (props) => {
 
@@ -26,7 +26,7 @@ const LoginModal = (props) => {
     const [loginError, setloginError] = useState('');
     const navigate = useNavigate();
 
-    const {user, setUser}  = useContext(UserContext); 
+    const [user, setUser]  = useContext(UserContext);
 
     useEffect(()=>{
         setShow(props.show);
@@ -35,43 +35,43 @@ const LoginModal = (props) => {
             setloginError("");
         } else {
             setEmailError('')
-        }       
-        
+        }
+
     },[email, props]);
 
-   
-    const handleClose = ()=>{        
+
+    const handleClose = ()=>{
         setShow(false);
         props.handleCloseLogin();
-    }    
-    
+    }
+
     const loginDataHandler = (e) => {
         e.preventDefault();
         logInWithEmailAndPassword(email, password)
-        .then((data)=>{            
+        .then((data)=>{
             if(data.error !== ''){
                 setloginError(data.error);
             }
-            else{                
-                setUser(data.profile); 
-                document.cookie=`userToken=${data.token}`;
-                navigate('/user-profile');
-                handleClose();
-            }
-        });         
-    }    
-
-    const googleSigninHandle = () => {            
-        GoogleSignin()
-            .then((data)=>{
+            else{
                 setUser(data.profile);
                 document.cookie=`userToken=${data.token}`;
                 navigate('/user-profile');
                 handleClose();
-            })
-    }    
+            }
+        });
+    }
 
-    const validateEmail = (email) =>{        
+    const googleSigninHandle =  () => {
+            GoogleSignin().then((data) =>{
+            console.log("Data :", data)
+            setUser(data.profile);
+            document.cookie=`userToken=${data.token}`;
+            navigate('/user-profile');
+            handleClose();
+        })
+    }
+
+    const validateEmail = (email) =>{
         return email.match(
             /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );

@@ -1,15 +1,16 @@
-import  {
-    auth,
-    provider,   
-    createUserWithEmailAndPassword,
+import  {auth} from './main';
+import {
+    createUserWithEmailAndPassword, GoogleAuthProvider,
     signInWithEmailAndPassword,
     signInWithPopup,
-    signOut,
-} from './index';
+    signOut
+} from "firebase/auth";
 
-import {getUser, saveUser} from './User';
+import {getUserByEmail, saveUser} from './User';
 
-export const signUpWithEmailAndPassword = (email, password, surname) => {    
+const googleProvider = new GoogleAuthProvider();
+
+export const signUpWithEmailAndPassword = (email, password, surname) => {
 
     return createUserWithEmailAndPassword(auth, email, password)
         .then((data)=>{
@@ -35,24 +36,24 @@ export const signUpWithEmailAndPassword = (email, password, surname) => {
 export const logInWithEmailAndPassword =  (email, password) => {
     let token = '';
     return signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {            
+        .then((userCredential) => {
             return userCredential.user.getIdToken();
         })
         .then((idtoken)=>{
             token = idtoken;
-            return getUser(email);
+            return getUserByEmail(email);
         })
         .then((userData)=>{
             return userData.data();
         })
-        .then((data)=>{            
+        .then((data)=>{
             return {profile:data, error:'', token: token};
         })
-        .catch((err) => {            
+        .catch((err) => {
             let error = ''
             if(err.code !== ""){
                 error = "Email and Password incorrect"
-            }             
+            }
             return {profile:'', error: error, token:''};
         });
 }
@@ -65,38 +66,35 @@ export const logOut = ()=>{
     });
 }
 
-export const GoogleSignin = () => {    
-    let token = 0;
-    let user = {};
 
-    return signInWithPopup(auth, provider)
-        .then((result)=>{
-            user = result.user;            
-            return user.getIdToken(); 
-        })
-        .then((idtoken)=>{
-            token = idtoken;
-            return getUser(user.email)       
-        })
-        .then((result) => {            
-            const userData = result.data();
-            if (userData !== undefined) {
-                return {profile: userData, error: "", token: token};
+export const GoogleSignin = async () => {
+    return await signInWithPopup(auth, googleProvider)
+        .then(async (result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const googleUser = result.user;
+            let user = await getUserByEmail(googleUser.email);
+            if (user === undefined) {
+                await saveUser(googleUser.email, googleUser.displayName)
+                user = await getUserByEmail(googleUser.email);
             }
-            else{       
-                saveUser(user.email, user.displayName)                   
-            }
+            console.log("User:", user);
+            console.log("Token:", token);
+            let data = {profile: user, token: token}
+            return data;
+
         })
-        .then(() => {
-            return getUser(user.email)                           
-        })
-        .then((result) => {
-            return result.data();            
-        })
-        .then((data) => {
-            return {profile: data, error: "", token: token};
-        })
-        .catch((error) => {            
-            return {profile:'', error: error.message, token:''};
+        .catch((error) => {
+            // Handle Errors here.
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            // // The email of the user's account used.
+            // const email = error.email;
+            // // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(error)
+            return {profile: '', error: error.message, token: credential};
         });
-}
+};

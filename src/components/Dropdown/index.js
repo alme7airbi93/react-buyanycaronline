@@ -3,11 +3,11 @@ import {NavLink} from "react-router-dom";
 import "./styles.css";
 import  UserContext from "../../context/Context";
 
-export default function Dropdown(props) {  
+export default function Dropdown(props) {
   const [isActive, setIsActive] = useState(false);
 
   const onClickHandle = (e) => {
-    e.preventDefault();      
+    e.preventDefault();
     setIsActive(!isActive);
   }
 
@@ -20,16 +20,16 @@ export default function Dropdown(props) {
     props.onClick();
   }
 
-  const {user, setUser}  = useContext(UserContext);
+  const [user, setUser]  = useContext(UserContext);
 
-  const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0];  
+  const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0];
 
   const customerOptions = () => {
     if(role === "CUSTOMER") {
-      return (        
-        <li>              
+      return (
+        <li>
           <NavLink to={'/new-ads'} onClick = {showDropdown}>NEW ADS</NavLink>
-        </li>    
+        </li>
       )
     }
   }
@@ -38,10 +38,10 @@ export default function Dropdown(props) {
     if(role === "ADMIN" || role === "MODERATOR") {
       return (
         <>
-          <li>              
+          <li>
             <NavLink to={'/manage-ads'} onClick = {showDropdown}>MANAGE ADS</NavLink>
           </li>
-          <li>              
+          <li>
             <NavLink to={'/monitor-page'} onClick = {showDropdown}>MONITOR PAGE</NavLink>
           </li>
         </>
@@ -55,19 +55,19 @@ export default function Dropdown(props) {
         <button onClick={(e) => onClickHandle(e)} className="menu-trigger">
           <span>{user.surname}</span>
           <i className = {`fas fa-caret-down ${isActive ? "active" : "inactive"}`}></i>
-        </button>        
-        <nav          
+        </button>
+        <nav
           className={`menu ${isActive ? "active" : "inactive"}`}
         >
           <ul>
-            <li>              
+            <li>
               <NavLink to={'/user-profile'} onClick = {showDropdown}>MANAGE PROFILE</NavLink>
             </li>
             {customerOptions()}
-            {adminOptions()}           
-            <li>              
+            {adminOptions()}
+            <li>
               <NavLink to={'/'} onClick = {logoutHalde}>LOGOUT</NavLink>
-            </li>          
+            </li>
           </ul>
         </nav>
       </div>

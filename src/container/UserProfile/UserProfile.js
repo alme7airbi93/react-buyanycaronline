@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Container, Row, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./UserProfile.css";
-
+import UserContext from "../../context/Context";
 
 const UserProfile = () => {
 
@@ -12,7 +12,9 @@ const UserProfile = () => {
         navigate('/new-ads')
     }
 
+    const [user, setuser] = useContext(UserContext);
 
+    console.log("user :", user);
     return (
         <div className={'user_info_main'}>
             <Container>
