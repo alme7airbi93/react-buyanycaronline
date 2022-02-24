@@ -3,6 +3,7 @@ import {Container, Row, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./UserProfile.css";
 import UserContext from "../../context/Context";
+import AccountSettings from "./AccountSettings/AccountSettings";
 
 const UserProfile = () => {
 
@@ -14,25 +15,14 @@ const UserProfile = () => {
 
     const [user, setuser] = useContext(UserContext);
 
+
     console.log("user :", user);
     return (
         <div className={'user_info_main'}>
             <Container>
                 <Row>
                     <Col md={3} className='user_info'>
-                        <h5>Account Settings</h5>
-                        <hr />
-                        <p>Name: <span>currentUser.username</span></p>
-                        <p>Password: <span> ********** </span></p>
-
-                        <p>Address</p>
-                        <hr />
-                        <p>Country: <span>currentUser.country</span></p>
-                        <p>City: <span>currentUser.city</span></p>
-
-                        <p>Contact Details</p>
-                        <hr />
-                        <p>Mobile: <span>currentUser.mobile</span></p>
+                        <AccountSettings/>
                     </Col>
                     <Col md={6} className='user_info'>
                         <h5>Manage Ads</h5>

@@ -76,9 +76,14 @@ export const GoogleSignin = async () => {
             // The signed-in user info.
             const googleUser = result.user;
             let user = await getUserByEmail(googleUser.email);
-            if (user === undefined) {
-                await saveUser(googleUser.email, googleUser.displayName)
-                user = await getUserByEmail(googleUser.email);
+            try{
+                if (user === undefined) {
+                    console.log("Saving user !")
+                    await saveUser(googleUser.email, googleUser.displayName)
+                    user = await getUserByEmail(googleUser.email);
+                }
+            }catch (error){
+                return error.message
             }
             console.log("User:", user);
             console.log("Token:", token);
@@ -87,12 +92,6 @@ export const GoogleSignin = async () => {
 
         })
         .catch((error) => {
-            // Handle Errors here.
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // // The email of the user's account used.
-            // const email = error.email;
-            // // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             console.log(error)
             return {profile: '', error: error.message, token: credential};
