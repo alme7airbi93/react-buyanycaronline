@@ -3,9 +3,8 @@ import "./Home.css";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Select from 'react-select';
-import Vehicles from '../../data/vehicles.json';
-import Makes from '../../data/makes.json';
-import Model_first_level from '../../data/model_first_levels.json';
+import {vehicles, makes, models} from '../../data/Enums';
+
 
 const Home = () => {
 
@@ -32,52 +31,34 @@ const Home = () => {
         toggleClass = "hide_search";
     }
 
-    let vehicle_options = Vehicles.RECORDS.map(item => {       
-        return {
-            value: item.id,
-            label: item.vehicle_name
-        }
-    })
+    let vehicels_options = vehicles();
+    let makes_options = makes();
+    let models_options = models();
 
-    let makes_options = Makes.RECORDS.map(item => {
-            return {
-            value: item.id,
-            label: item.make_name,
-            parent_id: item.vehicle_id
-        }         
-    })
-
-    let model_first_level_options = Model_first_level.RECORDS.map(item => {
-        return {
-            value: item.id,
-            label: item.model_first_level_name,
-            parent_id: item.make_id
-        }
-    })
-
-    const setVehicleHandle = (value) => {       
+    console.log("vehicles ", makes)
+    const setVehicleHandle = (value) => {
         setVehicle(value)
         setMake('')
-        setModelFirst('')        
-        setTypeDropdown(false) 
-    } 
+        setModelFirst('')
+        setTypeDropdown(false)
+    }
 
-    const setMakeHandle = (value ) => {               
-        const modelFirstLevelArrays = model_first_level_options.filter(item => item.parent_id === value.value)
+    const setMakeHandle = (value ) => {
+        const modelFirstLevelArrays = models_options.filter(item => item.parent_id === value.value)
 
-        if(modelFirstLevelArrays.length !== 0) {            
+        if(modelFirstLevelArrays.length !== 0) {
             setTypeDropdown(true)
-        } else {            
+        } else {
             setTypeDropdown(false)
-        }         
+        }
         setMake(value)
-        setModelFirst('')        
+        setModelFirst('')
     }
-    
+
     const setFirstModelHandle = (value) => {
-        setModelFirst(value)    
+        setModelFirst(value)
     }
-    
+
     const options = [
         { value: 'corolla', label: 'corolla' },
         { value: 'civic', label: 'civic' },
@@ -104,66 +85,66 @@ const Home = () => {
                                     <div className="container">
                                     <div className="row home-select-div">
                                         <div className={rowClass}>
-                                            <Select 
+                                            <Select
                                                 placeholder = {'Select Motors'}
-                                                options={vehicle_options} 
+                                                options={vehicels_options}
                                                 onChange={(e) => setVehicleHandle(e)}
-                                                isSearchable={false} 
+                                                isSearchable={false}
                                             />
                                         </div>
                                         <div className={rowClass}>
-                                            <Select                                                
+                                            <Select
                                                 placeholder = {vehicleValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Makes' : 'Select Types'}
-                                                options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicleValue.value )))}                                                 
-                                                onChange={(e) => setMakeHandle(e)} 
+                                                options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicleValue.value )))}
+                                                onChange={(e) => setMakeHandle(e)}
                                                 value= {makeValue}
                                                 isSearchable={false}
                                             />
                                         </div>
                                         <div className={rowClass}>
                                             {isTypeDropdown ?
-                                            <Select 
-                                                placeholder = {makeValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Models' : 'Select Types'}                                                
+                                            <Select
+                                                placeholder = {makeValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Models' : 'Select Types'}
                                                 onChange={(e) => setFirstModelHandle(e)}
-                                                options={model_first_level_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+                                                options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
                                                 value= {modelFirstValue}
                                                 isSearchable={false}
                                             />
                                             : ""}
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
-                                                placeholder={'Select Price'} 
+                                            <Select
+                                                placeholder={'Select Price'}
                                                 options={options}
                                             />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
+                                            <Select
                                                 placeholder={'Select Year'}
                                                 options={options}
                                             />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
-                                                placeholder={'Select Color'} 
-                                                options={options} 
+                                            <Select
+                                                placeholder={'Select Color'}
+                                                options={options}
                                             />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
+                                            <Select
                                                 placeholder={'Select Transmission'}
                                                 options={options}
                                             />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
-                                                placeholder={'Select FuelType'} 
-                                                options={options} 
+                                            <Select
+                                                placeholder={'Select FuelType'}
+                                                options={options}
                                             />
                                         </div>
                                         <div className={`${rowClass} ${toggleClass}`}>
-                                            <Select 
-                                                placeholder={'Select Condition'} 
+                                            <Select
+                                                placeholder={'Select Condition'}
                                                 options={options}
                                             />
                                         </div>
