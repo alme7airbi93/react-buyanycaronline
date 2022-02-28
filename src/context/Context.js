@@ -1,11 +1,19 @@
 import { createContext } from 'react';
 
 export const UserContext = createContext({
-    setUser:()=>{}
+	setUser:()=>{}
 });
 
 
-
 export const NewAdvertisement = createContext({
-    setAdvertisement:()=>{}
+	title: '', 
+	description: '',
+	price: 0, 
+	location: [], 
+	owner: [], 
+	views: [], 
+	state: [], 
+	owner_phone: '', 
+	photos: [], 
+	setAdvertisement:()=>{}	
 });

@@ -1,21 +1,17 @@
-import {Button, Col, Row} from "react-bootstrap";
+import {Button, Col, Row, Form} from "react-bootstrap";
 import Select from "react-select";
 import React, { useState } from "react";
 import {StepsStateInMainCategory, StepsStateInSummary} from "../stepsState";
-import { Models, Names, Order_1, Order_2, Order_3, Prices, Years } from "../../../globals";
+import { NewAdvertisement } from "../../../context/Context";
+import { Locations, Owners, Views, States } from "../../../globals";
 
 const CategorySelection = (props) => {
+	
+	const [advertisement, setAdvertisement] = useState(NewAdvertisement)
 
-	const [names, setNames] = useState([])
-	const [models, setModels] = useState([])
-	const [years, setYears] = useState([])
-	const [prices, setPrices] = useState([])
-	const [order_1, setOrder_1] = useState([])
-	const [order_2, setOrder_2] = useState([])
-	const [order_3, setOrder_3] = useState([])
-
-	const categoryNext = () => {
-		props.onClick(names, models, years, prices, order_1, order_2, order_3)
+	const Next = () => {
+		console.log(advertisement)
+		setAdvertisement(advertisement)
 	}
 
 	return(
@@ -26,79 +22,92 @@ const CategorySelection = (props) => {
 				<Row  className="justify-content-center">
 					<Col md={10}>
 						<div className={'mb-3'}>
+							<Form.Label style={{color: '#fff'}}>Location :</Form.Label>
 							<Select 
-								placeholder={'Name'} 
-								options={Names}
-								value={names}
-								onChange={(value) => setNames(value)}
+								placeholder="Location"
+								options={Locations}
+								value={advertisement.location}
+								onChange={(value) => {
+									advertisement.location = value
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
+							<Form.Label style={{color: '#fff'}}>Owner :</Form.Label>
 							<Select 
-								placeholder={'Model'}
-								options={Models}
-								value={models}
-								onChange={(value) => setModels(value)}
+								placeholder="Owner"
+								options={Owners}
+								value={advertisement.owner}
+								onChange={(value) => {
+									advertisement.owner = value
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
+							<Form.Label style={{color: '#fff'}}>Views :</Form.Label>
 							<Select 
-								placeholder={'Year'}
-								options={Years}
-								value={years}
-								onChange={(value) => setYears(value)}
+								placeholder="Views"
+								options={Views}
+								value={advertisement.views}
+								onChange={(value) => {
+									advertisement.views = value
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
+							<Form.Label style={{color: '#fff'}}>State :</Form.Label>
 							<Select 
-								placeholder={'Price'}
-								options={Prices}
-								value={prices}
-								onChange={(value) => setPrices(value)}
+								placeholder="State"
+								options={States}
+								value={advertisement.state}
+								onChange={(value) => {
+									advertisement.state = value
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
-							<Select 
-								placeholder={'Order'}
-								options={Order_1}
-								value={order_1}
-								onChange={(value) => setOrder_1(value)}
+							<Form.Label style={{color: '#fff'}}>Owner_PhoneNumber :</Form.Label>
+							<Form.Control 
+								type="text" 
+								placeholder="Enter Onwer PhoneNumber" 
+								value={advertisement.owner_phone}
+								onChange={(event) => {
+									advertisement.owner_phone = event.target.value
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
-							<Select 
-								placeholder={'Order'}
-								options={Order_2}
-								value={order_2}
-								onChange={(value) => setOrder_2(value)}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Select 
-								placeholder={'Order'}
-								options={Order_3}
-								value={order_3}
-								onChange={(value) => setOrder_3(value)}
+							<Form.Label style={{color: '#fff'}}>Photos :</Form.Label>
+							<Form.Control 
+								type="file" 
+								placeholder="Enter Onwer PhoneNumber" 
+								onChange={(event) => {
+									advertisement.photos = event.target.files[0]
+									setAdvertisement(advertisement)
+								}}
 							/>
 						</div>
 					</Col>
 					<Col md={10} className="btn-group" >
-						<Button className="back_btn" onClick={() => props.onBack(StepsStateInSummary)}>
+						<Button className="back_btn" onClick={() => props.onClick(StepsStateInSummary)}>
 							Back
 						</Button>
-						<Button className="next_btn" onClick={categoryNext}>
+						<Button className="next_btn" onClick={Next}>
 							Next
 						</Button>
 					</Col>

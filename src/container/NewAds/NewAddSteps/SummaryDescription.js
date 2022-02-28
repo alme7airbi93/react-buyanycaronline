@@ -1,16 +1,15 @@
 import {Button, Col, Form} from "react-bootstrap";
 import React, { useState } from "react";
 import {StepsStateInMainCategory} from "../stepsState";
+import { NewAdvertisement } from "../../../context/Context";
 
 const SummaryDescription = (props) => {
 
-	const [title, setTitle] = useState('')
-	const [price, setPrice] = useState('')
-	const [desc, setDesc] = useState('')
+	const [advertisement, setAdvertisement] = useState(NewAdvertisement)
 
-
-	const summaryNext = () => {
-		props.onClick(StepsStateInMainCategory, title, price, desc)
+	const Next = () => {
+		props.onClick(StepsStateInMainCategory)
+		setAdvertisement(advertisement)
 	}
 
 	return(
@@ -24,8 +23,11 @@ const SummaryDescription = (props) => {
 						<Form.Control 
 							type="text" 
 							placeholder="Enter Title" 
-							value={title}
-							onChange={(event) => setTitle(event.target.value)}
+							value={advertisement.title}
+							onChange={(event) => {
+								advertisement.title = event.target.value
+								setAdvertisement(advertisement)
+							}}
 						/>
 					</Form.Group>
 
@@ -34,8 +36,11 @@ const SummaryDescription = (props) => {
 						<Form.Control 
 							type="text" 
 							placeholder="Enter Price" 
-							value={price}
-							onChange={(event) => setPrice(event.target.value)}	
+							value={advertisement.price}
+							onChange={(event) => {
+								advertisement.price = event.target.value
+								setAdvertisement(advertisement)
+							}}	
 						/>
 					</Form.Group>
 
@@ -45,14 +50,17 @@ const SummaryDescription = (props) => {
 							as="textarea" 
 							rows={3} 
 							placeholder="Description"
-							value={desc}
-							onChange={(event) => setDesc(event.target.value)}
+							value={advertisement.description}
+							onChange={(event) => {
+								advertisement.description = event.target.value
+								setAdvertisement(advertisement)
+							}}
 						/>
 					</Form.Group>
 					<Button 
 						className="next_btn" 
 						md={10} 
-						onClick={summaryNext}
+						onClick={Next}
 					>
 						Next
 					</Button>
