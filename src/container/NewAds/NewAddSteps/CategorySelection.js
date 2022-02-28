@@ -3,7 +3,7 @@ import Select from "react-select";
 import React, { useState } from "react";
 import {StepsStateInMainCategory, StepsStateInSummary} from "../stepsState";
 import { NewAdvertisement } from "../../../context/Context";
-import { Locations, Owners, Views, States } from "../../../globals";
+import { vehicles } from "../../../data/Enums";
 
 const CategorySelection = (props) => {
 	
@@ -13,6 +13,8 @@ const CategorySelection = (props) => {
 		console.log(advertisement)
 		setAdvertisement(advertisement)
 	}
+
+	let vehicels_options = vehicles();
 
 	return(
 		<React.Fragment>
@@ -25,7 +27,7 @@ const CategorySelection = (props) => {
 							<Form.Label style={{color: '#fff'}}>Location :</Form.Label>
 							<Select 
 								placeholder="Location"
-								options={Locations}
+								options={vehicels_options}
 								value={advertisement.location}
 								onChange={(value) => {
 									advertisement.location = value
@@ -39,7 +41,7 @@ const CategorySelection = (props) => {
 							<Form.Label style={{color: '#fff'}}>Owner :</Form.Label>
 							<Select 
 								placeholder="Owner"
-								options={Owners}
+								options={vehicels_options}
 								value={advertisement.owner}
 								onChange={(value) => {
 									advertisement.owner = value
@@ -53,7 +55,7 @@ const CategorySelection = (props) => {
 							<Form.Label style={{color: '#fff'}}>Views :</Form.Label>
 							<Select 
 								placeholder="Views"
-								options={Views}
+								options={vehicels_options}
 								value={advertisement.views}
 								onChange={(value) => {
 									advertisement.views = value
@@ -67,7 +69,7 @@ const CategorySelection = (props) => {
 							<Form.Label style={{color: '#fff'}}>State :</Form.Label>
 							<Select 
 								placeholder="State"
-								options={States}
+								options={vehicels_options}
 								value={advertisement.state}
 								onChange={(value) => {
 									advertisement.state = value
