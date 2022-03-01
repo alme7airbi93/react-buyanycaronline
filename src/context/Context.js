@@ -9,11 +9,19 @@ export const NewAdvertisement = createContext({
 	title: '', 
 	description: '',
 	price: 0, 
-	location: [], 
-	owner: [], 
-	views: [], 
-	state: [], 
-	owner_phone: '', 
-	photos: [], 
+	vehicles: {
+		value: '', 
+		label: ''
+	}, 
+	makes: {
+		value: '', 
+		label: '', 
+		parent_id: ''
+	}, 
+	models: {
+		value: '', 
+		label: '', 
+		parent_id: ''
+	},
 	setAdvertisement:()=>{}	
 });

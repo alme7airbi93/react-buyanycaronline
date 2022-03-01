@@ -3,18 +3,23 @@ import Select from "react-select";
 import React, { useState } from "react";
 import {StepsStateInMainCategory, StepsStateInSummary} from "../stepsState";
 import { NewAdvertisement } from "../../../context/Context";
-import { vehicles } from "../../../data/Enums";
+import { vehicles, makes, models } from "../../../data/Enums";
 
 const CategorySelection = (props) => {
 	
 	const [advertisement, setAdvertisement] = useState(NewAdvertisement)
 
+	const [vehiclesValue, setVerhiclesValue] = useState('')
+	const [makesValue, setMakesValue] = useState('')
+	const [modelsValue, setModelsValue] = useState('')
+
 	const Next = () => {
-		console.log(advertisement)
 		setAdvertisement(advertisement)
 	}
 
 	let vehicels_options = vehicles();
+	let makes_options = makes();	
+	let models_options = models();
 
 	return(
 		<React.Fragment>
@@ -24,13 +29,15 @@ const CategorySelection = (props) => {
 				<Row  className="justify-content-center">
 					<Col md={10}>
 						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Location :</Form.Label>
-							<Select 
-								placeholder="Location"
+							<Form.Label style={{color: '#fff'}}>Vehicles :</Form.Label>
+							<Select
+								placeholder = {'Select Motors'}
+								isSearchable={false}
+								value={advertisement.vehicles}
 								options={vehicels_options}
-								value={advertisement.location}
 								onChange={(value) => {
-									advertisement.location = value
+									setVerhiclesValue(value)
+									advertisement.vehicles = value
 									setAdvertisement(advertisement)
 								}}
 							/>
@@ -38,13 +45,15 @@ const CategorySelection = (props) => {
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Owner :</Form.Label>
-							<Select 
-								placeholder="Owner"
-								options={vehicels_options}
-								value={advertisement.owner}
+							<Form.Label style={{color: '#fff'}}>Makes :</Form.Label>
+							<Select
+								placeholder = {vehiclesValue.value === undefined ? 'Select....' : vehiclesValue.value === "1" ? 'Select Makes' : 'Select Types'}
+								isSearchable={false}
+								value= {advertisement.makes}
+								options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehiclesValue.value )))}
 								onChange={(value) => {
-									advertisement.owner = value
+									setMakesValue(value)
+									advertisement.makes = value
 									setAdvertisement(advertisement)
 								}}
 							/>
@@ -52,54 +61,15 @@ const CategorySelection = (props) => {
 					</Col>
 					<Col md={10}>
 						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Views :</Form.Label>
-							<Select 
-								placeholder="Views"
-								options={vehicels_options}
-								value={advertisement.views}
+							<Form.Label style={{color: '#fff'}}>Models :</Form.Label>
+							<Select
+								placeholder = {makesValue.value === undefined ? 'Select....' : vehiclesValue.value === "1" ? 'Select Models' : 'Select Types'}
+								isSearchable={false}
+								value= {advertisement.models}
+								options={models_options.filter(item => (item.value === "0" || (item.parent_id === makesValue.value )))}
 								onChange={(value) => {
-									advertisement.views = value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>State :</Form.Label>
-							<Select 
-								placeholder="State"
-								options={vehicels_options}
-								value={advertisement.state}
-								onChange={(value) => {
-									advertisement.state = value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Owner_PhoneNumber :</Form.Label>
-							<Form.Control 
-								type="text" 
-								placeholder="Enter Onwer PhoneNumber" 
-								value={advertisement.owner_phone}
-								onChange={(event) => {
-									advertisement.owner_phone = event.target.value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Photos :</Form.Label>
-							<Form.Control 
-								type="file" 
-								placeholder="Enter Onwer PhoneNumber" 
-								onChange={(event) => {
-									advertisement.photos = event.target.files[0]
+									setModelsValue(value)
+									advertisement.models = value
 									setAdvertisement(advertisement)
 								}}
 							/>
