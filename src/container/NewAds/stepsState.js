@@ -1,10 +1,20 @@
 
 export const StepsStateInSummary = {
     inSummary:true,
-    inMainCategory:false
+    inMainCategory:false,
+    adSubmitted:false
 }
 
 export const StepsStateInMainCategory = {
     inSummary:false,
-    inMainCategory:true
+    inMainCategory:true,
+    adSubmitted:false
 }
+
+export const StepsStateAdSubmittedSuccessfully = {
+    inSummary:false,
+    inMainCategory:false,
+    adSubmitted: true
+}
+
+
