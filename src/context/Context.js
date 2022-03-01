@@ -6,6 +6,4 @@ export const UserContext = createContext({
 
 
 
-export const NewAdvertisement = createContext({
-    setAdvertisement:()=>{}
-});
+export const NewAdvertisement = createContext({});
