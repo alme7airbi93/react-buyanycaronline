@@ -6,24 +6,25 @@ import CategorySelection from "./NewAddSteps/CategorySelection";
 import SummaryDescription from "./NewAddSteps/SummaryDescription";
 import {StepsStateInSummary} from "./stepsState";
 
+
 const NewAds = () => {
 
-	const [advertisement, setAdvertisement] = useState(NewAdvertisement)
-	const [stepsState, setStepsState]  = useState(StepsStateInSummary)
 
-	console.log('new Advertisement', advertisement)
-	
-	return (
-		<NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
-			<div style={{height: "100vh"}}>
-				<Container>
-					<Row className={'justify-content-center'}>
-						{stepsState.inSummary && <SummaryDescription onClick={(value) => setStepsState(value)} /> }
-						{stepsState.inMainCategory && <CategorySelection onClick={(value) => setStepsState(value)} /> }
-					</Row>
-				</Container>
-			</div>
-		</NewAdvertisement.Provider>
-	);
+    const [advertisement, setAdvertisement] = useState(NewAdvertisement);
+    const [stepsState, setStepsState]  = useState(StepsStateInSummary)
+
+
+    return (
+        <NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
+        <div style={{height: "100vh"}}>
+            <Container>
+                <Row className={'justify-content-center'}>
+                    {stepsState.inSummary && <SummaryDescription onClick={(value) => setStepsState(value)}/> }
+                    {stepsState.inMainCategory && <CategorySelection onClick={(value) => setStepsState(value)}/> }
+                </Row>
+            </Container>
+        </div>
+       </NewAdvertisement.Provider>
+    );
 };
 export default NewAds;

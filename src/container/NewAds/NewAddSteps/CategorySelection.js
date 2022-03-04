@@ -1,92 +1,145 @@
-import {Button, Col, Row, Form} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import Select from "react-select";
-import React, { useState } from "react";
+import React, {useState, useContext} from "react";
 import {StepsStateInMainCategory, StepsStateInSummary} from "../stepsState";
-import { NewAdvertisement } from "../../../context/Context";
-import { vehicles, makes, models } from "../../../data/Enums";
+import { vehicles, makes, models ,models_second} from '../../../data/Enums';
+import {NewAdvertisement} from '../../../context/Context'
 
 const CategorySelection = (props) => {
-	
-	const [advertisement, setAdvertisement] = useState(NewAdvertisement)
 
-	const [vehiclesValue, setVerhiclesValue] = useState('')
-	const [makesValue, setMakesValue] = useState('')
-	const [modelsValue, setModelsValue] = useState('')
+    const [advSearch, setAdvSearch] = useState(false)
+    const [vehicleValue, setVehicle] = useState('')
+    const [makeValue, setMake] = useState('')
+    const [modelFirstValue, setModelFirst] = useState('')
+    const [modelSecondValue, setModelSecond] = useState('')
 
-	const Next = () => {
-		setAdvertisement(advertisement)
-	}
+    let [isTypeDropdown, setTypeDropdown] = useState(false)
+    let [isModelDropdown, setModelDropdown] = useState(false)
 
-	let vehicels_options = vehicles();
-	let makes_options = makes();	
-	let models_options = models();
+    const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
 
-	return(
-		<React.Fragment>
-			<Col md={5} className="find_details">
-				<h5>FIND</h5>
-				<hr/>
-				<Row  className="justify-content-center">
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Vehicles :</Form.Label>
-							<Select
-								placeholder = {'Select Motors'}
-								isSearchable={false}
-								value={advertisement.vehicles}
-								options={vehicels_options}
-								onChange={(value) => {
-									setVerhiclesValue(value)
-									advertisement.vehicles = value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Makes :</Form.Label>
-							<Select
-								placeholder = {vehiclesValue.value === undefined ? 'Select....' : vehiclesValue.value === "1" ? 'Select Makes' : 'Select Types'}
-								isSearchable={false}
-								value= {advertisement.makes}
-								options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehiclesValue.value )))}
-								onChange={(value) => {
-									setMakesValue(value)
-									advertisement.makes = value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10}>
-						<div className={'mb-3'}>
-							<Form.Label style={{color: '#fff'}}>Models :</Form.Label>
-							<Select
-								placeholder = {makesValue.value === undefined ? 'Select....' : vehiclesValue.value === "1" ? 'Select Models' : 'Select Types'}
-								isSearchable={false}
-								value= {advertisement.models}
-								options={models_options.filter(item => (item.value === "0" || (item.parent_id === makesValue.value )))}
-								onChange={(value) => {
-									setModelsValue(value)
-									advertisement.models = value
-									setAdvertisement(advertisement)
-								}}
-							/>
-						</div>
-					</Col>
-					<Col md={10} className="btn-group" >
-						<Button className="back_btn" onClick={() => props.onClick(StepsStateInSummary)}>
-							Back
-						</Button>
-						<Button className="next_btn" onClick={Next}>
-							Next
-						</Button>
-					</Col>
-				</Row>
-			</Col>
-		</React.Fragment>
-	)
+    let vehicels_options = vehicles();
+    let makes_options = makes();
+    let models_options = models();
+    let models_second_options = models_second();
+
+    const setVehicleHandle = (value) => {
+        
+        // props.haneVehicleValue(value);
+        setVehicle(value)
+        setMake('')
+        setModelFirst('')
+        setTypeDropdown(false)
+        setModelDropdown(false)
+        setModelSecond('')
+    }
+
+    const setMakeHandle = (value ) => {
+        const modelFirstLevelArrays = models_options.filter(item => item.parent_id === value.value)
+
+        if(modelFirstLevelArrays.length !== 0) {
+            setTypeDropdown(true)
+        } else {
+            setTypeDropdown(false)
+        }
+        setMake(value)
+        setModelDropdown(false)
+        setModelFirst('')
+        setModelSecond('')
+    }
+
+    const setFirstModelHandle = (value) => {
+        const modelSecondLevelArrays = models_options.filter(item => item.parent_id === value.value)
+        if(modelSecondLevelArrays.length !== 0) {
+            setModelDropdown(true)
+        } else {
+            setModelDropdown(false)
+        }
+        setModelFirst(value)
+        console.log(value)
+        console.log(modelFirstValue.value)
+        setModelSecond('')
+    }
+
+    const setSecondModelHandle = (value) => {
+        setModelSecond(value)
+    }
+
+    return(
+        <React.Fragment>
+            <Col md={5} className="find_details">
+                <h5>FIND</h5>
+                <hr/>
+                <Row  className="justify-content-center">
+                    <Col md={10}>
+                        <div className={'mb-3'}>                            
+                            <Select
+                                placeholder = {'Select Motors'}
+                                options={vehicels_options}
+                                onChange={(e) => setVehicleHandle(e)}
+                                isSearchable={false}
+                            />
+                        </div>
+                    </Col>
+                    <Col md={10}>
+                        <div className={'mb-3'}>                            
+                            <Select
+                                placeholder = {vehicleValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select Makes' : 'Select Types'}
+                                options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicleValue.value )))}
+                                onChange={(e) => setMakeHandle(e)}
+                                value= {makeValue}
+                                isSearchable={false}
+                            />
+                        </div>
+                    </Col>
+
+                    <Col md={10}>
+                        <div className={'mb-3'}>                            
+                            {isTypeDropdown ?
+                            <Select
+                                placeholder = {makeValue.value === undefined ? 'Select....' : vehicleValue.value === "1" ? 'Select first Models' : 'Select Types'}                                
+                                options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+                                onChange={(e) => setFirstModelHandle(e)}
+                                value= {modelFirstValue}
+                                isSearchable={false}
+                            />
+                            : ""}
+                        </div>
+                    </Col>
+
+                    <Col md={10}>
+                        <div className={'mb-3'}>
+                            {isModelDropdown ?
+                            <Select
+                                placeholder = {modelFirstValue.value === undefined ? 'Select....' : 'Select second Models'}                                
+                                options={models_second_options.filter(item => (item.value === "0" || (item.parent_id === modelFirstValue.value )))}
+                                onChange={(e) => setSecondModelHandle(e)}
+                                value= {modelSecondValue}
+                                isSearchable={false}
+                            />
+                            :""}
+                        </div>
+                    </Col>
+
+                    <Col md={10}>
+                        <div className={'mb-3'}>
+                            <Select placeholder={'Year'}  />
+                        </div>
+                    </Col>
+                    <Col md={10}>
+                        <div className={'mb-3'}>
+                            <Select placeholder={'Price'}  />
+                        </div>
+                    </Col> 
+                    <Col md={10} className="btn-group" >
+                            <Button right className="back_btn" onClick={() => props.onClick(StepsStateInSummary)} >Back</Button>
+                            <Button className="next_btn" >Next</Button>
+                    </Col>
+                </Row>
+            </Col>
+        </React.Fragment>
+
+    )
 }
 
 export default CategorySelection;

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@firebase/firestore": "^3.4.5",
+    "@googlemaps/react-wrapper": "^1.1.26",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
