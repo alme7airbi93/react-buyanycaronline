@@ -10,8 +10,9 @@ import {StepsStateInSummary} from "./stepsState";
 const NewAds = () => {
 
 
-    const [advertisement, setAdvertisement] = useState({title:"", description:"", price:0,location:{lat:"",long:""},owner:"",state:false, phone:""});
+    const [advertisement, setAdvertisement] = useState(NewAdvertisement);
     const [stepsState, setStepsState]  = useState(StepsStateInSummary)
+
 
     return (
         <NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
