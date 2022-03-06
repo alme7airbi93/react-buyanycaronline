@@ -9,18 +9,15 @@ import {StepsStateInSummary} from "./stepsState";
 
 const NewAds = () => {
 
-
     const [advertisement, setAdvertisement] = useState(NewAdvertisement);
-    const [stepsState, setStepsState]  = useState(StepsStateInSummary)
-
-
+    const [stepsState, setStepsState]  = useState(StepsStateInSummary);
     return (
         <NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
         <div style={{height: "100vh"}}>
             <Container>
                 <Row className={'justify-content-center'}>
                     {stepsState.inSummary && <SummaryDescription onClick={(value) => setStepsState(value)}/> }
-                    {stepsState.inMainCategory && <CategorySelection onClick={(value) => setStepsState(value)}/> }
+                    {stepsState.inMainCategory && <CategorySelection onClick={(value) => setStepsState(value)}/>}
                 </Row>
             </Container>
         </div>
