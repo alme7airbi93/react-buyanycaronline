@@ -28,7 +28,6 @@ import {UserContext} from "./context/Context";
 const App = () => {
 
   const [user, setUser] = useState({});
-
   return (
     <UserContext.Provider value={[user, setUser]}>
         <Router>
