@@ -18,7 +18,80 @@ const CategorySelection = (props) => {
     let [isModelDropdown, setModelDropdown] = useState(false)
 
     const print_console = ()=>{
-        console.log(advertisement);
+        var jsonString = {
+            title : advertisement.title,
+            price : parseFloat(advertisement.price),
+            description : advertisement.desc,
+            location : {
+                lat : '',
+                long : ''
+            },
+            views : parseInt("0"), //parseInt(advertisement.views)
+            state : false, //advertisement.state
+            owner : '', //advertisement.owner            
+            owner_phone : '', //advertisement.owner_phone
+            photos : {
+                1 : "pathToPhoto",
+                2 : "pathToPhoto",
+            }, //advertisement.photos
+        }
+       
+        var str_motor={};
+        var str_for_motor =  {};   
+        if (advertisement.vehicleValue.value === "6")
+        {
+            str_motor={                                 
+                    city: advertisement.makeValue.label,
+                    number: '',
+                    numbercode: '',
+                    model: advertisement.modelFirstValue.value,                
+            }
+        }
+        else{            
+            str_for_motor={                
+                    kind : advertisement.vehicleValue === undefined ? 'undefined' : advertisement.vehicleValue.label,
+                    make : advertisement.makeValue === undefined ? 'undefined' : advertisement.makeValue.value,
+                    model : advertisement.modelFirstValue === undefined ? 'undefined': advertisement.modelFirstValue.value,
+                    model2 : advertisement.modelSecondValue === undefined ? 'undefined': advertisement.modelSecondValue.value,
+                    color : '',
+                    year : '',
+                    condition : '',
+                    warrenty : false,
+                    region : '',
+            }
+
+            var features = {};
+            if (advertisement.vehicleValue.value === "1")
+            {
+                features = {
+                    distance : '',
+                    body_type: '',
+                    transmition: '',
+                    hp: 0,
+                    num_cylinders: 0
+                }
+            }
+            if (advertisement.vehicleValue.value === "2")
+            {
+                features = {
+                    engine_size: 0,
+                    distance: 0
+                }
+            }
+            if (advertisement.vehicleValue.value === "5")
+            {
+                features = {
+                    length: 0,
+                    type: 0,
+                    hours: 0
+                }
+            }
+            str_motor = {...str_for_motor, ...features};
+        }
+        jsonString = {...jsonString, type:{...str_motor}}                
+        const adv_JSONstring = JSON.stringify(jsonString);        
+        console.log(jsonString)             // String
+        console.log(adv_JSONstring)         //JSON String
     }
 
     return(
