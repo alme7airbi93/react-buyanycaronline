@@ -1,0 +1,13 @@
+
+#center-col {
+  flex: 1;
+
+  overflow-y: scroll;  
+  height: 70vh;  
+}
+ 
+#center-pos {
+  align-items: center;
+  justify-content: center;
+}
+
