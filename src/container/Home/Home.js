@@ -84,10 +84,12 @@ const Home = () => {
                                     <form>
                                     <div className="container">
                                     <div className="row home-select-div">
-                                        <div className={rowClass}>
+    {/* where to use "rowClass" props */}
+                                        <div className={rowClass}>   
                                             <Select
                                                 placeholder = {'Select Motors'}
                                                 options={vehicels_options}
+    // set "vehicleValue" as e
                                                 onChange={(e) => setVehicleHandle(e)}
                                                 isSearchable={false}
                                             />
@@ -112,6 +114,7 @@ const Home = () => {
                                             />
                                             : ""}
                                         </div>
+    {/* meand of $ ????? */}
                                         <div className={`${rowClass} ${toggleClass}`}>
                                             <Select
                                                 placeholder={'Select Price'}
