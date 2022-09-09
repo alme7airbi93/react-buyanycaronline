@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import App from "./App";
 
 const app = (
-    <App />
-)
+	<App />
+);
 
-ReactDOM.render(app, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById("root"));
 
