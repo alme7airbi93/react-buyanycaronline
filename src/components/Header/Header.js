@@ -3,7 +3,7 @@ import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logOut } from "../../firebase/Auth";
+import { logOut } from "../../repository/Auth";
 import Dropdown from "../Dropdown";
 import LoginModal from "../Modal/Login/LoginModal";
 import SignupModal from "../Modal/Signup/SignupModal";

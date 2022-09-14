@@ -14,7 +14,7 @@ import "./signup.css";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUpWithEmailAndPassword } from "../../../firebase/Auth"; 
+import { signUpWithEmailAndPassword } from "../../../repository/Auth"; 
 
 const SignupModal = (props) => {
 
