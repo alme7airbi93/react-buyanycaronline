@@ -16,6 +16,7 @@ import About from "./container/About/About";
 import Contact from "./container/Contact/Contact";
 import Login from "./container/Login/Login";
 import Error from "./container/404Error/Error";
+import Test from "./container/Demo/Test";
 import {UserRoutes, AdminModeratorRoutes, CustomerRoutes} from "./lib/ProtectedRoutes";
 import UserProfile from "./container/UserProfile/UserProfile";
 import NewAds from "./container/NewAds/NewAds";
@@ -45,6 +46,7 @@ const App = () => {
 					<Route exact path='/monitor-page' element={<AdminModeratorRoutes Component={MonitorPage} />} />
 					<Route exact path='/contact' element={<Contact />} />
 					<Route exact path='/login' element={<Login />} />
+					<Route exact path='/test' element={<Test />} />
 					<Route exact path='*' element={<Error />} />
 				</Routes>
 				<Footer />
