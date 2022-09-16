@@ -39,3 +39,4 @@ class Boat extends Vehicle {
 		this._hours = value;
 	}
 }
+export default Boat;

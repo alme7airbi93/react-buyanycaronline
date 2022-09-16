@@ -57,3 +57,5 @@ class Car extends Vehicle {
 		this._horsePower = value;
 	}
 }
+
+export default Car;
