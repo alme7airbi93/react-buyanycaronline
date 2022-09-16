@@ -36,3 +36,4 @@ class PlateNumber extends Advertisement {
 		this._numberCode = value;
 	}
 }
+export default PlateNumber;
