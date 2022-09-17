@@ -1,4 +1,5 @@
 import Vehicles from "./vehicles.json";
+import User_type from "./user_type.json";
 import Makes from "./makes.json";
 import Model_first_level from "./model_first_levels.json";
 import Model_second_level from "./model_second_levels.json";
@@ -15,7 +16,15 @@ export const vehicles = () => {
 	});
 	return vehicle_options;
 };
-
+export const user_type = () => {
+	let user_type_options = User_type.RECORDS.map(item => {
+		return {
+			value: item.id,
+			label: item.user_type
+		};
+	});
+	return user_type_options;
+};
 export const makes = () => {
 	let makes_options = Makes.RECORDS.map(item => {
 		return {

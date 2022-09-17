@@ -1,5 +1,6 @@
-import {doc, updateDoc} from "firebase/firestore";
-import firebase ,{db} from "./main";
+import {doc, updateDoc,addDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
+import {db} from "./main";
+import User from "../models/User";
 
 const doc_collection ='users';
 
@@ -13,13 +14,11 @@ export const userStatusChange=async function(userId=null, updateobj = {}){
         console.log("Error getting cached document:", e);
     }
 };
-export const saveUser = async (email, surename) => {
-	const data = {
-		email: email,
-		roles: ["CUSTOMER"],
-		surename: surename
-	};
-	await addDoc(collection(db, doc_collection), data);
+export const saveUser = async (value = new User()) => {
+	let user_data = JSON.parse(JSON.stringify(value));
+	let create_doc =await addDoc(collection(db, doc_collection), user_data);
+	console.log(create_doc.id);
+	return true;
 };
 
 export const getUserByEmail = async (email) => {
