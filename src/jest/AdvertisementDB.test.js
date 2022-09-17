@@ -1,5 +1,6 @@
 /* eslint-disable */
-import {createAdvertisement,advertisementStatusChange} from "../repository/AdvertisementDB.js";
+import {createAdvertisement,advertisementStatusChange,fetchAdvertisement} from "../repository/AdvertisementDB.js";
+import Advertisement from "../models/Advertisement";
 import User from "../models/User";
 import Car from "../models/Car";
 import Motorcycle from "../models/Motorcycle";
@@ -42,8 +43,14 @@ test("Create a Accessories Advertisement : ", async () => {
 
 test("Update the Advertisement Status: ", async () => {
     let advertId="3gWFmI4jzG2MR3BVTR6r";
-    let status={_status:1};
-	await expect(advertisementStatusChange(advertId,status)).resolves.toBe(true);
+	let advetise_info =new Advertisement("My Car","Car Description",1200,{city:"Delhi"},customer_type,"",1,2,1);
+	await expect(advertisementStatusChange(advertId,advetise_info)).resolves.toBe(true);
 
 });
+
+//test("Fetch the Advertisement Based on Type: ", async () => {
+//	let advetise_info =new Advertisement("My Car","Car Description",1200,{city:"Delhi"},customer_type,"",1,2,1);
+//	await expect(fetchAdvertisement(advetise_info)).resolves.toBe(true);
+//});
+
 
