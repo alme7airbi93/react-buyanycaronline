@@ -4,7 +4,7 @@ import User from "../models/User";
 
 const doc_collection ='users';
 
-export const userStatusChange=async function(userId=null, value=new User()){
+export const changeUserRole=async function(userId=null, value=new User()){
     try {
         const docRef = doc(db, doc_collection, userId);
         let update_doc=await updateDoc(docRef, {_role: value._role});
