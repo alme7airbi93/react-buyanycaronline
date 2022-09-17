@@ -7,9 +7,7 @@ import HeavyVehicle from "../models/HeavyVehicle";
 import Boat from "../models/Boat";
 import PlateNumber from "../models/PlateNumber";
 import Accessories from "../models/Accessories"
-let userInfo=new User();
-userInfo.role="customer";
-let customer_type=userInfo.role;
+let customer_type=new User("dev","customer","9090909090","singh");
 // eslint-disable-next-line no-undef
 test("Create a Car Advertisement : ", async () => {
 	let advetise_info =new Car("My Car","Car Description",1200,{city:"Delhi"},customer_type,"",1,2,1,4,10,["fine","excellent"],"Grey",2016,true,1,true,98701,1,40000,"Metalic",7653636,4,1400);
