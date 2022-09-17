@@ -3,20 +3,12 @@ import firebase ,{db} from "./main";
 
 const doc_collection ='users';
 
-export const deActivateUser=async function(userId){
+export const userStatusChange=async function(userId=null, updateobj = {}){
     try {
         const docRef = doc(db, doc_collection, userId);
-        let update_doc=await updateDoc(docRef, { status: false  });
+        let update_doc=await updateDoc(docRef, {status: updateobj.status});
         console.log(update_doc);
-    } catch (e) {
-        console.log("Error getting cached document:", e);
-    }
-};
-export const activate=async function(userId){
-    try {
-        const docRef = doc(db, doc_collection, userId);
-        let update_doc=await updateDoc(docRef, { status: true  });
-        console.log(update_doc);
+		return true;
     } catch (e) {
         console.log("Error getting cached document:", e);
     }

@@ -14,10 +14,10 @@ export const createAdvertisement = async (value = new Advertisement()) => {
 		console.log("Error getting cached document:", e);
 	}
 };
-export const advertisementStatusChange = async (advertId = null, status = {}) => {
+export const advertisementStatusChange = async (advertId = null, updateobj = {}) => {
 	try {
 		const docRef = doc(db, doc_collection, advertId);
-		await updateDoc(docRef, status);
+		await updateDoc(docRef, { _status: updateobj._status });
 		//console.log(update_doc);
 		return true;
 	} catch (e) {
