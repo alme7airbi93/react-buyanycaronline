@@ -1,4 +1,4 @@
-import {doc, updateDoc,addDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
+import {doc, updateDoc,addDoc,getDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
 import {db} from "./main";
 import User from "../models/User";
 
@@ -18,7 +18,7 @@ export const saveUser = async (value = new User()) => {
 	let user_data = JSON.parse(JSON.stringify(value));
 	let create_doc =await addDoc(collection(db, doc_collection), user_data);
 	console.log(create_doc.id);
-	return true;
+	return {success:true,User_id:create_doc.id};
 };
 
 export const getUserByEmail = async (email) => {
@@ -33,6 +33,16 @@ export const getUserByEmail = async (email) => {
 			return user;
 		}
 	});
+};
+export const fetchSingleUser = async (userId = null) => {
+	const docRef = doc(db, doc_collection, userId);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		console.log("Document data:", docSnap.data());
+		return {success:true,data:docSnap.data()};
+	} else {
+		return {success:false,data:[]};
+	}
 };
 export const fetchUser = async (value = new User()) => {
 	const q = query(collection(db, doc_collection), where("_role", "==", value._role));
