@@ -14,7 +14,7 @@ test("Update the User Status: ", async () => {
 	await expect(changeUserRole(userId,user)).resolves.toBe(true);
 
 });
-test("Fetch Single  Advertisement Based on id: ", async () => {
+test("Fetch Single  User Based on id: ", async () => {
 	let result =await fetchSingleUser(userId);
 	await expect(result.success).toBe(true);
 });
