@@ -1,5 +1,9 @@
+/**
+ * @jest-environment node
+ */
+
 /* eslint-disable */
-import {createAdvertisement,advertisementStatusChange,fetchAdvertisement,fetchSingleAdvertisement} from "../repository/AdvertisementDB.js";
+import {createAdvertisement,advertisementStatusChange,getAllAdvertisement,getAdvertisementById} from "../repository/AdvertisementDB.js";
 import Advertisement from "../models/Advertisement";
 import User from "../models/User";
 import Car from "../models/Car";
@@ -60,14 +64,20 @@ test("Update the Advertisement Status: ", async () => {
 	await expect(advertisementStatusChange(advertId,advetise_info)).resolves.toBe(true);
 
 });
-test("Fetch Single  Advertisement Based on id: ", async () => {	
-	let result =await fetchSingleAdvertisement(advert_id);
+test("Fetch Single  Advertisement Based on id: ", async () => {
+	let result =await getAdvertisementById(advert_id);
 	await expect(result.success).toBe(true);
 });
 
 test("Fetch the Advertisement Based on Type: ", async () => {
 	let advetise_info =new Accessories("My Accessories","Accessories Description",1200,{city:"Delhi"},customer_type,"",3,20,1,2,5,2018,"Gear Box");
-	await expect(fetchAdvertisement(advetise_info)).resolves.toBe(true);
+	await expect(getAllAdvertisement(advetise_info)).resolves.toBe(true);
+});
+
+test("Add filed to object ", async () => {
+	let advetise_info =new Accessories("My Accessories","Accessories Description",1200,{city:"Delhi"},customer_type,"",3,20,1,2,5,2018,"Gear Box");
+	console.log(JSON.parse(JSON.stringify(advetise_info)))
+	expect(()=>{return 1});
 });
 
 

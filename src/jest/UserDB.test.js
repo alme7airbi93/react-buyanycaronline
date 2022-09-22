@@ -1,25 +1,38 @@
+/**
+ * @jest-environment node
+ */
 /* eslint-disable */
-import {changeUserRole,saveUser,fetchUser,fetchSingleUser} from "../repository/UserDB.js";
+import {changeUserRole, saveUser, getAllUsers, getUserById, getUserByUsername} from "../repository/UserDB.js";
 import User from "../models/User";
-var userId="";
-test("Create New User : ", async () => {	
-	let user=new User("devtest","Customer","909090900","test");
-	let result=await saveUser(user);
-	userId=result.User_id;
-	await expect(result.success).toBe(true);
+
+let userId = "";
+
+test("Create New User : ", async () => {
+	let user = new User("devtest", "Customer", "909090900", "test");
+	user.id = "123";
+	let result = await saveUser(user);
+	userId = result.data;
+	expect(result.success).toBe(true);
 });
 
-test("Update the User Status: ", async () => {
-    let user=new User("devtest","Admin","909090900","test");
-	await expect(changeUserRole(userId,user)).resolves.toBe(true);
+test("Update the User Role: ", async () => {
+	let user = new User("devtest", "Admin", "909090900", "test");
+	let resualt = await changeUserRole(userId, user);
+	expect(resualt.success).toBe(true);
 
 });
-test("Fetch Single  User Based on id: ", async () => {
-	let result =await fetchSingleUser(userId);
-	await expect(result.success).toBe(true);
-});
-test("Fetch User based on role: ", async () => {
-    let user=new User("devtest","Customer","909090900","test");
-	await expect(fetchUser(user)).resolves.toBe(true);
 
+test("Get user by ID : ", async () => {
+	let result = await getUserById(userId);
+	expect(result.success).toBe(true);
+});
+
+test("Get user by username : ", async () => {
+	let result = await getUserByUsername("devtest");
+	expect(result.success).toBe(true);
+});
+
+test("Get All Users :  ", async () => {
+	let resualt = await getAllUsers();
+	expect(resualt.success).toBe(true);
 });

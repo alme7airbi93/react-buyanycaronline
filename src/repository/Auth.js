@@ -6,7 +6,7 @@ import {
 	signOut
 } from "firebase/auth";
 
-import {getUserByEmail, saveUser} from "./User";
+import {getUserByUsername, saveUser} from "./UserDB";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -41,7 +41,7 @@ export const logInWithEmailAndPassword =  (email, password) => {
 		})
 		.then((idtoken)=>{
 			token = idtoken;
-			return getUserByEmail(email);
+			return getUserByUsername(email);
 		})
 		.then((userData)=>{
 			return userData.data();
@@ -75,12 +75,12 @@ export const GoogleSignin = async () => {
 			const token = credential.accessToken;
 			// The signed-in user info.
 			const googleUser = result.user;
-			let user = await getUserByEmail(googleUser.email);
+			let user = await getUserByUsername(googleUser.email);
 			try{
 				if (user === undefined) {
 					console.log("Saving user !");
 					await saveUser(googleUser.email, googleUser.displayName);
-					user = await getUserByEmail(googleUser.email);
+					user = await getUserByUsername(googleUser.email);
 				}
 			}catch (error){
 				return error.message;
