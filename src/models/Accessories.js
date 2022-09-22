@@ -4,7 +4,7 @@ import User from "./User";
 class Accessories extends Advertisement {
 	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,vehicle_make  = -1, vehicle_model  = -1, vehicle_year = -1,accessory_name =""){
 
-	super(title, description, price, location, owner, photos, advertisement_type, views, stat);
+		super(title, description, price, location, owner, photos, advertisement_type, views, stat);
 		this._vehicle_make = vehicle_make;
 		this._vehicle_model = vehicle_model;
 		this._vehicle_year = vehicle_year;
@@ -35,7 +35,7 @@ class Accessories extends Advertisement {
 	set vehicle_year(value) {
 		this._vehicle_year = value;
 	}
-    get accessory_name() {
+	get accessory_name() {
 		return this._accessory_name;
 	}
 

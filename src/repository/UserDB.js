@@ -2,17 +2,17 @@ import {doc, updateDoc,addDoc,getDoc, collection, query, where, getDocs, limit} 
 import {db} from "./main";
 import User from "../models/User";
 
-const doc_collection ='users';
+const doc_collection ="users";
 
 export const changeUserRole=async function(userId=null, value=new User()){
-    try {
-        const docRef = doc(db, doc_collection, userId);
-        let update_doc=await updateDoc(docRef, {_role: value._role});
-        console.log(update_doc);
+	try {
+		const docRef = doc(db, doc_collection, userId);
+		let update_doc=await updateDoc(docRef, {_role: value._role});
+		console.log(update_doc);
 		return true;
-    } catch (e) {
-        console.log("Error getting cached document:", e);
-    }
+	} catch (e) {
+		console.log("Error getting cached document:", e);
+	}
 };
 export const saveUser = async (value = new User()) => {
 	let user_data = JSON.parse(JSON.stringify(value));
