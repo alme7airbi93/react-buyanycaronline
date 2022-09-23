@@ -3,7 +3,7 @@ import "./Home.css";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Select from "react-select";
-import {vehicles, makes, models} from "../../data/Enums";
+import {vehicles, makes, models} from "../../data";
 
 
 const Home = () => {
@@ -85,7 +85,7 @@ const Home = () => {
 											<div className="container">
 												<div className="row home-select-div">
 													{/* where to use "rowClass" props */}
-													<div className={rowClass}>   
+													<div className={rowClass}>
 														<Select
 															placeholder = {"Select Motors"}
 															options={vehicels_options}

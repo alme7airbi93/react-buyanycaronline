@@ -2,7 +2,14 @@
  * @jest-environment node
  */
 /* eslint-disable */
-import {changeUserRole, saveUser, getAllUsers, getUserById, getUserByUsername} from "../repository/UserDB.js";
+import {
+	changeUserRole,
+	saveUser,
+	getAllUsers,
+	getUserById,
+	getUserByUsername,
+	updateUserProfile,
+} from "../repository/UserDB.js";
 import User from "../models/User";
 
 let userId = "";
@@ -18,6 +25,13 @@ test("Create New User : ", async () => {
 test("Update the User Role: ", async () => {
 	let user = new User("devtest", "Admin", "909090900", "test");
 	let resualt = await changeUserRole(userId, user);
+	expect(resualt.success).toBe(true);
+
+});
+
+test("Update the User Profile: ", async () => {
+	let user = new User("devtest", "Admin", "909090900", "Ali");
+	let resualt = await updateUserProfile(userId, user);
 	expect(resualt.success).toBe(true);
 
 });

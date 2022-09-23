@@ -2,11 +2,11 @@ import {Button, Col, Row} from "react-bootstrap";
 import Select from "react-select";
 import React, {useState, useContext} from "react";
 import {StepsStateInSummary, StepsStateInDetail} from "../stepsState";
-import { vehicles, makes, models ,models_second} from "../../../data/Enums";
+import { vehicles, makes, models ,models_second} from "../../../data";
 import {NewAdvertisement} from "../../../context/Context";
 
 const CategorySelection = (props) => {
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);    
+	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
 
 	let vehicels_options = vehicles();
 	let makes_options = makes();
@@ -21,12 +21,12 @@ const CategorySelection = (props) => {
 	const [makeValue, setMake] = useState("");
 	const [modelFirstValue, setModelFirst] = useState("");
 	const [modelSecondValue, setModelSecond] = useState("");
-    
+
 	const handler=()=>{
 		if (advertisement.type===undefined)
 		{
 			setAdvertisement({...advertisement, "type":{"kind": " "}});
-		}                
+		}
 	};
 
 	return(
@@ -36,25 +36,25 @@ const CategorySelection = (props) => {
 				<hr/>
 				<Row className="justify-content-center">
 					<Col md={10}>
-						<div className={"mb-3"}>                            
+						<div className={"mb-3"}>
 							<Select
 								placeholder = {"Select Motors"}
-								options={vehicels_options}                                
-								onChange={data => {                                  
+								options={vehicels_options}
+								onChange={data => {
 									setVehicle(data);
 									setMake("");
 									setModelFirst("");
 									setMakeDropdown(true);
 									setTypeDropdown(false);
-									setAdvertisement({...advertisement, "type":{"kind": data.label}});                                    
+									setAdvertisement({...advertisement, "type":{"kind": data.label}});
 								}}
 								isSearchable={false}
-							/>  
+							/>
 						</div>
 					</Col>
 					<Col md={10}>
 						<div className={"mb-3"}>
-							{isMakeDropdown ?                            
+							{isMakeDropdown ?
 								<Select
 									placeholder = {vehicleValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Makes" : "Select Types"}
 									options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicleValue.value )))}
@@ -67,16 +67,16 @@ const CategorySelection = (props) => {
 										}
 										setMake(data);
 										setModelFirst("");
-										setAdvertisement({...advertisement, "type":{...advertisement.type, "make": data.value}});                                    
-									}}   
-									value= {makeValue}                             
+										setAdvertisement({...advertisement, "type":{...advertisement.type, "make": data.value}});
+									}}
+									value= {makeValue}
 									isSearchable={false}
 								/>
 								:null}
 						</div>
 					</Col>
 					<Col md={10}>
-						<div className={"mb-3"}>                            
+						<div className={"mb-3"}>
 							{isTypeDropdown &&
                             <Select
                             	placeholder = {makeValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Models" : "Select Types"}
@@ -87,7 +87,7 @@ const CategorySelection = (props) => {
                             			setModelDropdown(true);
                             		} else {
                             			setModelDropdown(false);
-                            		}                                
+                            		}
                             		setModelFirst(data);
                             		setAdvertisement({...advertisement, "type":{...advertisement.type, "model": data.value}});
                             	}}
@@ -103,7 +103,7 @@ const CategorySelection = (props) => {
                             	placeholder = {modelFirstValue.value === undefined ? "Select...." : "Select second Models"}
                             	options={models_second_options.filter(item => (item.value === "0" || (item.parent_id === modelFirstValue.value)))}
                             	onChange={data => {
-                            		setModelSecond(data);                                    
+                            		setModelSecond(data);
                             		setAdvertisement({...advertisement, "type":{...advertisement.type, "modelSecond": data.value}});
                             	}}
                             	value= {modelSecondValue}
