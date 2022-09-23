@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+import {User_Roles} from "../data/User_Roles.js";
 /* eslint-disable */
 import {
 	changeUserRole,
@@ -15,7 +16,7 @@ import User from "../models/User";
 let userId = "";
 
 test("Create New User : ", async () => {
-	let user = new User("devtest", "Customer", "909090900", "test");
+	let user = new User("devtest", User_Roles.CUSTOMER, "909090900", "test");
 	user.id = "123";
 	let result = await saveUser(user);
 	userId = result.data;
@@ -23,14 +24,14 @@ test("Create New User : ", async () => {
 });
 
 test("Update the User Role: ", async () => {
-	let user = new User("devtest", "Admin", "909090900", "test");
+	let user = new User("devtest", User_Roles.ADMIN, "909090900", "test");
 	let resualt = await changeUserRole(userId, user);
 	expect(resualt.success).toBe(true);
 
 });
 
 test("Update the User Profile: ", async () => {
-	let user = new User("devtest", "Admin", "909090900", "Ali");
+	let user = new User("devtest", User_Roles.SUPER_ADMIN, "909090900", "Ali");
 	let resualt = await updateUserProfile(userId, user);
 	expect(resualt.success).toBe(true);
 

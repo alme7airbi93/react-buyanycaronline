@@ -1,4 +1,5 @@
 import {doc, updateDoc,addDoc,getDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
+import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
 import {preSaveOrUpdate} from "./Common.js";
 import {db} from "./main";
 import User from "../models/User";
@@ -7,7 +8,7 @@ const doc_collection ="users";
 
 
 export const saveUser = async (value ) => {
-	if(checkTypeOf(value)){
+	if(checkTypeOfUser(value)){
 		try {
 			let user_data = preSaveOrUpdate(value);
 			let create_doc = await addDoc(collection(db, doc_collection), user_data);
@@ -25,7 +26,7 @@ export const saveUser = async (value ) => {
 export const updateUserProfile =async (userId=null, value)=> {
 	console.log("================= Update user profile=================");
 	console.log("Updating : ", userId);
-	if(checkTypeOf(value)){
+	if(checkTypeOfUser(value)){
 		try {
 			let update_doc= await updateDoc(doc(db, doc_collection, userId), preSaveOrUpdate(value));
 
@@ -41,7 +42,7 @@ export const updateUserProfile =async (userId=null, value)=> {
 export const changeUserRole=async (userId=null, value)=> {
 	console.log("================= Update user role =================");
 	console.log("Updating : ", userId);
-	if(checkTypeOf(value)){
+	if(checkTypeOfUser(value)){
 		try {
 			const docRef = doc(db, doc_collection, userId);
 			let update_doc= await updateDoc(docRef, {_role: value._role});
@@ -101,6 +102,4 @@ export const getAllUsers = async () => {
 
 };
 
-const checkTypeOf = (val) => {
-	return Object.getPrototypeOf(val) === Object.getPrototypeOf(new User());
-};
+
