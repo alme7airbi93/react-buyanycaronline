@@ -1,6 +1,6 @@
 
 
-export const preSaveOrUpdate = (val)=> {
+export const preSaveOrUpdateAClass = (val)=> {
 	try {
 		delete val["id"];
 		delete val["_id"];

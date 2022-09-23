@@ -1,12 +1,12 @@
 import { doc, addDoc, getDoc ,collection, updateDoc, query, where, getDocs } from "firebase/firestore";
-import {preSaveOrUpdate} from "./Common.js";
+import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
 import { db } from "./main";
 import Advertisement from "../models/Advertisement";
 const doc_collection = "advertisements";
 
 export const createAdvertisement = async (value = new Advertisement()) => {
 	try {
-		let advt_data = preSaveOrUpdate(value);
+		let advt_data = preSaveOrUpdateAClass(value);
 		const docRef = collection(db, doc_collection);
 		let update_doc = await addDoc(docRef, advt_data);
 		console.log(update_doc.id);

@@ -1,6 +1,6 @@
 import {doc, updateDoc,addDoc,getDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
 import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
-import {preSaveOrUpdate} from "./Common.js";
+import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
 import {db} from "./main";
 import User from "../models/User";
 
@@ -10,7 +10,7 @@ const doc_collection ="users";
 export const saveUser = async (value ) => {
 	if(checkTypeOfUser(value)){
 		try {
-			let user_data = preSaveOrUpdate(value);
+			let user_data = preSaveOrUpdateAClass(value);
 			let create_doc = await addDoc(collection(db, doc_collection), user_data);
 			console.log("================= Save a user  =================");
 			console.log("Saved user ", create_doc.id);
@@ -28,7 +28,7 @@ export const updateUserProfile =async (userId=null, value)=> {
 	console.log("Updating : ", userId);
 	if(checkTypeOfUser(value)){
 		try {
-			let update_doc= await updateDoc(doc(db, doc_collection, userId), preSaveOrUpdate(value));
+			let update_doc= await updateDoc(doc(db, doc_collection, userId), preSaveOrUpdateAClass(value));
 
 			console.log("Response for update ", update_doc);
 			return {success:true,data:update_doc};
