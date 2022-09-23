@@ -3,7 +3,7 @@ import User from "./User";
 
 class Vehicle extends Advertisement {
 	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,
-		make = -1, modal = -1, features = [""], color = "", year = -1, condition = false, fuel_type = -1, warranty = false, region = -1, vehicleType = -1) {
+		make = -1, modal = -1, features = [""], color = "", year = -1, condition = false, fuel_type = -1, warranty = false, region = -1) {
 		super(title, description, price, location, owner, photos, advertisement_type, views, stat);
 		this._make = make;
 		this._modal = modal;
@@ -14,7 +14,6 @@ class Vehicle extends Advertisement {
 		this._fuel_type = fuel_type;
 		this._warranty = warranty;
 		this._region = region;
-		this._vehicleType = vehicleType;
 	}
 
 
@@ -90,13 +89,6 @@ class Vehicle extends Advertisement {
 		this._region = value;
 	}
 
-	get vehicleType() {
-		return this._vehicleType;
-	}
-
-	set vehicleType(value) {
-		this._vehicleType = value;
-	}
 }
 
 export default Vehicle;
