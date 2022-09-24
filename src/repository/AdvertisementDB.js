@@ -1,4 +1,4 @@
-import {doc, addDoc, getDoc, collection, updateDoc, query, where, getDocs} from "firebase/firestore";
+import {doc, addDoc, getDoc, collection, updateDoc, getDocs} from "firebase/firestore";
 import {
 	checkAdvertisemntType,
 	checkTypeOfAdvertisement
@@ -22,7 +22,7 @@ export const createAdvertisement = async (value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		return {success: false, data: "Not an Advertisement"};
+		throw "Not an Advertisement";
 	}
 };
 
@@ -38,7 +38,7 @@ export const advertisementStatusChange = async (advertId = null, value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		return {success: false, data: "Not a status"};
+		throw "Not an Status";
 	}
 };
 
@@ -54,7 +54,7 @@ export const updateAdvertisement = async (advertId = null, value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		return {success: false, data: "Not an Advertisement"};
+		throw "Not an Advertisement";
 	}
 };
 
@@ -66,7 +66,7 @@ export const getAdvertisementById = async (advertId = null) => {
 		console.log(data.data());
 		return {success:true, data: Object.assign(checkAdvertisemntType(data.data()), {...data.data(), _id:data.id})};
 	} else {
-		return {success:false};
+		throw "Advertisement not found";
 	}
 };
 
@@ -82,7 +82,7 @@ export const getAllAdvertisement = async () => {
 		console.log(ads);
 		return {success:true, data: ads};
 	}else {
-		return {success:false, data: "No data found"};
+		throw "Advertisement not found";
 	}
 };
 
