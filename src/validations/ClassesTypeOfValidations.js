@@ -43,7 +43,7 @@ export const checkAdvertisemntType = (value) => {
 	case value._advertisement_type === Advertisement_Types.Accessories:
 		return new Accessories();
 	default:
-		return "Not an Advertisement";
+		throw Error("Not an Advertisement");
 	}
 };
 
