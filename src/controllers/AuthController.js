@@ -7,6 +7,8 @@ import {
 } from "firebase/auth";
 
 import {getUserByUsername, saveUser} from "../repository/UserDB.js";
+import User from "../models/User";
+import {User_Roles} from "../data/User_Roles";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -75,21 +77,14 @@ export const GoogleSignin = async () => {
 			const token = credential.accessToken;
 			// The signed-in user info.
 			const googleUser = result.user;
-			let user = await getUserByUsername(googleUser.email);
-			try{
-				if (user === undefined) {
-					console.log("Saving user !");
-					await saveUser(googleUser.email, googleUser.displayName);
-					user = await getUserByUsername(googleUser.email);
-				}
-			}catch (error){
-				return error.message;
-			}
-			console.log("User:", user);
-			console.log("Token:", token);
-			let data = {profile: user, token: token};
-			return data;
-
+			return await getUserByUsername(googleUser.email).then(data =>{
+				return  {profile: data.data, token: token};
+			}).catch(async e => {
+				console.log("Saving user !");
+				let user = new User(googleUser.email, User_Roles.CUSTOMER, "", googleUser.displayName);
+				await saveUser(user);
+				return {profile: user, token: token};
+			});
 		})
 		.catch((error) => {
 			const credential = GoogleAuthProvider.credentialFromError(error);

@@ -62,13 +62,15 @@ const LoginModal = (props) => {
 	};
 
 	const googleSigninHandle =  () => {
-		GoogleSignin().then((data) =>{
-			console.log("Data :", data);
-			setUser(data.profile);
-			document.cookie=`userToken=${data.token}`;
-			navigate("/user-profile");
-			handleClose();
-		});
+			GoogleSignin().then((data) => {
+				console.log("Data :", data);
+				setUser(data.profile);
+				document.cookie = `userToken=${data.token}`;
+				navigate("/user-profile");
+				handleClose();
+			}).catch(e =>{
+				console.log(e);
+			});
 	};
 
 	const validateEmail = (email) =>{
