@@ -1,49 +1,89 @@
-import { doc, addDoc, getDoc ,collection, updateDoc, query, where, getDocs } from "firebase/firestore";
+import {doc, addDoc, getDoc, collection, updateDoc, query, where, getDocs} from "firebase/firestore";
+import {
+	checkAdvertisemntType,
+	checkTypeOfAdvertisement
+} from "../validations/ClassesTypeOfValidations.js";
+import {checkTypeOfAdvertisementStatus} from "../validations/EnumsValidation.js";
 import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
-import { db } from "./main";
-import Advertisement from "../models/Advertisement";
+import {db} from "./main";
+
 const doc_collection = "advertisements";
 
-export const createAdvertisement = async (value = new Advertisement()) => {
-	try {
-		let advt_data = preSaveOrUpdateAClass(value);
-		const docRef = collection(db, doc_collection);
-		let update_doc = await addDoc(docRef, advt_data);
-		console.log(update_doc.id);
-		return {success:true,advert_id:update_doc.id};
-		//return true;
-	} catch (e) {
-		console.log("Error getting cached document:", e);
-	}
-};
-export const advertisementStatusChange = async (advertId = null, value = new Advertisement()) => {
-	try {
-		const docRef = doc(db, doc_collection, advertId);
-		await updateDoc(docRef, { _status: value._status });
-		//console.log(update_doc);
-		return true;
-	} catch (e) {
-		console.log("Error getting cached document:", e);
-	}
-};
-export const getAdvertisementById = async (advertId = null) => {
-	const docRef = doc(db, doc_collection, advertId);
-	const docSnap = await getDoc(docRef);
-	if (docSnap.exists()) {
-		return {success:true,data:docSnap.data()};
+export const createAdvertisement = async (value) => {
+	if (checkTypeOfAdvertisement(value)) {
+		try {
+			let advt_data = preSaveOrUpdateAClass(value);
+			const docRef = collection(db, doc_collection);
+			let create_doc = await addDoc(docRef, advt_data);
+			console.log("================= Save an Advertisement  =================");
+			console.log("Saved user ", create_doc.id);
+			return {success: true, data: create_doc.id};
+		} catch (e) {
+			return {success: false, data: e};
+		}
 	} else {
-		return {success:false,data:[]};
+		return {success: false, data: "Not an Advertisement"};
 	}
 };
 
-// To be developed so it contain all fields using forloop !!!!!!!!!!!!
-export const getAllAdvertisement = async () => {
-	const advertSnapshot = await getDocs(collection(db, doc_collection));
-	let ads = [];
-	advertSnapshot.forEach((doc) => {
-		ads.push(...doc, doc.id);
-	});
-	console.log("================= GET ALL =================");
-	console.log(ads);
-	return ads;
+export const advertisementStatusChange = async (advertId = null, value) => {
+	console.log("================= Update Advertisement status=================");
+	console.log("Updating : ", advertId);
+	if (checkTypeOfAdvertisementStatus(value)) {
+		try {
+			const docRef = doc(db, doc_collection, advertId);
+			let update_doc = await updateDoc(docRef, {_status: value});
+			return {success: true, data: update_doc};
+		} catch (e) {
+			return {success: false, data: e};
+		}
+	} else {
+		return {success: false, data: "Not a status"};
+	}
 };
+
+export const updateAdvertisement = async (advertId = null, value) => {
+	console.log("================= Update Advertisement=================");
+	console.log("Updating : ", advertId);
+	if (checkTypeOfAdvertisement(value)) {
+		try {
+			let update_doc = await updateDoc(doc(db, doc_collection, advertId), preSaveOrUpdateAClass(value));
+			console.log("Response for update ", update_doc);
+			return {success: true, data: update_doc};
+		} catch (e) {
+			return {success: false, data: e};
+		}
+	} else {
+		return {success: false, data: "Not an Advertisement"};
+	}
+};
+
+export const getAdvertisementById = async (advertId = null) => {
+	const docRef = doc(db, doc_collection, advertId);
+	const data = await getDoc(docRef);
+	if (data.exists()) {
+		console.log("================= Get Advertisement By ID  =================");
+		console.log(data.data());
+		return {success:true, data: Object.assign(checkAdvertisemntType(data.data()), {...data.data(), _id:data.id})};
+	} else {
+		return {success:false};
+	}
+};
+
+export const getAllAdvertisement = async () => {
+	console.log("================= GET ALL =================");
+	const docs = await getDocs(collection(db, doc_collection));
+	let ads = [];
+	if (docs.size !== 0) {
+		docs.forEach((data) => {
+			ads.push(Object.assign(checkAdvertisemntType(data.data()), {...data.data(), _id: data.id}));
+		});
+
+		console.log(ads);
+		return {success:true, data: ads};
+	}else {
+		return {success:false, data: "No data found"};
+	}
+};
+
+

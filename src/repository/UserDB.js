@@ -96,7 +96,7 @@ export const getAllUsers = async () => {
 			console.log(users);
 			return {success:true, data: users};
 		} else {
-			return {success:false};
+			return {success:false, data: "No data found"};
 		}
 	});
 

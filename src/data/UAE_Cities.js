@@ -1,4 +1,4 @@
-export const AE_CITIES = {
+export const UAE_CITIES = {
 	ABUDHABI:"Abu Dhabi",
 	DUBAI:"Dubai",
 	SHARAJAH:"Sharjah",
