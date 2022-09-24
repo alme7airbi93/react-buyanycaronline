@@ -12,6 +12,7 @@ import {
 	updateUserProfile,
 } from "../repository/UserDB.js";
 import User from "../models/User";
+import {AdvertisementOptions} from "../data/SelectOptions";
 
 let userId = "";
 
@@ -49,5 +50,6 @@ test("Get user by username : ", async () => {
 
 test("Get All Users :  ", async () => {
 	let resualt = await getAllUsers();
+	console.log(AdvertisementOptions());
 	expect(resualt.success).toBe(true);
 });

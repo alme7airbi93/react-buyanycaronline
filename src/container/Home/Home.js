@@ -3,7 +3,9 @@ import "./Home.css";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Select from "react-select";
-import {vehicles, makes, models} from "../../data";
+import { makes, models} from "../../data";
+import {AdvertisementOptions} from "../../data/SelectOptions";
+
 
 
 const Home = () => {
@@ -31,7 +33,6 @@ const Home = () => {
 		toggleClass = "hide_search";
 	}
 
-	let vehicels_options = vehicles();
 	let makes_options = makes();
 	let models_options = models();
 
@@ -88,7 +89,7 @@ const Home = () => {
 													<div className={rowClass}>
 														<Select
 															placeholder = {"Select Motors"}
-															options={vehicels_options}
+															options={AdvertisementOptions()}
 															// set "vehicleValue" as e
 															onChange={(e) => setVehicleHandle(e)}
 															isSearchable={false}

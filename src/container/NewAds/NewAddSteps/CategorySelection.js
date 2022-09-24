@@ -2,13 +2,12 @@ import {Button, Col, Row} from "react-bootstrap";
 import Select from "react-select";
 import React, {useState, useContext} from "react";
 import {StepsStateInSummary, StepsStateInDetail} from "../stepsState";
-import { vehicles, makes, models ,models_second} from "../../../data";
+import { makes, models ,models_second} from "../../../data";
 import {NewAdvertisement} from "../../../context/Context";
 
 const CategorySelection = (props) => {
 	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
 
-	let vehicels_options = vehicles();
 	let makes_options = makes();
 	let models_options = models();
 	let models_second_options = models_second();
@@ -39,7 +38,7 @@ const CategorySelection = (props) => {
 						<div className={"mb-3"}>
 							<Select
 								placeholder = {"Select Motors"}
-								options={vehicels_options}
+								options={AdvertisementOptions()}
 								onChange={data => {
 									setVehicle(data);
 									setMake("");

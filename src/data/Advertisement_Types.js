@@ -4,5 +4,5 @@ export const Advertisement_Types = {
 	HeavyVehicles:"Heavy Vehicles",
 	Boats:"Boats",
 	Accessories:"Accessories",
-	PlateNumber:"plate_numbers"
+	PlateNumber:"Plate Numbers"
 };
