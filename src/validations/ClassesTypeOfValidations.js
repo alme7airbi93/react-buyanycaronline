@@ -9,41 +9,44 @@ import User from "../models/User.js";
 
 // Used for preSave
 export const checkTypeOfUser = (val) => {
-	return Object.getPrototypeOf(val) === Object.getPrototypeOf(new User());
+	if(Object.getPrototypeOf(val) === Object.getPrototypeOf(new User())){
+		return true;
+	}else {
+		throw Error("Not a User ! ");
+	}
 };
 
 // User for preSave
 export const checkTypeOfAdvertisement = (val) => {
-	if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Car())){
+	if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Car())) {
 		return true;
-	}else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Motorcycle())) {
+	} else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Motorcycle())) {
 		return true;
-	}else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Accessories())) {
+	} else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Accessories())) {
 		return true;
-	}else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Boat())) {
+	} else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new Boat())) {
 		return true;
-	}else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new HeavyVehicle())) {
+	} else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new HeavyVehicle())) {
 		return true;
-	}else return Object.getPrototypeOf(val) === Object.getPrototypeOf(new PlateNumber());
+	} else if (Object.getPrototypeOf(val) === Object.getPrototypeOf(new PlateNumber())) {
+		return true;
+	} else throw Error("Not an Advertisement");
 };
 
 // Used when get data from DB
 export const checkAdvertisemntType = (value) => {
-	switch (value) {
-	case value._advertisement_type === Advertisement_Types.Cars:
+	if (value._advertisement_type === Advertisement_Types.Cars) {
 		return new Car();
-	case value._advertisement_type === Advertisement_Types.Motorcycles:
+	} else if (value._advertisement_type === Advertisement_Types.Motorcycles) {
 		return new Motorcycle();
-	case value._advertisement_type === Advertisement_Types.HeavyVehicles:
+	} else if (value._advertisement_type === Advertisement_Types.HeavyVehicles) {
 		return new HeavyVehicle();
-	case value._advertisement_type === Advertisement_Types.Boats:
+	} else if (value._advertisement_type === Advertisement_Types.Boats) {
 		return new Boat();
-	case value._advertisement_type === Advertisement_Types.PlateNumber:
+	} else if (value._advertisement_type === Advertisement_Types.PlateNumber) {
 		return new PlateNumber();
-	case value._advertisement_type === Advertisement_Types.Accessories:
+	} else if (value._advertisement_type === Advertisement_Types.Accessories) {
 		return new Accessories();
-	default:
-		throw Error("Not an Advertisement");
-	}
+	} else throw Error("Not an Advertisement"+JSON.stringify(value));
 };
 

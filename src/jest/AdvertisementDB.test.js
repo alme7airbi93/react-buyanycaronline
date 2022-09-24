@@ -37,7 +37,7 @@ test("Create a Car Advertisement : ", async () => {
 
 test("Create a Motorcycle Advertisement : ", async () => {
 	let owner = await getUserByUsername("devtest");
-	let advetise_info = new Motorcycle("My Motorcycles", "Motorcycles Description", 1200, {city: "Delhi"}, owner, "", Advertisement_Types.Motorcycles, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 2, 350, 35000, 1);
+	let advetise_info = new Motorcycle("My Motorcycles", "Motorcycles Description", 1200, {city: "Delhi"}, owner.data, "", Advertisement_Types.Motorcycles, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 2, 350, 35000, 1);
 	let result = await createAdvertisement(advetise_info);
 	advert_id = result.advert_id;
 	expect(result.success).toBe(true);
@@ -46,7 +46,7 @@ test("Create a Motorcycle Advertisement : ", async () => {
 
 test("Create a HeavyVehicle Advertisement : ", async () => {
 	let owner = await getUserByUsername("devtest");
-	let advetise_info = new HeavyVehicle("My HeavyVehicle", "Description", 1200, {city: "Delhi"}, owner, "", Advertisement_Types.HeavyVehicles, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 3, 6, "200T", 1);
+	let advetise_info = new HeavyVehicle("My HeavyVehicle", "Description", 1200, {city: "Delhi"}, owner.data, "", Advertisement_Types.HeavyVehicles, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 3, 6, "200T", 1);
 	let result = await createAdvertisement(advetise_info);
 	advert_id = result.advert_id;
 	expect(result.success).toBe(true);
@@ -55,7 +55,7 @@ test("Create a HeavyVehicle Advertisement : ", async () => {
 
 test("Create a Boat Advertisement : ", async () => {
 	let owner = await getUserByUsername("devtest");
-	let advetise_info = new Boat("My Boat", "Boat Description", 1200, {city: "Delhi"}, owner, "", Advertisement_Types.Boats, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 4, 1, "25 Meter", 60);
+	let advetise_info = new Boat("My Boat", "Boat Description", 1200, {city: "Delhi"}, owner.data, "", Advertisement_Types.Boats, 2, 1, 4, 10, ["fine", "excellent"], "Grey", 2016, true, 1, true, 98701, 4, 1, "25 Meter", 60);
 	let result = await createAdvertisement(advetise_info);
 	advert_id = result.advert_id;
 	expect(result.success).toBe(true);
@@ -64,7 +64,7 @@ test("Create a Boat Advertisement : ", async () => {
 
 test("Create a PlateNumber Advertisement : ", async () => {
 	let owner = await getUserByUsername("devtest");
-	let advetise_info = new PlateNumber("My PlateNumber", "PlateNumber Description", 1200, {city: "Delhi"}, owner, "", Advertisement_Types.PlateNumber, 20, 1, 5, 9090900, 89);
+	let advetise_info = new PlateNumber("My PlateNumber", "PlateNumber Description", 1200, {city: "Delhi"}, owner.data, "", Advertisement_Types.PlateNumber, 20, 1, 5, 9090900, 89);
 	let result = await createAdvertisement(advetise_info);
 	advert_id = result.advert_id;
 	expect(result.success).toBe(true);
@@ -73,7 +73,7 @@ test("Create a PlateNumber Advertisement : ", async () => {
 
 test("Create a Accessories Advertisement : ", async () => {
 	let owner = await getUserByUsername("devtest");
-	let advetise_info = new Accessories("My Accessories", "Accessories Description", 1200, {city: "Delhi"}, owner, "", 3, 20, 1, 2, 5, 2018, "Gear Box");
+	let advetise_info = new Accessories("My Accessories", "Accessories Description", 1200, {city: "Delhi"}, owner.data, "", Advertisement_Types.Accessories, 20, 1, 2, 5, 2018, "Gear Box");
 	let result = await createAdvertisement(advetise_info);
 	advert_id = result.data;
 	expect(result.success).toBe(true);
