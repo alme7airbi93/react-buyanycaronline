@@ -22,7 +22,7 @@ export const createAdvertisement = async (value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		throw "Not an Advertisement";
+		throw Error("Not an Advertisement");
 	}
 };
 
@@ -38,7 +38,7 @@ export const advertisementStatusChange = async (advertId = null, value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		throw "Not an Status";
+		throw Error("Not an Status");
 	}
 };
 
@@ -54,7 +54,7 @@ export const updateAdvertisement = async (advertId = null, value) => {
 			return {success: false, data: e};
 		}
 	} else {
-		throw "Not an Advertisement";
+		throw Error("Not an Advertisement");
 	}
 };
 
@@ -66,7 +66,7 @@ export const getAdvertisementById = async (advertId = null) => {
 		console.log(data.data());
 		return {success:true, data: Object.assign(checkAdvertisemntType(data.data()), {...data.data(), _id:data.id})};
 	} else {
-		throw "Advertisement not found";
+		throw Error("Advertisement not found");
 	}
 };
 
@@ -82,7 +82,7 @@ export const getAllAdvertisement = async () => {
 		console.log(ads);
 		return {success:true, data: ads};
 	}else {
-		throw "Advertisement not found";
+		throw Error("Advertisement not found");
 	}
 };
 

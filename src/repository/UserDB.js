@@ -19,7 +19,7 @@ export const saveUser = async (value ) => {
 			return {success: false, data: e};
 		}
 	}else {
-		throw "Not a User";
+		throw Error("Not a User");
 	}
 };
 
@@ -35,7 +35,7 @@ export const updateUserProfile =async (userId=null, value)=> {
 		} catch (e) {
 			return {success:false,data:e};
 		}}else {
-		throw "Not a User";
+		throw Error("Not a User");
 	}
 };
 
@@ -52,7 +52,7 @@ export const changeUserRole=async (userId=null, value)=> {
 		} catch (e) {
 			return {success:false,data:e};
 		}}else {
-		throw "Not a User";
+		throw Error("Not a User");
 	}
 };
 
@@ -68,7 +68,7 @@ export const getUserByUsername = async (username) => {
 			});
 			return {success:true, data:user};
 		} else {
-			throw "User not found !";
+			throw Error("User not found !");
 		}
 	});
 };
@@ -81,7 +81,7 @@ export const getUserById = async (userId = null) => {
 		console.log(data.data());
 		return {success:true, data: Object.assign(new User(), {...data.data(), _id:data.id})};
 	} else {
-		throw "User not found !";
+		throw Error("User not found !");
 	}
 };
 
@@ -96,7 +96,7 @@ export const getAllUsers = async () => {
 			console.log(users);
 			return {success:true, data: users};
 		} else {
-			throw "No records found - getAllUsers";
+			throw  Error("No records found - getAllUsers");
 		}
 	});
 
