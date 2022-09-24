@@ -3,7 +3,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import {Button, Form, FormControl, InputGroup, Alert} from "react-bootstrap";
 import {UserContext} from "../../context/Context";
-import { logInWithEmailAndPassword, GoogleSignin } from "../../repository/Auth";
+import { logInWithEmailAndPassword, GoogleSignin } from "../../controllers/AuthController.js";
 
 
 const UserLogin = () => {

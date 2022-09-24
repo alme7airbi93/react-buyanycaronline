@@ -14,7 +14,7 @@ import "./login.css";
 import React, { useEffect, useState, useContext } from "react";
 import {UserContext} from "../../../context/Context";
 import { useNavigate } from "react-router-dom";
-import { logInWithEmailAndPassword, GoogleSignin } from "../../../repository/Auth";
+import { logInWithEmailAndPassword, GoogleSignin } from "../../../controllers/AuthController.js";
 
 const LoginModal = (props) => {
 

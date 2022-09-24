@@ -1,12 +1,12 @@
 import {
-	Modal, 
-	Button, 
-	FormGroup, 
-	FormControl, 
-	Form,  
-	FormLabel,   
-	Container, 
-	Row, 
+	Modal,
+	Button,
+	FormGroup,
+	FormControl,
+	Form,
+	FormLabel,
+	Container,
+	Row,
 	Col,
 	Alert
 } from "react-bootstrap";
@@ -14,7 +14,7 @@ import "./signup.css";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUpWithEmailAndPassword } from "../../../repository/Auth"; 
+import { signUpWithEmailAndPassword } from "../../../controllers/AuthController.js";
 
 const SignupModal = (props) => {
 
@@ -25,11 +25,11 @@ const SignupModal = (props) => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [name, setName] = useState("");
 
-	const [show, setShow] = useState(false);    
+	const [show, setShow] = useState(false);
 	const [singupError, setSignupError] = useState("");
 	let navigate = useNavigate();
 
-  
+
 	useEffect(()=>{
 		setShow(props.show);
 		if(email !=="" && validateEmail(email) === null) {
@@ -45,18 +45,18 @@ const SignupModal = (props) => {
 		} else {
 			setpasswordMatchError("");
 		}
-        
+
 	},[confirmPassword, email, password, props]);
 
 
 	const handleClose = ()=>{
 		setShow(false);
 		props.handleCloseSignup();
-	};    
-   
+	};
+
 
 	const RegisterDataHandler = (e) => {
-		e.preventDefault();        
+		e.preventDefault();
 		if(password === confirmPassword) {
 			signUpWithEmailAndPassword(email, password, name)
 				.then((data)=>{
@@ -69,12 +69,12 @@ const SignupModal = (props) => {
 						setSignupError(data.error);
 						setpasswordMatchError("");
 					}
-				}); 
+				});
 		} else {
 			setSignupError("");
 			setpasswordMatchError("Please confrim password again!");
 		}
-	};    
+	};
 
 	const validateEmail = (email) =>{
 		return email.match(
@@ -82,9 +82,9 @@ const SignupModal = (props) => {
 		);
 	};
 
-	const isValid = 
+	const isValid =
         password !== confirmPassword ||
-        !validateEmail(email) || 
+        !validateEmail(email) ||
         name === "";
 
 	return (
