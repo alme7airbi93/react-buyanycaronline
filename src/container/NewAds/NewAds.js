@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Row} from "react-bootstrap";
 import "./NewAds.css";
 import {NewAdvertisement} from "../../context/Context";
@@ -12,6 +12,9 @@ import {StepsStateInSummary} from "./stepsState";
 const NewAds = () => {
 	const [advertisement, setAdvertisement] = useState(NewAdvertisement);
 	const [stepsState, setStepsState]  = useState(StepsStateInSummary);
+	useEffect(() => {
+		console.log(advertisement);
+	},[stepsState]);
 	return (
 		<NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
 			<div style={{height: "100vh"}}>

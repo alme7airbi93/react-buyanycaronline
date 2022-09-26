@@ -13,7 +13,7 @@ import {
 } from "../common/repository/UserDB.js";
 import User from "../common/models/User";
 import {AdvertisementOptions} from "../common/data/SelectOptions";
-import {checkTypeUserRoles} from "../validations/EnumsValidation.js";
+import {checkTypeUserRoles} from "../common/validations/EnumsValidation.js";
 
 let userId = "";
 

@@ -1,11 +1,5 @@
-import { toHaveDescription } from "@testing-library/jest-dom/dist/matchers";
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
-export const UserContext = createContext({
-	setUser:()=>{}
-});
+export const UserContext = createContext();
 
-export const NewAdvertisement = createContext({
-	// setAdvertisement:()=>{
-	// }
-});
+export const NewAdvertisement = createContext();

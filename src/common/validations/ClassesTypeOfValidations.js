@@ -1,11 +1,11 @@
-import {Advertisement_Types} from "../common/data/Advertisement_Types.js";
-import Accessories from "../common/models/Accessories.js";
-import Boat from "../common/models/Boat.js";
-import Car from "../common/models/Car.js";
-import HeavyVehicle from "../common/models/HeavyVehicle.js";
-import Motorcycle from "../common/models/Motorcycle.js";
-import PlateNumber from "../common/models/PlateNumber.js";
-import User from "../common/models/User.js";
+import {Advertisement_Types} from "../data/Advertisement_Types.js";
+import Accessories from "../models/Accessories.js";
+import Boat from "../models/Boat.js";
+import Car from "../models/Car.js";
+import HeavyVehicle from "../models/HeavyVehicle.js";
+import Motorcycle from "../models/Motorcycle.js";
+import PlateNumber from "../models/PlateNumber.js";
+import User from "../models/User.js";
 
 // Used for preSave
 export const checkTypeOfUser = (val) => {
