@@ -15,6 +15,8 @@ import "./signup.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUpWithEmailAndPassword } from "../../../controllers/AuthController.js";
+import {User_Roles} from "../../../data/User_Roles.js";
+import User from "../../../models/User.js";
 
 const SignupModal = (props) => {
 
@@ -31,6 +33,7 @@ const SignupModal = (props) => {
 
 
 	useEffect(()=>{
+		// eslint-disable-next-line react/prop-types
 		setShow(props.show);
 		if(email !=="" && validateEmail(email) === null) {
 			setEmailError("Please enter email exactly!");
@@ -51,6 +54,7 @@ const SignupModal = (props) => {
 
 	const handleClose = ()=>{
 		setShow(false);
+		// eslint-disable-next-line react/prop-types
 		props.handleCloseSignup();
 	};
 
@@ -58,7 +62,7 @@ const SignupModal = (props) => {
 	const RegisterDataHandler = (e) => {
 		e.preventDefault();
 		if(password === confirmPassword) {
-			signUpWithEmailAndPassword(email, password, name)
+			signUpWithEmailAndPassword(new User(email, User_Roles.CUSTOMER, "", name), password)
 				.then((data)=>{
 					if(data.token)
 					{
@@ -78,7 +82,7 @@ const SignupModal = (props) => {
 
 	const validateEmail = (email) =>{
 		return email.match(
-			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		);
 	};
 
@@ -93,7 +97,6 @@ const SignupModal = (props) => {
 			<div className="modal_main_div">
 				<Modal.Header className="modal_header">
 					<Modal.Title>Register</Modal.Title>
-					{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 					<h3 onClick={handleClose} style={{cursor: "pointer"}}>
                         x
 					</h3>

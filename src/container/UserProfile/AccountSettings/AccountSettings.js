@@ -3,7 +3,7 @@ import {UserContext} from "../../../context/Context";
 
 
 const AccountSettings = () => {
-	const [user, setuser] = useContext(UserContext);
+	const [user] = useContext(UserContext);
 	return(
 		<React.Fragment>
 			<h5>Account Settings</h5>

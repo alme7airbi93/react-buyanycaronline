@@ -12,15 +12,15 @@ import {User_Roles} from "../data/User_Roles";
 
 const googleProvider = new GoogleAuthProvider();
 
-export const signUpWithEmailAndPassword = (email, password, surname) => {
+export const signUpWithEmailAndPassword = (user, password) => {
 
-	return createUserWithEmailAndPassword(auth, email, password)
+	return createUserWithEmailAndPassword(auth, user.username, password)
 		.then((data)=>{
 			return data.user.getIdToken();
 		})
 		.then((idtoken)=>{
 			const token = idtoken;
-			saveUser(email, surname);
+			saveUser(user);
 			return { token: token };
 		})
 		.catch((err)=>{
@@ -46,7 +46,7 @@ export const logInWithEmailAndPassword =  (email, password) => {
 			return getUserByUsername(email);
 		})
 		.then((userData)=>{
-			return userData.data();
+			return userData.data;
 		})
 		.then((data)=>{
 			return {profile:data, error:"", token: token};
@@ -79,7 +79,7 @@ export const GoogleSignin = async () => {
 			const googleUser = result.user;
 			return await getUserByUsername(googleUser.email).then(data =>{
 				return  {profile: data.data, token: token};
-			}).catch(async e => {
+			}).catch(async () => {
 				console.log("Saving user !");
 				let user = new User(googleUser.email, User_Roles.CUSTOMER, "", googleUser.displayName);
 				await saveUser(user);
