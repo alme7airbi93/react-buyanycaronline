@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import {NavLink} from "react-router-dom";
 import "./styles.css";
 import {UserContext} from "../../context/Context";
+import {User_Roles} from "../../data/User_Roles.js";
 
 export default function Dropdown(props) {
 	const [isActive, setIsActive] = useState(false);
@@ -17,24 +18,25 @@ export default function Dropdown(props) {
 
 	const logoutHalde = () => {
 		setIsActive(false);
+		// eslint-disable-next-line react/prop-types
 		props.onClick();
 	};
 
-	const [user, setUser]  = useContext(UserContext);
+	const [user]  = useContext(UserContext);
 
 
 	const customerOptions = () => {
-		if(user.roles.includes("CUSTOMER")) {
+		if (user._role === User_Roles.CUSTOMER) {
 			return (
 				<li>
-					<NavLink to={"/new-ads"} onClick = {showDropdown}>NEW ADS</NavLink>
+					<NavLink to={"/new-ads"} onClick={showDropdown}>NEW ADS</NavLink>
 				</li>
 			);
 		}
 	};
 
 	const adminOptions = () => {
-		if(user.roles.includes("ADMIN") || user.roles.includes("MODERATOR")) {
+		if(user._role === User_Roles.ADMIN || user._role === User_Roles.SUPER_ADMIN) {
 			return (
 				<>
 					<li>

@@ -13,6 +13,7 @@ import {
 } from "../repository/UserDB.js";
 import User from "../models/User";
 import {AdvertisementOptions} from "../data/SelectOptions";
+import {checkTypeUserRoles} from "../validations/EnumsValidation.js";
 
 let userId = "";
 
@@ -52,4 +53,9 @@ test("Get All Users :  ", async () => {
 	let resualt = await getAllUsers();
 	console.log(AdvertisementOptions());
 	expect(resualt.success).toBe(true);
+});
+
+test("Check user roles :  ", async () => {
+	let result = await getUserByUsername("devtest");
+	expect(checkTypeUserRoles(result.data._role)).toBe(true);
 });

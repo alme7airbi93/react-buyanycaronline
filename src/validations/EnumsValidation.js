@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {Advertisement_states} from "../data/Advertisement_states.js";
 import {Boat_Types} from "../data/Boat_Types.js";
 import {Fuel_Types} from "../data/Fuel_Types.js";
@@ -7,7 +8,7 @@ import {UAE_CITIES} from "../data/UAE_Cities.js";
 import {User_Roles} from "../data/User_Roles.js";
 
 export const checkTypeOfAdvertisementStatus = (val) => {
-	for (const [value] of Object.entries(Advertisement_states)) {
+	for (const [key, value] of Object.entries(Advertisement_states)) {
 		if (value === val) {
 			return true;
 		}
@@ -16,7 +17,7 @@ export const checkTypeOfAdvertisementStatus = (val) => {
 };
 
 export const checkTypeOfBoats = (val) => {
-	for (const [value] of Object.entries(Boat_Types)) {
+	for (const [key, value] of Object.entries(Boat_Types)) {
 		if (value === val) {
 			return true;
 		}
@@ -24,7 +25,7 @@ export const checkTypeOfBoats = (val) => {
 	return false;
 };
 export const checkTypeOfFuels = (val) => {
-	for (const [value] of Object.entries(Fuel_Types)) {
+	for (const [key, value] of Object.entries(Fuel_Types)) {
 		if (value === val) {
 			return true;
 		}
@@ -32,7 +33,7 @@ export const checkTypeOfFuels = (val) => {
 	return false;
 };
 export const checkTypeOfHeavyVehicle = (val) => {
-	for (const [value] of Object.entries(Heavy_Vehicle_Types)) {
+	for (const [key, value] of Object.entries(Heavy_Vehicle_Types)) {
 		if (value === val) {
 			return true;
 		}
@@ -40,7 +41,7 @@ export const checkTypeOfHeavyVehicle = (val) => {
 	return false;
 };
 export const checkTypeOfMotorcycle = (val) => {
-	for (const [value] of Object.entries(Motorcycle_Types)) {
+	for (const [key, value] of Object.entries(Motorcycle_Types)) {
 		if (value === val) {
 			return true;
 		}
@@ -49,7 +50,7 @@ export const checkTypeOfMotorcycle = (val) => {
 };
 
 export const checkTypeOfUAECities= (val) => {
-	for (const [value] of Object.entries(UAE_CITIES)) {
+	for (const [key, value] of Object.entries(UAE_CITIES)) {
 		if (value === val) {
 			return true;
 		}
@@ -58,7 +59,7 @@ export const checkTypeOfUAECities= (val) => {
 };
 
 export const checkTypeUserRoles= (val) => {
-	for (const [value] of Object.entries(User_Roles)) {
+	for (const [key, value] of Object.entries(User_Roles)) {
 		if (value === val) {
 			return true;
 		}

@@ -22,10 +22,10 @@
             "error",
             "tab"
         ],
-//        "linebreak-style": [s
-//            "error",
-//            "unix"
-//        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
         "quotes": [
             "error",
             "double"

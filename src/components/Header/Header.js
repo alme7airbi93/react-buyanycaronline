@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
@@ -7,7 +7,6 @@ import { logOut } from "../../controllers/AuthController.js";
 import Dropdown from "../Dropdown";
 import LoginModal from "../Modal/Login/LoginModal";
 import SignupModal from "../Modal/Signup/SignupModal";
-import {UserContext} from "../../context/Context";
 
 
 const Header = () => {
@@ -15,7 +14,7 @@ const Header = () => {
 	const [loginShow, setLoginShow] = useState(false);
 	const [signupShow, setSignupShow] = useState(false);
 
-	const [user, setUser]  = useContext(UserContext);
+	// const [user]  = useContext(UserContext);
 
 	const closeLogin = ()=>{
 		setLoginShow(false);
@@ -54,15 +53,11 @@ const Header = () => {
 		document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 	};
 
-
-	const role = (Object.keys(user).length === 0 && user.constructor === Object) ? null : user.roles[0];
-
-
 	const userToken = getCookie("userToken");
 
 	let btn;
 
-	if((role === "CUSTOMER" || role === "ADMIN" || role === "MODERATOR") && userToken) {
+	if(userToken) {
 		btn = (
 			<div className="col-md-5 d-flex justify-content-end headers-button">
 				<Dropdown onClick={logoutHandler}/>

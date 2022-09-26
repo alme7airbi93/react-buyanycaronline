@@ -26,9 +26,11 @@ const LoginModal = (props) => {
 	const [loginError, setloginError] = useState("");
 	const navigate = useNavigate();
 
+	// eslint-disable-next-line no-unused-vars
 	const [user, setUser]  = useContext(UserContext);
 
 	useEffect(()=>{
+		// eslint-disable-next-line react/prop-types
 		setShow(props.show);
 		if(email !=="" && validateEmail(email) === null) {
 			setEmailError("Please enter email exactly!");
@@ -42,6 +44,7 @@ const LoginModal = (props) => {
 
 	const handleClose = ()=>{
 		setShow(false);
+		// eslint-disable-next-line react/prop-types
 		props.handleCloseLogin();
 	};
 
@@ -62,21 +65,19 @@ const LoginModal = (props) => {
 	};
 
 	const googleSigninHandle =  () => {
-			GoogleSignin().then((data) => {
-				console.log("Data :", data);
-				setUser(data.profile);
-				document.cookie = `userToken=${data.token}`;
-				navigate("/user-profile");
-				handleClose();
-			}).catch(e =>{
-				console.log(e);
-			});
+		GoogleSignin().then((data) => {
+			console.log("Data :", data);
+			setUser(data.profile);
+			document.cookie = `userToken=${data.token}`;
+			navigate("/user-profile");
+			handleClose();
+		}).catch(e =>{
+			console.log(e);
+		});
 	};
 
 	const validateEmail = (email) =>{
-		return email.match(
-			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-		);
+		return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 	};
 
 	const isValid =
