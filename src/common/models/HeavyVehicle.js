@@ -12,6 +12,7 @@ class HeavyVehicle extends Vehicle {
 		this._numberOfCylinders = numberOfCylinders;
 		this._capacityWeight = capacityWeight;
 		this._category = category;
+		Object.preventExtensions(this);
 	}
 
 

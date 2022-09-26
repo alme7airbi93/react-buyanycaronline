@@ -14,6 +14,7 @@ class Car extends Vehicle {
 		this._transmission = transmission;
 		this._numberOfCylinders = numberOfCylinders;
 		this._horsePower = horsePower;
+		Object.preventExtensions(this);
 	}
 
 

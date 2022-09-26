@@ -2,11 +2,13 @@ class User {
 
 
 	constructor(username = "", role = -1, phone = "", surename = "") {
+		this._id = "";
 		this._username = username;
 		this._role = role;
 		this._phone = phone;
 		this._surename = "";
 		this._surename = surename;
+		Object.preventExtensions(this);
 	}
 
 

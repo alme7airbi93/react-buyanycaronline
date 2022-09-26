@@ -9,6 +9,7 @@ class PlateNumber extends Advertisement {
 		this._city = city;
 		this._number = number;
 		this._numberCode = numberCode;
+		Object.preventExtensions(this);
 	}
 
 

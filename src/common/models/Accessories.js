@@ -9,6 +9,7 @@ class Accessories extends Advertisement {
 		this._vehicle_model = vehicle_model;
 		this._vehicle_year = vehicle_year;
 		this._accessory_name = accessory_name;
+		Object.preventExtensions(this);
 	}
 
 

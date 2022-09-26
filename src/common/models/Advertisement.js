@@ -3,6 +3,7 @@ import User from "./User.js";
 class Advertisement {
 
 	constructor(title = "", description = "", price = 0.0, location = {}, owner = new User(), photos = [], advertisement_type = -1, views = -1, stat= -1) {
+		this._id = "";
 		this._title = title;
 		this._description = description;
 		this._price = price;
@@ -14,6 +15,14 @@ class Advertisement {
 		this._status = stat;
 	}
 
+
+	get id() {
+		return this._id;
+	}
+
+	set id(value) {
+		this._id = value;
+	}
 
 	get title() {
 		return this._title;

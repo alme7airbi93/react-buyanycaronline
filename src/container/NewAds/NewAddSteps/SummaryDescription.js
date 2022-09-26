@@ -21,8 +21,7 @@ const SummaryDescription = (props) => {
 	let [type, setType] = useState("");
 
 	const handler=()=>{
-		let adver = new Advertisement(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-		setAdvertisement(adver);
+		setAdvertisement(new Advertisement(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending));
 	};
 
 	return(

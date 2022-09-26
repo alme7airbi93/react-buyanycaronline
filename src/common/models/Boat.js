@@ -12,6 +12,7 @@ class Boat extends Vehicle {
 		this._category = category;
 		this._length = length;
 		this._hours = hours;
+		Object.preventExtensions(this);
 	}
 
 

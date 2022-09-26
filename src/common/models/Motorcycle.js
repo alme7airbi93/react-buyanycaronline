@@ -11,6 +11,7 @@ class Motorcycle extends Vehicle {
 		this._engineSize = engineSize;
 		this._distance = distance;
 		this._category = category;
+		Object.preventExtensions(this);
 	}
 
 
