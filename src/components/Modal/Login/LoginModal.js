@@ -131,8 +131,8 @@ const LoginModal = (props) => {
 							</Col>
 
 							<Col md={5} className={"social_btn_main"}>
-								<button className={"social_btn fb_btn"}>Sign in with Facebook</button>
-								<button className={"social_btn twitter_btn"}>Sign in with Twitter</button>
+								{/*<button className={"social_btn fb_btn"}>Sign in with Facebook</button>*/}
+								{/*<button className={"social_btn twitter_btn"}>Sign in with Twitter</button>*/}
 								<button className={"social_btn google_btn"} onClick = {googleSigninHandle}>Sign in with Google+</button>
 							</Col>
 						</Row>
