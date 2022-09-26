@@ -1,5 +1,5 @@
-import Vehicle from "./Vehicle";
-import User from "./User";
+import Vehicle from "./Vehicle.js";
+import User from "./User.js";
 
 class Boat extends Vehicle {
 

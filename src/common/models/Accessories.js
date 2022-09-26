@@ -1,5 +1,5 @@
-import Advertisement from "./Advertisement";
-import User from "./User";
+import Advertisement from "./Advertisement.js";
+import User from "./User.js";
 
 class Accessories extends Advertisement {
 	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,vehicle_make  = -1, vehicle_model  = -1, vehicle_year = -1,accessory_name =""){

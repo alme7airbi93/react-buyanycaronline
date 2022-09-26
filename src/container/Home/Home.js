@@ -3,8 +3,8 @@ import "./Home.css";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Select from "react-select";
-import { makes, models} from "../../data";
-import {AdvertisementOptions} from "../../data/SelectOptions";
+import { makes, models} from "../../common/data";
+import {AdvertisementOptions} from "../../common/data/SelectOptions";
 
 
 

@@ -1,8 +1,8 @@
 import {doc, updateDoc, addDoc, getDoc, collection, query, where, getDocs, limit} from "firebase/firestore";
-import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
-import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
-import {db} from "./main";
-import User from "../models/User";
+import {checkTypeOfUser} from "../../validations/ClassesTypeOfValidations.js";
+import {preSaveOrUpdateAClass} from "../../validations/PreSave.js";
+import {db} from "./main.js";
+import User from "../models/User.js";
 
 const doc_collection = "users";
 

@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import {User_Roles} from "../data/User_Roles.js";
+import {User_Roles} from "../common/data/User_Roles.js";
 /* eslint-disable */
 import {
 	changeUserRole,
@@ -10,9 +10,9 @@ import {
 	getUserById,
 	getUserByUsername,
 	updateUserProfile,
-} from "../repository/UserDB.js";
-import User from "../models/User";
-import {AdvertisementOptions} from "../data/SelectOptions";
+} from "../common/repository/UserDB.js";
+import User from "../common/models/User";
+import {AdvertisementOptions} from "../common/data/SelectOptions";
 import {checkTypeUserRoles} from "../validations/EnumsValidation.js";
 
 let userId = "";

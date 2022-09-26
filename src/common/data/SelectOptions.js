@@ -1,4 +1,4 @@
-import {Advertisement_Types} from "./Advertisement_Types";
+import {Advertisement_Types} from "./Advertisement_Types.js";
 
 
 export const AdvertisementOptions = ()=>{

@@ -15,8 +15,8 @@ import "./signup.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUpWithEmailAndPassword } from "../../../controllers/AuthController.js";
-import {User_Roles} from "../../../data/User_Roles.js";
-import User from "../../../models/User.js";
+import {User_Roles} from "../../../common/data/User_Roles.js";
+import User from "../../../common/models/User.js";
 
 const SignupModal = (props) => {
 

@@ -2,10 +2,10 @@ import {doc, addDoc, getDoc, collection, updateDoc, getDocs} from "firebase/fire
 import {
 	checkAdvertisemntType,
 	checkTypeOfAdvertisement
-} from "../validations/ClassesTypeOfValidations.js";
-import {checkTypeOfAdvertisementStatus} from "../validations/EnumsValidation.js";
-import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
-import {db} from "./main";
+} from "../../validations/ClassesTypeOfValidations.js";
+import {checkTypeOfAdvertisementStatus} from "../../validations/EnumsValidation.js";
+import {preSaveOrUpdateAClass} from "../../validations/PreSave.js";
+import {db} from "./main.js";
 
 const doc_collection = "advertisements";
 

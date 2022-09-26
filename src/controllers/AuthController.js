@@ -1,4 +1,4 @@
-import  {auth} from "../repository/main.js";
+import  {auth} from "../common/repository/main.js";
 import {
 	createUserWithEmailAndPassword, GoogleAuthProvider,
 	signInWithEmailAndPassword,
@@ -6,9 +6,9 @@ import {
 	signOut
 } from "firebase/auth";
 
-import {getUserByUsername, saveUser} from "../repository/UserDB.js";
-import User from "../models/User";
-import {User_Roles} from "../data/User_Roles";
+import {getUserByUsername, saveUser} from "../common/repository/UserDB.js";
+import User from "../common/models/User";
+import {User_Roles} from "../common/data/User_Roles";
 
 const googleProvider = new GoogleAuthProvider();
 

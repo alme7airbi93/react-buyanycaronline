@@ -1,11 +1,11 @@
 /* eslint-disable */
-import {Advertisement_states} from "../data/Advertisement_states.js";
-import {Boat_Types} from "../data/Boat_Types.js";
-import {Fuel_Types} from "../data/Fuel_Types.js";
-import {Heavy_Vehicle_Types} from "../data/Heavy_Vehicle_Types.js";
-import {Motorcycle_Types} from "../data/Motorcycle_Types.js";
-import {UAE_CITIES} from "../data/UAE_Cities.js";
-import {User_Roles} from "../data/User_Roles.js";
+import {Advertisement_states} from "../common/data/Advertisement_states.js";
+import {Boat_Types} from "../common/data/Boat_Types.js";
+import {Fuel_Types} from "../common/data/Fuel_Types.js";
+import {Heavy_Vehicle_Types} from "../common/data/Heavy_Vehicle_Types.js";
+import {Motorcycle_Types} from "../common/data/Motorcycle_Types.js";
+import {UAE_CITIES} from "../common/data/UAE_Cities.js";
+import {User_Roles} from "../common/data/User_Roles.js";
 
 export const checkTypeOfAdvertisementStatus = (val) => {
 	for (const [key, value] of Object.entries(Advertisement_states)) {

@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { Navigate } from "react-router-dom";
 import {UserContext} from "../context/Context";
-import {User_Roles} from "../data/User_Roles.js";
+import {User_Roles} from "../common/data/User_Roles.js";
 import {checkTypeUserRoles} from "../validations/EnumsValidation.js";
 
 // eslint-disable-next-line react/prop-types

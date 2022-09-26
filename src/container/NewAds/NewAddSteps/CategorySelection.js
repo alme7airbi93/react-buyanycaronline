@@ -1,8 +1,9 @@
 import {Button, Col, Row} from "react-bootstrap";
 import Select from "react-select";
 import React, {useState, useContext} from "react";
+import {AdvertisementOptions} from "../../../common/data/SelectOptions.js";
 import {StepsStateInSummary, StepsStateInDetail} from "../stepsState";
-import { makes, models ,models_second} from "../../../data";
+import { makes, models ,models_second} from "../../../common/data";
 import {NewAdvertisement} from "../../../context/Context";
 
 const CategorySelection = (props) => {
@@ -27,7 +28,6 @@ const CategorySelection = (props) => {
 			setAdvertisement({...advertisement, "type":{"kind": " "}});
 		}
 	};
-
 	return(
 		<React.Fragment>
 			<Col md={5} className="find_details">

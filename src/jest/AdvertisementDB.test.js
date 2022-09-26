@@ -3,24 +3,24 @@
  */
 
 
-import {Advertisement_states} from "../data/Advertisement_states.js";
-import {Advertisement_Types} from "../data/Advertisement_Types.js";
+import {Advertisement_states} from "../common/data/Advertisement_states.js";
+import {Advertisement_Types} from "../common/data/Advertisement_Types.js";
 /* eslint-disable */
 import {
 	createAdvertisement,
 	advertisementStatusChange,
 	getAllAdvertisement,
 	getAdvertisementById
-} from "../repository/AdvertisementDB.js";
-import Advertisement from "../models/Advertisement";
-import User from "../models/User";
-import Car from "../models/Car";
-import Motorcycle from "../models/Motorcycle";
-import HeavyVehicle from "../models/HeavyVehicle";
-import Boat from "../models/Boat";
-import PlateNumber from "../models/PlateNumber";
-import Accessories from "../models/Accessories";
-import {getUserByUsername} from "../repository/UserDB.js";
+} from "../common/repository/AdvertisementDB.js";
+import Advertisement from "../common/models/Advertisement";
+import User from "../common/models/User";
+import Car from "../common/models/Car";
+import Motorcycle from "../common/models/Motorcycle";
+import HeavyVehicle from "../common/models/HeavyVehicle";
+import Boat from "../common/models/Boat";
+import PlateNumber from "../common/models/PlateNumber";
+import Accessories from "../common/models/Accessories";
+import {getUserByUsername} from "../common/repository/UserDB.js";
 
 
 var advert_id = "";
