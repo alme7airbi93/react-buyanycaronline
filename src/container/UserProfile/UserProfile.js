@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Container, Row, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./UserProfile.css";
@@ -12,7 +12,7 @@ const UserProfile = () => {
 	const profileHandler = () => {
 		navigate("/new-ads");
 	};
-
+	const [editMode, setEditMode] = useState(false);
 	const [user, setuser] = useContext(UserContext);
 
 
@@ -22,7 +22,13 @@ const UserProfile = () => {
 			<Container>
 				<Row>
 					<Col md={3} className='user_info'>
-						<AccountSettings/>
+						{!editMode &&
+							<>
+								<AccountSettings/>
+								<button className="search_btn">Edit</button>
+							</>
+						}
+
 					</Col>
 					<Col md={6} className='user_info'>
 						<h5>Manage Ads</h5>
