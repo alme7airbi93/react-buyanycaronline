@@ -15,14 +15,29 @@ const SummaryDescription = (props) => {
 	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
 	const [user]  = useContext(UserContext);
 
-	let [title, setTitle] = useState("");
-	let [price, setPrice] = useState(0);
-	let [desc, setDesc] = useState("");
-	let [type, setType] = useState("");
+	let [title, setTitle] = useState(advertisement._title);
+	let [price, setPrice] = useState(advertisement._price);
+	let [desc, setDesc] = useState(advertisement._description);
+	let [type, setType] = useState(advertisement._advertisement_type);
 
 	const handler=()=>{
+		if (!title.length) {
+			alert("please enter title")
+			return;
+		}
+
+		if (!price) {
+			alert("please enter price")
+			return;
+		}
+		if (!type) {
+			alert("please select type")
+			return;
+		}
+
 		let adver = new Advertisement(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
 		setAdvertisement(adver);
+		props.onClick(StepsStateInMainCategory);
 	};
 
 	return(
@@ -33,7 +48,7 @@ const SummaryDescription = (props) => {
 				<Form>
 					<Form.Group className="mb-3" >
 						<Form.Label style={{color: "#fff"}}>Title :</Form.Label>
-						<Form.Control className="input-fields-theme" type="text" placeholder="Enter Title" onChange={data=>{
+						<Form.Control className="input-fields-theme" type="text" value={title} placeholder="Enter Title" onChange={data=>{
 							setTitle(data.target.value);
 						}}/>
 					</Form.Group>
@@ -44,6 +59,7 @@ const SummaryDescription = (props) => {
 							<Select
 								placeholder = {"Select Motors"}
 								options={AdvertisementOptions()}
+								value={AdvertisementOptions().find(obj=> obj.value === type)}
 								isSearchable={false}
 								onChange={data => {
 									setType(data.value);}}
@@ -52,19 +68,19 @@ const SummaryDescription = (props) => {
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 						<Form.Label style={{color: "#fff"}}>Price :</Form.Label>
-						<Form.Control className="input-fields-theme" type="text" placeholder="Enter Price" onChange={data=>{
+						<Form.Control className="input-fields-theme" type="number" placeholder="Enter Price" value={price} onChange={data=>{
 							setPrice(parseFloat(data.target.value));
 						}}/>
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 						<Form.Label style={{color: "#fff"}}>Description :</Form.Label>
-						<Form.Control className="input-fields-theme" as="textarea" rows={3} placeholder="Description" onChange={data => {
+						<Form.Control className="input-fields-theme" as="textarea" rows={3} value={desc} placeholder="Description" onChange={data => {
 							setDesc(data.target.value);
 						}}/>
 					</Form.Group>
 					<Form.Group className="mb-3">
 						{/* eslint-disable-next-line react/prop-types */}
-						<Button className="next_btn" onClick={()=>{ props.onClick(StepsStateInMainCategory);handler();}}>Next</Button>
+						<Button className="next_btn" onClick={()=>{ handler();}}>Next</Button>
 					</Form.Group>
 				</Form>
 			</Col>
