@@ -12,7 +12,6 @@ const UserProfile = () => {
 	const profileHandler = () => {
 		navigate("/new-ads");
 	};
-	const [editMode, setEditMode] = useState(false);
 	const [user, setuser] = useContext(UserContext);
 
 
@@ -21,14 +20,8 @@ const UserProfile = () => {
 		<div className={"user_info_main"}>
 			<Container>
 				<Row>
-					<Col md={3} className='user_info'>
-						{!editMode &&
-							<>
-								<AccountSettings/>
-								<button className="search_btn">Edit</button>
-							</>
-						}
-
+					<Col md={5} className='user_info'>
+						<AccountSettings/>
 					</Col>
 					<Col md={6} className='user_info'>
 						<h5>Manage Ads</h5>
