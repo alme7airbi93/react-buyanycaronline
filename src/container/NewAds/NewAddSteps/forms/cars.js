@@ -1,6 +1,8 @@
 import { Form } from "react-bootstrap";
 import React, { useContext } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
+import Select from "react-select";
+import { MotorcycleOptions } from "../../../../common/data/SelectOptions.js";
 
 const Detail = () => {
   const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
@@ -9,26 +11,33 @@ const Detail = () => {
     <React.Fragment>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Body Type :</Form.Label>
-        <Form.Control
-          as="input"
-          placeholder="Enter Body Type"
-          onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
-              type: { ...advertisement.type, body_type: data.target.value },
-            });
-          }}
-        />
+        <div className="mb-3">
+          <Select
+            placeholder={"Select types"}
+            options={MotorcycleOptions()}
+            value={MotorcycleOptions().find(
+              (obj) => obj.value === advertisement.body_type
+            )}
+            isSearchable={false}
+            onChange={(data) => {
+              setAdvertisement({
+                ...advertisement,
+                body_type: data.value,
+              });
+            }}
+          />
+        </div>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Transmition :</Form.Label>
         <Form.Control
           as="input"
           placeholder="Enter Transmition"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, transmition: data.target.value },
+              transmition: data.target.value,
             });
           }}
         />
@@ -39,10 +48,11 @@ const Detail = () => {
           as="input"
           type="number"
           placeholder="Enter hp"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, hp: (data.target.value) },
+              hp: data.target.value,
             });
           }}
         />

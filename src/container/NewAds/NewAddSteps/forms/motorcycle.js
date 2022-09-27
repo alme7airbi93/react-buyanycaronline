@@ -17,11 +17,11 @@ const Detail = (props) => {
           as="input"
           type="number"
           placeholder="Enter engine_size"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, engine_size: data.target.value },
-            });
+              engine_size: data.target.value });
           }}
         />
       </Form.Group>
@@ -30,12 +30,12 @@ const Detail = (props) => {
         <Form.Control
           as="input"
           placeholder="Enter distance"
+          className="input-fields-theme"
           type="number"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, distance: data.target.value },
-            });
+              distance: data.target.value });
           }}
         />
       </Form.Group>

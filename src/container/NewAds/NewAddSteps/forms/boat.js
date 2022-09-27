@@ -1,53 +1,61 @@
-import { Button, Col, Row, Form } from "react-bootstrap";
-import React, { useState, useContext } from "react";
-import { StepsStateInMainCategory, StepsStateInPhoto } from "../../stepsState";
-import { NewAdvertisement, UserContext } from "../../../../context/Context";
+import { Form } from "react-bootstrap";
+import React, { useContext } from "react";
+import { NewAdvertisement } from "../../../../context/Context";
+import { BoatOptions } from "../../../../common/data/SelectOptions.js";
+import Select from "react-select";
 
-const Detail = (props) => {
+const Detail = () => {
   const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-  const [user, setUser] = useContext(UserContext);
-  const [condition_bool, setcondition_bool] = useState(false);
-  const [warranty_bool, setwarranty_bool] = useState(false);
 
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>length  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>length :</Form.Label>
         <Form.Control
           as="input"
           type="number"
           placeholder="Enter length"
+          className="input-fields-theme"
+          value={advertisement.length}
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, length: data.target.value },
+              length: data.target.value,
             });
           }}
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>type  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>type :</Form.Label>
+        <div className="mb-3">
+          <Select
+            placeholder={"Select types"}
+            options={BoatOptions()}
+            value={BoatOptions().find(
+              (obj) => obj.value === advertisement.type
+            )}
+            isSearchable={false}
+            onChange={(data) => {
+              setAdvertisement({
+                ...advertisement,
+                type: data.value,
+              });
+            }}
+          />
+        </div>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label style={{ color: "#fff" }}>hours :</Form.Label>
         <Form.Control
           as="input"
-          placeholder="Enter type"
           type="number"
-          onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
-              type: { ...advertisement.type, type: data.target.value },
-            });
-          }}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>hours  :</Form.Label>
-        <Form.Control
-          as="textarea"
+          className="input-fields-theme"
           placeholder="Enter hours"
+          value={advertisement.hours}
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, hours: (data.target.value) },
+              hours: data.target.value,
             });
           }}
         />

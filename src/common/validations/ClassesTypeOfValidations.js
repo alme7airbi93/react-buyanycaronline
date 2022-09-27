@@ -49,4 +49,3 @@ export const checkAdvertisemntType = (value) => {
 		return new Accessories();
 	} else throw Error("Not an Advertisement"+JSON.stringify(value));
 };
-

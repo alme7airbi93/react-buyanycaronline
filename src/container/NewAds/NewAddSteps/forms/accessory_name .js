@@ -12,18 +12,20 @@ const Detail = () => {
         <Form.Control
           as="input"
           placeholder="Enter accessory_name"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, accessory_name: data.target.value },
-            });
+              accessory_name: data.target.value });
           }}
         />
       </Form.Group>
       <Form.Group className="mb-3" >
             <Form.Label style={{color: "#fff"}}>vehicle_year :</Form.Label>
-            <Form.Control type="date" placeholder="Enter vehicle_year" onChange={data => {
-                setAdvertisement({...advertisement.type, vehicle_year : data.target.value});
+            <Form.Control type="date" 
+            className="input-fields-theme"
+            placeholder="Enter vehicle_year" onChange={data => {
+                setAdvertisement({...advertisement, vehicle_year : data.target.value});
             }}/>
         </Form.Group>       
       <Form.Group className="mb-3">
@@ -31,11 +33,11 @@ const Detail = () => {
         <Form.Control
           as="input"
           placeholder="Enter vehicle_model"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, vehicle_model: data.target.value },
-            });
+              vehicle_model: data.target.value });
           }}
         />
       </Form.Group>
@@ -44,11 +46,11 @@ const Detail = () => {
         <Form.Control
           as="textarea"
           placeholder="Enter vehicle_make"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, vehicle_make: (data.target.value) },
-            });
+              vehicle_make: (data.target.value)});
           }}
         />
       </Form.Group>

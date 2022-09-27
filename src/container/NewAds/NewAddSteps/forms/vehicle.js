@@ -20,8 +20,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, number_of_cylinders: data.target.value },
-            });
+              number_of_cylinders: data.target.value });
           }}
         />
       </Form.Group>
@@ -34,8 +33,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, capacity_weight: data.target.value },
-            });
+              capacity_weight: data.target.value});
           }}
         />
       </Form.Group>

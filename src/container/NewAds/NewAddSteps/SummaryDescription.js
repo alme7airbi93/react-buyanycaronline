@@ -2,12 +2,17 @@ import {Button, Col, Form} from "react-bootstrap";
 import React, {useContext, useState} from "react";
 import Select from "react-select";
 import {Advertisement_states} from "../../../common/data/Advertisement_states.js";
-import {AdvertisementOptions} from "../../../common/data/SelectOptions.js";
-import Advertisement from "../../../common/models/Advertisement.js";
-// import Select from "react-select";
-// import {AdvertisementOptions} from "../../../common/data/SelectOptions.js";
+import {AdvertisementOptions, } from "../../../common/data/SelectOptions.js";
 import {StepsStateInMainCategory} from "../stepsState";
 import {NewAdvertisement, UserContext} from "../../../context/Context";
+
+import Accessories from "../../../common/models/Accessories.js";
+import Boat from "../../../common/models/Boat.js";
+import Car from "../../../common/models/Car.js";
+import HeavyVehicle from "../../../common/models/HeavyVehicle.js";
+import Motorcycle from "../../../common/models/Motorcycle.js";
+import PlateNumber from "../../../common/models/PlateNumber.js";
+import {Advertisement_Types} from "../../../common/data/Advertisement_Types.js";
 
 const SummaryDescription = (props) => {
 
@@ -19,6 +24,24 @@ const SummaryDescription = (props) => {
 	let [price, setPrice] = useState(advertisement._price);
 	let [desc, setDesc] = useState(advertisement._description);
 	let [type, setType] = useState(advertisement._advertisement_type);
+
+	const checkAdvertisemntType = () => {
+		console.log(type)
+		if (type === Advertisement_Types.Cars) {
+			return new Car(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else if (type === Advertisement_Types.Motorcycles) {
+			return new Motorcycle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else if (type === Advertisement_Types.HeavyVehicles) {
+			return new HeavyVehicle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else if (type === Advertisement_Types.Boats) {
+			return new Boat(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else if (type === Advertisement_Types.PlateNumber) {
+			return new PlateNumber(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else if (type === Advertisement_Types.Accessories) {
+			return new Accessories(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		} else throw Error("Not an Advertisement"+JSON.stringify(type));
+	};
+	
 
 	const handler=()=>{
 		if (!title.length) {
@@ -34,8 +57,8 @@ const SummaryDescription = (props) => {
 			alert("please select type")
 			return;
 		}
-
-		let adver = new Advertisement(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+		
+		let adver = checkAdvertisemntType();
 		setAdvertisement(adver);
 		props.onClick(StepsStateInMainCategory);
 	};
@@ -59,10 +82,10 @@ const SummaryDescription = (props) => {
 							<Select
 								placeholder = {"Select Motors"}
 								options={AdvertisementOptions()}
-								value={AdvertisementOptions().find(obj=> obj.value === type)}
+								value={AdvertisementOptions().find(obj=> obj.label === type)}
 								isSearchable={false}
 								onChange={data => {
-									setType(data.value);}}
+									setType(data.label);}}
 							/>
 						</div>
 					</Form.Group>

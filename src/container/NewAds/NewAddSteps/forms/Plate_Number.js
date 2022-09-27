@@ -12,11 +12,11 @@ const Detail = () => {
         <Form.Control
           as="input"
           placeholder="Enter City"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, citry: data.target.value },
-            });
+              citry: data.target.value});
           }}
         />
       </Form.Group>
@@ -25,24 +25,25 @@ const Detail = () => {
         <Form.Control
           as="input"
           placeholder="Enter number"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, number: data.target.value },
-            });
+              number: data.target.value});
           }}
         />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>number_code :</Form.Label>
         <Form.Control
-          as="textarea"
+          as="input"
+          type="number"
           placeholder="Enter number_code"
+          className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
               ...advertisement,
-              type: { ...advertisement.type, number_code: (data.target.value) },
-            });
+              number_code: (data.target.value)});
           }}
         />
       </Form.Group>
