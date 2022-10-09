@@ -26,7 +26,7 @@ const SummaryDescription = (props) => {
 	let [type, setType] = useState(advertisement._advertisement_type);
 
 	const checkAdvertisemntType = () => {
-		console.log(type)
+		console.log(type);
 		if (type === Advertisement_Types.Cars) {
 			return new Car(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
 		} else if (type === Advertisement_Types.Motorcycles) {
@@ -45,16 +45,16 @@ const SummaryDescription = (props) => {
 
 	const handler=()=>{
 		if (!title.length) {
-			alert("please enter title")
+			alert("please enter title");
 			return;
 		}
 
 		if (!price) {
-			alert("please enter price")
+			alert("please enter price");
 			return;
 		}
 		if (!type) {
-			alert("please select type")
+			alert("please select type");
 			return;
 		}
 		
