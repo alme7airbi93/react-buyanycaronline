@@ -8,11 +8,12 @@ import AccountSettings from "./AccountSettings/AccountSettings";
 const UserProfile = () => {
 
 	const navigate = useNavigate();
+	const ctx = useContext(UserContext);
+	const user =  ctx.getUserData()
 
 	const profileHandler = () => {
 		navigate("/new-ads");
 	};
-	const [user, setuser] = useContext(UserContext);
 
 
 	console.log("user :", user);
