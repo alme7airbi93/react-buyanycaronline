@@ -22,14 +22,14 @@ import NewAds from "./container/NewAds/NewAds";
 import ManageAds from "./container/ManageAds/ManageAds";
 import MonitorPage from "./container/MonitorPage/MonitorPage";
 import {UserContext} from "./context/Context";
-
+import { UserContextProvider } from "./context/Context";
 
 
 const App = () => {
 
 	const [user, setUser] = useState({});
 	return (
-		<UserContext.Provider value={[user, setUser]}>
+		<UserContextProvider>
 			<Router>
 				<Header />
 				<Routes>
@@ -49,7 +49,7 @@ const App = () => {
 				</Routes>
 				<Footer />
 			</Router>
-		</UserContext.Provider>
+		</UserContextProvider>
 	);
 };
 export default App;
