@@ -18,7 +18,9 @@ const SummaryDescription = (props) => {
 
 	// eslint-disable-next-line no-unused-vars
 	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-	const [user]  = useContext(UserContext);
+	console.log(setAdvertisement,'advertisement');
+	const ctx  = useContext(UserContext);
+	const user = ctx.getUserData();
 
 	let [title, setTitle] = useState(advertisement._title);
 	let [price, setPrice] = useState(advertisement._price);
