@@ -11,30 +11,24 @@ import Plate_Numberform from "./forms/Plate_Number"
 import Accessory_nameform from "./forms/accessory_name "
 import Boatform from "./forms/boat"
 import Vehicleform from "./forms/vehicle"
+import { useEffect } from "react";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+
 
 const CategorySelection = (props) => {
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
+	const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
 
-	// let makes_options = makes();
-	// let models_options = models();
-	// let models_second_options = models_second();
-
-	// let [isMakeDropdown, setMakeDropdown] = useState(false);
-	// let [isTypeDropdown, setTypeDropdown] = useState(false);
-	// let [isModelDropdown, setModelDropdown] = useState(false);
-
-	// const [vehicleValue, setVehicle] = useState("");
-	// const [makeValue, setMake] = useState("");
-	// const [modelFirstValue, setModelFirst] = useState("");
-	// const [modelSecondValue, setModelSecond] = useState("");
+	useEffect(()=>{
+		console.log(advertisement,'adasdasd, in advertisement')
+	},[])
 
 	const handler=()=>{
 		if (advertisement.type===undefined)
 		{
-			setAdvertisement({...advertisement, "type":{"kind": " "}});
+			adsCtx.setAds({...advertisement, "type":{"kind": " "}});
 		}
 	};
-	console.log(advertisement,"--advertisement--")
 	return(
 		<React.Fragment>
 			<Col md={5} className="find_details">
@@ -60,7 +54,7 @@ const CategorySelection = (props) => {
 					
 					<Col md={10} className="btn-group" >
 						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInSummary)} >Back</Button>
-						<Button className="next_btn" onClick={() => { handler();props.onClick(StepsStateInDetail);}} >Next</Button>
+						<Button className="next_btn" onClick={() => { handler();props.nextStep(StepsStateInDetail);}} >Next</Button>
 					</Col>
 				</Row>
 			</Col>

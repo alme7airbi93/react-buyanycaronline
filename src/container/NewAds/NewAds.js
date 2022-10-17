@@ -7,28 +7,28 @@ import SummaryDescription from "./NewAddSteps/SummaryDescription";
 import Detail from "./NewAddSteps/Detail";
 import Photo from "./NewAddSteps/Photo";
 import GoogleMap from "./NewAddSteps/GoogleMap";
-import {StepsStateInSummary} from "./stepsState";
+import {StepsStateInSummary} from "./stepsState"; 
+import AdvertismentProvider from "../../context/AdvertismentContext";
 
 const NewAds = () => {
-	const [advertisement, setAdvertisement] = useState(NewAdvertisement);
+
 	const [stepsState, setStepsState]  = useState(StepsStateInSummary);
 	useEffect(() => {
-		console.log(advertisement);
 	},[stepsState]);
 	return (
-		<NewAdvertisement.Provider value={[advertisement,setAdvertisement]}>
+		<AdvertismentProvider>
 			<div style={{height: "100vh"}}>
 				<Container>
 					<Row className={"justify-content-center"}>
-						{stepsState.inSummary && <SummaryDescription onClick={(value) => setStepsState(value)}/> }
-						{stepsState.inMainCategory && <CategorySelection onClick={(value) => setStepsState(value)}/>}
-						{stepsState.inDetail && <Detail onClick={(value) => setStepsState(value)}/>}
-						{stepsState.inPhoto && <Photo onClick={(value) => setStepsState(value)}/>}
-						{stepsState.inMap && <GoogleMap onClick={(value) => setStepsState(value)}/>}
+						{stepsState.inSummary && <SummaryDescription nextStep={(step) => setStepsState(step)}/> }
+						{stepsState.inMainCategory && <CategorySelection nextStep={(step) => setStepsState(step)}/>}
+						{stepsState.inDetail && <Detail nextStep={(step) => setStepsState(step)}/>}
+						{stepsState.inPhoto && <Photo nextStep={(step) => setStepsState(step)}/>}
+						{stepsState.inMap && <GoogleMap nextStep={(step) => setStepsState(step)}/>}
 					</Row>
 				</Container>
 			</div>
-		</NewAdvertisement.Provider>
+		</AdvertismentProvider>
 	);
 };
 export default NewAds;

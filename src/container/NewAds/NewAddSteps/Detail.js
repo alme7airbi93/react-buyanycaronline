@@ -3,11 +3,17 @@ import React, {useState, useContext} from "react";
 import {StepsStateInMainCategory, StepsStateInPhoto} from "../stepsState";
 import {NewAdvertisement, UserContext} from "../../../context/Context";
 import "./scrollbar.css";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+
 
 const Detail = (props) => {
 
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-	const [user, setUser]  = useContext(UserContext);
+	const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
+	const ctx  = useContext(UserContext);
+	const user = ctx.getUserData();
+
+
 	const [condition_bool, setcondition_bool] = useState(false);
 	const [warranty_bool, setwarranty_bool] = useState(false);
     

@@ -3,12 +3,16 @@ import {Button, Col, Row, Form} from "react-bootstrap";
 import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
 import {NewAdvertisement} from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+
 
 import "./scrollbar.css";
 
 const GoogleMap = (props) => {
   
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
+	const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
+
 	const center = { lat: 24.4539, lng: 54.3773 };
 	const zoom = 4;    
 

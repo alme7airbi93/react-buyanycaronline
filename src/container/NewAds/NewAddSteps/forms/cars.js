@@ -3,9 +3,12 @@ import React, { useContext } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import Select from "react-select";
 import { MotorcycleOptions } from "../../../../common/data/SelectOptions.js";
+import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
+
 
 const Detail = () => {
-  const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
+  const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
 
   return (
     <React.Fragment>

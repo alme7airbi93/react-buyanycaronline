@@ -6,7 +6,7 @@ export const StepsStateInSummary = {
 	inPhoto:false,
 	inMap:false
 };
-
+ 
 export const StepsStateInMainCategory = {
 	inSummary:false,
 	inMainCategory:true,
