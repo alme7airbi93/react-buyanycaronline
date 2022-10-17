@@ -22,7 +22,8 @@ export default function Dropdown(props) {
 		props.onClick();
 	};
 
-	const [user]  = useContext(UserContext);
+	const ctx  = useContext(UserContext);
+	const user =  ctx.getUserData()
 
 
 	const customerOptions = () => {

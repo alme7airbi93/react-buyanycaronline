@@ -3,6 +3,8 @@ import { Boat_Types } from "./Boat_Types";
 import { Heavy_Vehicle_Types } from "./Heavy_Vehicle_Types";
 import { Motorcycle_Types } from "./Motorcycle_Types";
 import { Fuel_Types } from "./Fuel_Types";
+import { Engine_Types } from "./Engine_Types";
+import { Travel_Disttance } from "./Travel_Disttance";
 
 export const AdvertisementOptions = () => {
   let options = [];
@@ -38,6 +40,20 @@ export const HeavyVehicleOptions = () => {
 export const FuelTypes = () => {
   let options = [];
   for (const [key, val] of Object.entries(Fuel_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const EngineTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Engine_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const TravelDisttance = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Travel_Disttance)) {
     options.push({ value: key, label: val });
   }
   return options;

@@ -13,12 +13,15 @@ import HeavyVehicle from "../../../common/models/HeavyVehicle.js";
 import Motorcycle from "../../../common/models/Motorcycle.js";
 import PlateNumber from "../../../common/models/PlateNumber.js";
 import {Advertisement_Types} from "../../../common/data/Advertisement_Types.js";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 
 const SummaryDescription = (props) => {
 
 	// eslint-disable-next-line no-unused-vars
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-	const [user]  = useContext(UserContext);
+	const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
+	const ctx  = useContext(UserContext);
+	const user = ctx.getUserData();
 
 	let [title, setTitle] = useState(advertisement._title);
 	let [price, setPrice] = useState(advertisement._price);
@@ -59,8 +62,9 @@ const SummaryDescription = (props) => {
 		}
 		
 		let adver = checkAdvertisemntType();
-		setAdvertisement(adver);
-		props.onClick(StepsStateInMainCategory);
+		adsCtx.setAds(adver);
+		console.log(adver)
+		props.nextStep(StepsStateInMainCategory);
 	};
 
 	return(

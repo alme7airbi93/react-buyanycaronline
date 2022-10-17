@@ -27,7 +27,7 @@ const LoginModal = (props) => {
 	const navigate = useNavigate();
 
 	// eslint-disable-next-line no-unused-vars
-	const [user, setUser]  = useContext(UserContext);
+	const ctx = useContext(UserContext);
 
 	useEffect(()=>{
 		// eslint-disable-next-line react/prop-types
@@ -66,8 +66,8 @@ const LoginModal = (props) => {
 
 	const googleSigninHandle =  () => {
 		GoogleSignin().then((data) => {
-			console.log("Data :", data);
-			setUser(data.profile);
+			console.log("Data in Google Sign in:", data.token);
+			ctx.setUserData(data.profile)
 			document.cookie = `userToken=${data.token}`;
 			navigate("/user-profile");
 			handleClose();

@@ -14,7 +14,10 @@ import "./edit.css";
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../../context/Context";
 const EditProfile = (props) => {
-  const [user] = useContext(UserContext);
+  const ctx = useContext(UserContext)
+const user = ctx.getUserData();
+
+
   const [email, setEmail] = useState(user.username);
   const [phone, setPhone] = useState(user.phone);
   return (

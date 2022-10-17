@@ -5,33 +5,21 @@ import { NewAdvertisement, UserContext } from "../../../context/Context";
 import Select from "react-select";
 
 import { FuelTypes } from "../../../common/data/SelectOptions.js";
+
 import "./scrollbar.css";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 
 const Detail = (props) => {
-  const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-  const [user, setUser] = useContext(UserContext);
   const [condition_bool, setcondition_bool] = useState(false);
   const [warranty_bool, setwarranty_bool] = useState(false);
 
-  let [type, setType] = useState(advertisement._advertisement_type);
+  const adsCtx = useContext(AdvertismentCtx);
+  const advertisement = adsCtx.ads;
+  const ctx = useContext(UserContext);
+  const user = ctx.getUserData();
 
-  const FuelTypes = () => {
-    console.log(type, "akash");
-    // if (type === Advertisement_Types.Cars) {
-    // 	return new Car(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else if (type === Advertisement_Types.Motorcycles) {
-    // 	return new Motorcycle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else if (type === Advertisement_Types.HeavyVehicles) {
-    // 	return new HeavyVehicle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else if (type === Advertisement_Types.Boats) {
-    // 	return new Boat(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else if (type === Advertisement_Types.PlateNumber) {
-    // 	return new PlateNumber(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else if (type === Advertisement_Types.Accessories) {
-    // 	return new Accessories(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
-    // } else throw Error("Not an Advertisement"+JSON.stringify(type));
-  };
-
+  let [type, setType] = useState(advertisement._Fuel_Types);
+console.log(type, "fuletype")
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
@@ -76,24 +64,24 @@ const Detail = (props) => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Fuel Type :</Form.Label>
-                  {/* <Form.Control
-                    as="textarea"
-                    placeholder="Enter Fuel Type"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          fuel_type: data.target.value,
-                        },
-                      });
-                    }}
-                  /> */}
-                  <div className="mb-3">
+                  <div>
+                    {/* <Form.Control
+                      as="textarea"
+                      placeholder="Enter Fuel Type"
+                      onChange={(data) => {
+                        setAdvertisement({
+                          ...advertisement,
+                          type: {
+                            ...advertisement.type,
+                            fuel_type: data.target.value,
+                          },
+                        });
+                      }}
+                    /> */}
                     <Select
-                      placeholder={"Enter Fuel Type"}
+                      placeholder={"Fuel Type"}
                       options={FuelTypes()}
-                        // value={FuelTypes().find((obj) => obj.label === type)}
+                      value={FuelTypes().find((obj) => obj.label=== type)}
                       isSearchable={false}
                       onChange={(data) => {
                         setType(data.label);

@@ -9,12 +9,12 @@ import EditProfile from "../../components/Modal/Editprofile/EditProfile";
 const UserProfile = () => {
   const navigate = useNavigate();
 
-  const profileHandler = () => {
-    navigate("/new-ads");
-  };
-  const [user, setuser] = useContext(UserContext);
+	const ctx = useContext(UserContext);
+	const user =  ctx.getUserData()
 
-  console.log("user :", user);
+	const profileHandler = () => {
+		navigate("/new-ads");
+	};
 
   const [open, setOpen] = useState(false);
   const handleOpen = (val) => {
