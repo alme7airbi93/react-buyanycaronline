@@ -4,11 +4,15 @@ import { Heavy_Vehicle_Types } from "./Heavy_Vehicle_Types";
 import { Motorcycle_Types } from "./Motorcycle_Types";
 import { Fuel_Types } from "./Fuel_Types";
 import { Engine_Types } from "./Engine_Types";
+import { Transmition_Types } from "./Transmition_Types";
+import { Color_Types } from "./Color_Types";
 import { Travel_Disttance } from "./Travel_Disttance";
 import { Manufacturing_Years } from "./ManufacturingYear.js";
 import { Horse_Power } from "./Horse_Power.js";
+import { Body_Condition } from "./Body_Condition.js";
+import { Warranty_Types } from "./Warranty_Types.js";
 import { Region } from "./Region.js";
-
+import { Cylinder_Types } from "./Cylinder_Types.js";
 
 export const AdvertisementOptions = () => {
   let options = [];
@@ -63,29 +67,61 @@ export const TravelDisttance = () => {
   return options;
 };
 
-export const ManufacturingYearsOptions = () =>{
+export const ManufacturingYearsOptions = () => {
   let options = [];
-  Manufacturing_Years.forEach((value,index)=>{
-    options.push({value:value,label:value})
-  })
+  Manufacturing_Years.forEach((value, index) => {
+    options.push({ value: value, label: value });
+  });
   return options;
+};
 
-}
-
-export const HorsePowerOptions = () =>{
+export const HorsePowerOptions = () => {
   let options = [];
-  Horse_Power.forEach((value,index)=>{
-    options.push({value:value,label:value})
-  })
+  Horse_Power.forEach((value, index) => {
+    options.push({ value: value, label: value });
+  });
   return options;
+};
 
-}
-
-export const RegionalOption = () =>{
-  let options = []
+export const RegionalOption = () => {
+  let options = [];
   for (const [key, val] of Object.entries(Region)) {
     options.push({ value: key, label: val });
   }
   return options;
-
-}
+};
+export const TransmitionTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Transmition_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const ColorTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Color_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const BodyCondition = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Body_Condition)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const WarrantyTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Warranty_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const CylinderTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Cylinder_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};

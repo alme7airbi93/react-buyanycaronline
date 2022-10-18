@@ -1,13 +1,18 @@
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import React, { useContext } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import { BoatOptions } from "../../../../common/data/SelectOptions.js";
 import Select from "react-select";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
+import { StepsStateInDetail } from "../../stepsState";
 
-const Detail = () => {
-  const adsCtx =  useContext(AdvertismentCtx)
-	const advertisement = adsCtx.ads;
+const Detail = (props) => {
+  const adsCtx = useContext(AdvertismentCtx);
+  const advertisement = adsCtx.ads;
+
+  const updateData = () => {
+    props.nextStep(StepsStateInDetail);
+  };
 
   return (
     <React.Fragment>
@@ -62,6 +67,18 @@ const Detail = () => {
           }}
         />
       </Form.Group>
+      <div className="d-flex justify-content-space-between">
+        <Button
+          right
+          className="back_btn"
+          onClick={() => props.nextStep(StepsStateInSummary)}
+        >
+          Back
+        </Button>
+        <Button className="next_btn" onClick={() => updateData()}>
+          Next
+        </Button>
+      </div>
     </React.Fragment>
   );
 };

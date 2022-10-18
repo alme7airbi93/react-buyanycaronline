@@ -4,6 +4,7 @@ import { StepsStateInMainCategory, StepsStateInPhoto } from "../../stepsState";
 import { NewAdvertisement, UserContext } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import Select from "react-select";
+import { StepsStateInDetail } from "../../stepsState";
 
 import { EngineTypes } from "../../../../common/data/SelectOptions.js";
 import { TravelDisttance } from "../../../../common/data/SelectOptions.js";
@@ -16,6 +17,10 @@ const Detail = (props) => {
 
   let [type, setType] = useState(advertisement._Engine_Types);
   let [distance, setDistance] = useState(advertisement._Travel_Disttance);
+
+  const updateData = () => {
+    props.nextStep(StepsStateInDetail);
+  };
 
   return (
     <React.Fragment>
@@ -68,6 +73,18 @@ const Detail = (props) => {
           />
         </div>
       </Form.Group>
+      <div className="d-flex justify-content-space-between">
+      <Button
+        right
+        className="back_btn"
+        onClick={() => props.nextStep(StepsStateInSummary)}
+      >
+        Back
+      </Button>
+      <Button className="next_btn" onClick={() => updateData()}>
+        Next
+      </Button>
+      </div>
     </React.Fragment>
   );
 };

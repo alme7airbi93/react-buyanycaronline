@@ -4,14 +4,20 @@ import { StepsStateInMainCategory, StepsStateInPhoto } from "../stepsState";
 import { NewAdvertisement, UserContext } from "../../../context/Context";
 import Select from "react-select";
 
-import { FuelTypes,RegionalOption } from "../../../common/data/SelectOptions.js";
+import {
+  FuelTypes,
+  RegionalOption,
+  ColorTypes,
+  BodyCondition,
+  WarrantyTypes,
+} from "../../../common/data/SelectOptions.js";
 
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js";
 const Detail = (props) => {
-  const [condition_bool, setcondition_bool] = useState(false);
-  const [warranty_bool, setwarranty_bool] = useState(false);
+  // const [condition_bool, setcondition_bool] = useState(false);
+  // const [warranty_bool, setwarranty_bool] = useState(false);
 
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
@@ -19,27 +25,28 @@ const Detail = (props) => {
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
-  useEffect(()=>{
-
-  },[])
-
-
+  useEffect(() => {}, []);
 
   let [type, setType] = useState(advertisement._Fuel_Types);
-  console.log(type, "fuletype")
+  let [color, setColor] = useState(advertisement._Color_Types);
+  let [condition, setCondition] = useState(advertisement._Body_Condition);
+  let [warrantyTypes, setWarrantyTypes] = useState(
+    advertisement._Warranty_Types
+  );
+  console.log(type, "fuletype");
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
         <h5>Advertisement Detail</h5>
         <hr />
         <Row className="justify-content-center">
-          <Col md={10}>
+          <Col md={12}>
             {advertisement.type?.kind !== "Number Plates" && (
               <Form id="center-col">
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Color :</Form.Label>
-                  <Form.Control
+                  {/* <Form.Control
                     as="textarea"
                     placeholder="Enter Color"
                     onChange={(data) => {
@@ -51,18 +58,29 @@ const Detail = (props) => {
                         },
                       });
                     }}
+                  /> */}
+                  <Select
+                    placeholder={"Color"}
+                    options={ColorTypes()}
+                    value={ColorTypes().find((obj) => obj.label === color)}
+                    isSearchable={false}
+                    onChange={(data) => {
+                      setColor(data.label);
+                    }}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>Manufacturing Year :</Form.Label>
+                  <Form.Label style={{ color: "#fff" }}>
+                    Manufacturing Year :
+                  </Form.Label>
                   <Select
                     placeholder={"Select"}
                     options={ManufacturingYearsOptions()}
-                    value={ManufacturingYearsOptions().find(obj=> obj.label === type)}
+                    value={ManufacturingYearsOptions().find(
+                      (obj) => obj.label === type
+                    )}
                     isSearchable={true}
- 
                   />
-
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Fuel Type :</Form.Label>
@@ -81,19 +99,18 @@ const Detail = (props) => {
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Region :</Form.Label>
                   <Select
-                      placeholder={"Manufacturing Region"}
-                      options={RegionalOption()}
-                      value={RegionalOption().find((obj) => obj.label === type)}
-                      isSearchable={false}
-                      onChange={(data) => {
-                        setType(data.label);
-                      }}
-                    />
-
+                    placeholder={"Manufacturing Region"}
+                    options={RegionalOption()}
+                    value={RegionalOption().find((obj) => obj.label === type)}
+                    isSearchable={false}
+                    onChange={(data) => {
+                      setType(data.label);
+                    }}
+                  />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Condition :</Form.Label>
-                  <Form.Control
+                  {/* <Form.Control
                     type="checkbox"
                     placeholder="Enter Condition"
                     onChange={() => {
@@ -111,11 +128,22 @@ const Detail = (props) => {
                         });
                       }
                     }}
+                  /> */}
+                  <Select
+                    placeholder={"Body Condition"}
+                    options={BodyCondition()}
+                    value={BodyCondition().find(
+                      (obj) => obj.label === condition
+                    )}
+                    isSearchable={false}
+                    onChange={(data) => {
+                      setCondition(data.label);
+                    }}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Warrenty :</Form.Label>
-                  <Form.Control
+                  {/* <Form.Control
                     type="checkbox"
                     placeholder="Enter Warrenty"
                     onChange={() => {
@@ -132,6 +160,17 @@ const Detail = (props) => {
                           type: { ...advertisement.type, warrenty: false },
                         });
                       }
+                    }}
+                  /> */}
+                  <Select
+                    placeholder={"Enter Warrenty"}
+                    options={WarrantyTypes()}
+                    value={WarrantyTypes().find(
+                      (obj) => obj.label === warrantyTypes
+                    )}
+                    isSearchable={false}
+                    onChange={(data) => {
+                      setWarrantyTypes(data.label);
                     }}
                   />
                 </Form.Group>
@@ -396,7 +435,7 @@ const Detail = (props) => {
               </Form>
             )}
           </Col>
-          <Col md={10} className="btn-group" style={{ align: "center" }}>
+          <Col md={10} className="btn-group" style={{ align: "center",paddingTop: "15px" }}>
             <br />
             <Button
               right
@@ -409,7 +448,7 @@ const Detail = (props) => {
             <Button
               className="next_btn"
               id="center-pos"
-              onClick={() =>props.nextStep(StepsStateInPhoto)}
+              onClick={() => props.nextStep(StepsStateInPhoto)}
             >
               Next
             </Button>
