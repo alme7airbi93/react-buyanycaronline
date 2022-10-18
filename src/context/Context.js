@@ -7,13 +7,12 @@ export function UserContextProvider({ children }) {
     console.log('childer in context')
 
     const setUserData = (data)=>{
-        console.log(data, 'in setUSer')
         const {username, phone, role, surename,id} = data;
         localStorage.setItem('username',username);
         localStorage.setItem('surename',surename);
         localStorage.setItem('phone',phone);
         localStorage.setItem('id',id);
-        localStorage.setItem('role',role);
+        localStorage.setItem('role',role); 
     }
 
     const getUserData = ()=>{
@@ -22,14 +21,9 @@ export function UserContextProvider({ children }) {
         const phone =  localStorage.getItem('phone');
         const id =  localStorage.getItem('id');
         const role =  localStorage.getItem('role');
-        const data = {
-            username:username,
-            surename:surename,
-            phone:phone,
-            id:id,
-            role:role
-        }
-        return data;
+        const user =  new User(username,role,phone,surename)
+        user.id = id;
+        return user;
 
     }
 
