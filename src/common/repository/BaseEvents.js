@@ -1,4 +1,4 @@
-import { doc, addDoc, getDoc, collection, updateDoc, getDocs, query } from "firebase/firestore";
+import { doc, addDoc, getDoc, collection, updateDoc, getDocs, query, where } from "firebase/firestore";
 import {
     checkAdvertisemntType,
     checkTypeOfAdvertisement
@@ -23,7 +23,7 @@ class BaseEvents {
         console.log(data)
         try {
             const docRef = collection(db, this.collectionName);
-            const create_doc = await addDoc(docRef,data);
+            const create_doc = await addDoc(docRef, data);
             return { sucess: true, msg: create_doc.id }
         }
         catch (e) {
@@ -42,22 +42,39 @@ class BaseEvents {
             else {
                 return { success: false, msg: 'Document not found' }
             }
+        }
+        catch (e) {
+            return { success: false, msg: e }
+        }
+    }
+
+    async updateDocument(docId) {
+        try {
+
+            //code will come here
 
         }
         catch (e) {
             return { success: false, msg: e }
-
         }
 
     }
 
-    async updateDocument(docId){
-        try{
+    async filterDocument(filter, value) {
+        if (filter != '' || value != '') {
+            try {
+                const q = query(collection(db, this.collectionName), where(filter, '==', value))
+                const data = await getDocs(q);
+                return { success: true, data: data }
+            }
+            catch (e) {
+                return { sucess: false, msg: e }
+            }
+        }
+        else{
+            return{sucess: false, msg: "not valid data provided"}
+        }
 
-        }
-        catch(e){
-            return { success: false, msg: e }
-        }
 
     }
 
