@@ -4,6 +4,7 @@ import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
 import {NewAdvertisement} from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import AdvertisementRepo from "../../../common/repository/AdvertisementRepo";
 
 
 import "./scrollbar.css";
@@ -20,7 +21,12 @@ const GoogleMap = (props) => {
 		const adv_JSONstring = JSON.stringify(advertisement); 
 		console.log(advertisement);        
 		// console.log(adv_JSONstring);        
-	};  
+	};
+
+	const saveData = () =>{
+		const adsInstance =  new AdvertisementRepo();
+		adsInstance.storeData(advertisement).then((res)=>console.log(res))
+	}
     
 	return (    
 		<React.Fragment>     
@@ -44,7 +50,7 @@ const GoogleMap = (props) => {
 					</Col>
 					<Col md={10} className="btn-group" >
 						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInPhoto)} >Back</Button>
-						<Button className="next_btn" onClick={()=>{print();}}>Done</Button>
+						<Button className="next_btn" onClick={saveData}>Done</Button>
 					</Col> 
 				</Row>
 			</Col>            

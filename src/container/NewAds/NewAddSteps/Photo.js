@@ -4,14 +4,17 @@ import {StepsStateInMap, StepsStateInDetail} from "../stepsState";
 import {NewAdvertisement} from "../../../context/Context";
 import ImageUploader from "react-images-upload";
 import "./scrollbar.css";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+
 
 const UploadAndDisplayImage = (props) => {
 	const [selectedImage, setSelectedImage] = useState(null);  
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
 	const [photos, setphotos]=useState([]);
+	const adsCtx =  useContext(AdvertismentCtx)
+	const advertisement = adsCtx.ads;
   
 	const onDrop = (pictures, pictureUrl) => {
-		setAdvertisement({...advertisement, "photos":pictureUrl});                
+		adsCtx.setAds({...advertisement, "photos":pictureUrl});                
 	};
 
 	return (
@@ -33,8 +36,8 @@ const UploadAndDisplayImage = (props) => {
 						<br /> 
 					</Col>
 					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInDetail)} >Back</Button>
-						<Button className="next_btn" onClick={()=>{props.onClick(StepsStateInMap);}}>Next</Button>
+						<Button right className="back_btn" onClick={() => props.nextStep(StepsStateInDetail)} >Back</Button>
+						<Button className="next_btn" onClick={()=>{props.nextStep(StepsStateInMap);}}>Next</Button>
 					</Col>
 				</Row>
 			</Col>            

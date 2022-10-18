@@ -38,7 +38,7 @@ const CategorySelection = (props) => {
 					<Col md="12">
 					{
 						advertisement._advertisement_type === "Cars"?
-						<Carsform /> :
+						<Carsform nextStep = {props.nextStep} /> :
 						advertisement._advertisement_type === "Heavy Vehicles"?
 						<Vehicleform /> :
 						advertisement._advertisement_type === "Motorcycles"?
@@ -52,10 +52,10 @@ const CategorySelection = (props) => {
 					}
 					</Col>
 					
-					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInSummary)} >Back</Button>
+					{/* <Col md={10} className="btn-group" >
+						<Button right className="back_btn" onClick={() => props.nextStep(StepsStateInSummary)} >Back</Button>
 						<Button className="next_btn" onClick={() => { handler();props.nextStep(StepsStateInDetail);}} >Next</Button>
-					</Col>
+					</Col> */}
 				</Row>
 			</Col>
 		</React.Fragment>

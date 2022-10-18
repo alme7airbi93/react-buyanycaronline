@@ -1,25 +1,32 @@
 import { Button, Col, Row, Form } from "react-bootstrap";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StepsStateInMainCategory, StepsStateInPhoto } from "../stepsState";
 import { NewAdvertisement, UserContext } from "../../../context/Context";
 import Select from "react-select";
 
-import { FuelTypes } from "../../../common/data/SelectOptions.js";
+import { FuelTypes,RegionalOption } from "../../../common/data/SelectOptions.js";
 
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
-
+import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js";
 const Detail = (props) => {
   const [condition_bool, setcondition_bool] = useState(false);
   const [warranty_bool, setwarranty_bool] = useState(false);
 
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
+
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
+  useEffect(()=>{
+
+  },[])
+
+
+
   let [type, setType] = useState(advertisement._Fuel_Types);
-console.log(type, "fuletype")
+  console.log(type, "fuletype")
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
@@ -27,7 +34,7 @@ console.log(type, "fuletype")
         <hr />
         <Row className="justify-content-center">
           <Col md={10}>
-            {advertisement.type.kind !== "Number Plates" && (
+            {advertisement.type?.kind !== "Number Plates" && (
               <Form id="center-col">
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
@@ -47,41 +54,23 @@ console.log(type, "fuletype")
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>Year :</Form.Label>
-                  <Form.Control
-                    type="date"
-                    placeholder="Enter Year"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          year: data.target.value,
-                        },
-                      });
-                    }}
+                  <Form.Label style={{ color: "#fff" }}>Manufacturing Year :</Form.Label>
+                  <Select
+                    placeholder={"Select"}
+                    options={ManufacturingYearsOptions()}
+                    value={ManufacturingYearsOptions().find(obj=> obj.label === type)}
+                    isSearchable={true}
+ 
                   />
+
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Fuel Type :</Form.Label>
                   <div>
-                    {/* <Form.Control
-                      as="textarea"
-                      placeholder="Enter Fuel Type"
-                      onChange={(data) => {
-                        setAdvertisement({
-                          ...advertisement,
-                          type: {
-                            ...advertisement.type,
-                            fuel_type: data.target.value,
-                          },
-                        });
-                      }}
-                    /> */}
                     <Select
                       placeholder={"Fuel Type"}
                       options={FuelTypes()}
-                      value={FuelTypes().find((obj) => obj.label=== type)}
+                      value={FuelTypes().find((obj) => obj.label === type)}
                       isSearchable={false}
                       onChange={(data) => {
                         setType(data.label);
@@ -91,19 +80,16 @@ console.log(type, "fuletype")
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Region :</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter Region"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          region: data.target.value,
-                        },
-                      });
-                    }}
-                  />
+                  <Select
+                      placeholder={"Manufacturing Region"}
+                      options={RegionalOption()}
+                      value={RegionalOption().find((obj) => obj.label === type)}
+                      isSearchable={false}
+                      onChange={(data) => {
+                        setType(data.label);
+                      }}
+                    />
+
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Condition :</Form.Label>
@@ -164,7 +150,7 @@ console.log(type, "fuletype")
                     />
                   </Form.Group>
                 )}
-                {advertisement.type.kind == "Used Cars for sale" && (
+                {advertisement.type?.kind == "Used Cars for sale" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -257,7 +243,7 @@ console.log(type, "fuletype")
                   </div>
                 )}
 
-                {advertisement.type.kind == "MotorCycles" && (
+                {advertisement.type?.kind == "MotorCycles" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -298,7 +284,7 @@ console.log(type, "fuletype")
                   </div>
                 )}
 
-                {advertisement.type.kind == "Boats" && (
+                {advertisement.type?.kind == "Boats" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -355,7 +341,7 @@ console.log(type, "fuletype")
               </Form>
             )}
 
-            {advertisement.type.kind == "Number Plates" && (
+            {advertisement.type?.kind == "Number Plates" && (
               <Form id="center-col">
                 <h5>Plate Number</h5>
                 <Form.Group className="mb-3">
@@ -416,16 +402,14 @@ console.log(type, "fuletype")
               right
               className="back_btn"
               id="center-pos"
-              onClick={() => props.onClick(StepsStateInMainCategory)}
+              onClick={() => props.nextStep(StepsStateInMainCategory)}
             >
               Back
             </Button>
             <Button
               className="next_btn"
               id="center-pos"
-              onClick={() => {
-                props.onClick(StepsStateInPhoto);
-              }}
+              onClick={() =>props.nextStep(StepsStateInPhoto)}
             >
               Next
             </Button>
