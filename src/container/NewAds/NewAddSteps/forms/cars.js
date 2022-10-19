@@ -11,10 +11,12 @@ import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { useState } from "react";
 import { StepsStateInDetail } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import Car from "../../../../common/models/Car";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
+
   const [carDetails, setCarDetails] = useState({
     body_type: advertisement._bodyType,
     transmition: advertisement._transmission,
@@ -23,12 +25,14 @@ const Detail = (props) => {
 
   const updateData = () => {
     if (FormDataValidation(carDetails)) {
-      adsCtx.setAds({
-        ...advertisement,
+      console.log(advertisement,'before')
+      const d = Object.assign(new Car(), 
+      {...advertisement,
         _bodyType: carDetails.body_type,
         _transmission: carDetails.transmition,
-        _horsePower: carDetails.power,
+        _horsePower:carDetails.power,
       });
+      adsCtx.setAds(d);
       props.nextStep(StepsStateInDetail);
     } else {
       alert("Please enter required fields");

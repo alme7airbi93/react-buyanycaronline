@@ -1,13 +1,13 @@
-import React, {useState, useContext, Component} from "react";
+import React, {useState, useContext, Component, useEffect} from "react";
 import {Button, Col, Row, Form} from "react-bootstrap";
 import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
 import {NewAdvertisement} from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
-import AdvertisementRepo from "../../../common/repository/AdvertisementRepo";
 
 
 import "./scrollbar.css";
+import { createAdvertisement } from "../../../common/repository/AdvertisementDB";
 
 const GoogleMap = (props) => {
   
@@ -15,17 +15,20 @@ const GoogleMap = (props) => {
 	const advertisement = adsCtx.ads;
 
 	const center = { lat: 24.4539, lng: 54.3773 };
-	const zoom = 4;    
+	const zoom = 4;
+	
+	useEffect(()=>{
+		console.log(advertisement,'in google')
+	},[])
 
-	const print=()=>{
-		const adv_JSONstring = JSON.stringify(advertisement); 
-		console.log(advertisement);        
-		// console.log(adv_JSONstring);        
-	};
 
 	const saveData = () =>{
-		const adsInstance =  new AdvertisementRepo();
-		adsInstance.storeData(advertisement).then((res)=>console.log(res))
+		createAdvertisement(advertisement).then((res)=>{
+			if(res.success){
+				alert('Data uploaded successfully')
+
+			}
+		})
 	}
     
 	return (    

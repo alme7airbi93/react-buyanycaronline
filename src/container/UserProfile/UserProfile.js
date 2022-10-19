@@ -1,20 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 import { UserContext } from "../../context/Context";
 import AccountSettings from "./AccountSettings/AccountSettings";
 import EditProfile from "../../components/Modal/Editprofile/EditProfile";
+import { getUserByUsername } from "../../common/repository/UserDB";
 
 const UserProfile = () => {
   const navigate = useNavigate();
 
-	const ctx = useContext(UserContext);
-	const user =  ctx.getUserData()
+  const ctx = useContext(UserContext);
+  const user = ctx.getUserData()
 
-	const profileHandler = () => {
-		navigate("/new-ads");
-	};
+  //State
+  const [adsData, setAdsData] = useState([])
+
+
+  useEffect(() => {
+
+  },[])
+
+  const profileHandler = () => {
+    navigate("/new-ads");
+  };
+
 
   const [open, setOpen] = useState(false);
   const handleOpen = (val) => {
@@ -38,26 +48,35 @@ const UserProfile = () => {
           <Col md={6} className="user_info">
             <h5>Manage Ads</h5>
             <hr />
-            <h5>You have not published any advertisement yet</h5>
-            <br />
+            {
+              adsData && adsData.length ? (
 
-            <div className="d-flex justify-content-between">
-              <div>
-                <p>
-                  Title: <span>ad.title</span>
-                </p>
-                <p>
-                  Price: <span>ad.price</span>
-                </p>
-                <p>
-                  Description: <span>ad.description</span>
-                </p>
-              </div>
-              <div>
-                <button className="search_btn mb-3">Modify</button>
-                <button className="search_btn">Mark as Sold</button>
-              </div>
-            </div>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <p>
+                      Title: <span>ad.title</span>
+                    </p>
+                    <p>
+                      Price: <span>ad.price</span>
+                    </p>
+                    <p>
+                      Description: <span>ad.description</span>
+                    </p>
+                  </div>
+                  <div>
+                    <button className="search_btn mb-3">Modify</button>
+                    <button className="search_btn">Mark as Sold</button>
+                  </div>
+                </div>
+              )
+                : (
+                  <>
+                    <h5>You have not published any advertisement yet</h5>
+                    <br />
+                  </>
+
+                )
+            }
           </Col>
           <Col md={2} className="user_info">
             <h5>New Ad?</h5>
