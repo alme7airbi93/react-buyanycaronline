@@ -59,6 +59,9 @@ const Detail = (props) => {
   };
 
 
+  useEffect(()=>{
+    console.log(advertisement._advertisement_type == "Motorcycles", 'ads Type in details page')
+  },[])
 
 
   
@@ -71,7 +74,7 @@ const Detail = (props) => {
         <hr />
         <Row className="justify-content-center">
           <Col md={12}>
-            {advertisement.type?.kind !== "Number Plates" && (
+            {advertisement._advertisement_type !== "Number Plates" && (
               <Form id="center-col">
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
@@ -187,7 +190,7 @@ const Detail = (props) => {
                     />
                   </Form.Group>
                 )}
-                {advertisement.type?.kind == "Used Cars for sale" && (
+                {advertisement._advertisement_type == "Used Cars for sale" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -280,7 +283,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement.type?.kind == "MotorCycles" && (
+                {advertisement._advertisement_type == "Motorcycles" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -321,7 +324,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement.type?.kind == "Boats" && (
+                {advertisement._advertisement_type == "Boats" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -378,7 +381,7 @@ const Detail = (props) => {
               </Form>
             )}
 
-            {advertisement.type?.kind == "Number Plates" && (
+            {advertisement._advertisement_type == "Number Plates" && (
               <Form id="center-col">
                 <h5>Plate Number</h5>
                 <Form.Group className="mb-3">
