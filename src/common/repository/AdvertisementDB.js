@@ -39,6 +39,7 @@ export const advertisementStatusChange = async (advertId = null, value) => {
 export const updateAdvertisement = async (advertId = null, value) => {
 	console.log("================= Update Advertisement=================");
 	console.log("Updating : ", advertId);
+	console.log(value);
 	checkTypeOfAdvertisement(value);
 	try {
 		let update_doc = await updateDoc(doc(db, doc_collection, advertId), preSaveOrUpdateAClass(value));

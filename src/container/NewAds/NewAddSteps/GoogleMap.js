@@ -7,9 +7,10 @@ import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 
 
 import "./scrollbar.css";
-import { createAdvertisement } from "../../../common/repository/AdvertisementDB";
+import { createAdvertisement,updateAdvertisement } from "../../../common/repository/AdvertisementDB";
 import {
 	getDownloadURL,
+	uploadString,
 	uploadBytes,
 	getStorage,
 	listAll,
@@ -29,50 +30,43 @@ const GoogleMap = (props) => {
 	
 	useEffect(()=>{
 		setPhotos(advertisement.photos)
-		console.log(advertisement,'in google')
+		//console.log(advertisement,'in Map')
 	},[])
 
 
-	const uploadImageNow = async (file,id,filename) => {
-		console.log(file,id,filename+'.png','file')
-		const imagePath = 'ads/'+id;
-		if (!file) {
-		  alert('Image cannnot be blank')
-		  return
-		}
+	const uploadImageNow = async (file,id) => {
+		const imagePath = 'advertisement/'+id;
+		const date = new Date();
+		const filename = Math.floor(date.getTime() / 1000);
 		const storage = getStorage()
-		const storageRef = ref(storage, imagePath + `/${filename}.png`)
-		const task = await uploadBytes(storageRef, file).then((res) =>
+		const storageRef = ref(storage, imagePath + `/${filename}`)
+		await uploadString(storageRef, file[0],'data_url').then((res) =>
 		  console.log(res.ref),
 		)
 		const url = await getDownloadURL(storageRef)
-		console.log(url,'url')
-		// await uploadEventImage(eventId, url, imageType)
-		// toast('image uploaded successfully')
-		// setLoading(false)
-		// refreshData(true)
+		return url
 	  }
 
 
 	const savePhotos = (id) => {
-		var filename = 1;
+		const url = [];
 		photos.forEach((data)=> {
-			filename = filename + 1;
-			uploadImageNow(data,id,filename)
+			uploadImageNow(data,id).then((res)=>url.push(res))
 		})
+		advertisement._photos = url;
+		console.log(advertisement);
+		updateAdvertisement(id,advertisement).then(res=>console.log(res,'res image url saved'))
+
 	}
 
 	const saveData = () =>{
 		var dt = advertisement;
 		dt.photos = [];
-		console.log(dt,'save data')
-		console.log(photos,'photos')
 		createAdvertisement(advertisement).then((res)=>{
 			if(res.success){
 				console.log(res.data,res)
 				savePhotos(res.data)
 				alert('Data uploaded successfully')
-
 			}
 		})
 	}
