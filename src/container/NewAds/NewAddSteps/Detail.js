@@ -324,60 +324,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement._advertisement_type == "Boats" && (
-                  <div>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>
-                        Length :
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Length"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              length: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>Type :</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Type"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              type: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>Hours :</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Hours"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              hours: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                  </div>
-                )}
+               
               </Form>
             )}
 
