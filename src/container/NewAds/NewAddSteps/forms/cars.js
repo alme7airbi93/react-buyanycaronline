@@ -9,7 +9,7 @@ import {
 } from "../../../../common/data/SelectOptions.js";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { useState } from "react";
-import { StepsStateInDetail } from "../../stepsState";
+import { StepsStateInDetail, StepsStateInSummary } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
 
 const Detail = (props) => {

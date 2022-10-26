@@ -5,7 +5,7 @@ import { NewAdvertisement, UserContext } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { CylinderTypes } from "../../../../common/data/SelectOptions.js";
 import Select from "react-select";
-import { StepsStateInDetail } from "../../stepsState";
+import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
 
 
 const Detail = (props) => {

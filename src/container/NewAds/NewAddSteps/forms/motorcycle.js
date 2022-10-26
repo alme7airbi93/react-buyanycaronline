@@ -4,7 +4,7 @@ import { StepsStateInMainCategory, StepsStateInPhoto } from "../../stepsState";
 import { NewAdvertisement, UserContext } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import Select from "react-select";
-import { StepsStateInDetail } from "../../stepsState";
+import { StepsStateInDetail,StepsStateInSummary} from "../../stepsState";
 
 import { EngineTypes } from "../../../../common/data/SelectOptions.js";
 import { TravelDisttance } from "../../../../common/data/SelectOptions.js";

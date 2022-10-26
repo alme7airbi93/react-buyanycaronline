@@ -4,7 +4,7 @@ import { NewAdvertisement } from "../../../../context/Context";
 import { BoatOptions } from "../../../../common/data/SelectOptions.js";
 import Select from "react-select";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
-import { StepsStateInDetail } from "../../stepsState";
+import { StepsStateInDetail, StepsStateInSummary} from "../../stepsState";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);

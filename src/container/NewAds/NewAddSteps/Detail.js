@@ -10,6 +10,7 @@ import {
   ColorTypes,
   BodyCondition,
   WarrantyTypes,
+  SteeringTypes,
 } from "../../../common/data/SelectOptions.js";
 
 import "./scrollbar.css";
@@ -30,6 +31,7 @@ const Detail = (props) => {
   let [type, setType] = useState(advertisement._Fuel_Types);
   let [color, setColor] = useState(advertisement._Color_Types);
   let [condition, setCondition] = useState(advertisement._Body_Condition);
+  let [steeringside, setSteeringside] = useState(advertisement._Steering_Types);
   let [warrantyTypes, setWarrantyTypes] = useState(
     advertisement._Warranty_Types
   );
@@ -143,25 +145,6 @@ const Detail = (props) => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Warrenty :</Form.Label>
-                  {/* <Form.Control
-                    type="checkbox"
-                    placeholder="Enter Warrenty"
-                    onChange={() => {
-                      if (warranty_bool === false) {
-                        setwarranty_bool(true);
-                        setAdvertisement({
-                          ...advertisement,
-                          type: { ...advertisement.type, warrenty: true },
-                        });
-                      } else {
-                        setwarranty_bool(false);
-                        setAdvertisement({
-                          ...advertisement,
-                          type: { ...advertisement.type, warrenty: false },
-                        });
-                      }
-                    }}
-                  /> */}
                   <Select
                     placeholder={"Enter Warrenty"}
                     options={WarrantyTypes()}
@@ -171,6 +154,22 @@ const Detail = (props) => {
                     isSearchable={false}
                     onChange={(data) => {
                       setWarrantyTypes(data.label);
+                    }}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label style={{ color: "#fff" }}>
+                    Steering Types :
+                  </Form.Label>
+                  <Select
+                    placeholder={"Steering Side"}
+                    options={SteeringTypes()}
+                    value={SteeringTypes().find(
+                      (obj) => obj.label === steeringside
+                    )}
+                    isSearchable={false}
+                    onChange={(data) => {
+                      setSteeringside(data.label);
                     }}
                   />
                 </Form.Group>
@@ -435,7 +434,11 @@ const Detail = (props) => {
               </Form>
             )}
           </Col>
-          <Col md={10} className="btn-group" style={{ align: "center",paddingTop: "15px" }}>
+          <Col
+            md={10}
+            className="btn-group"
+            style={{ align: "center", paddingTop: "15px" }}
+          >
             <br />
             <Button
               right

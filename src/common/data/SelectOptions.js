@@ -13,6 +13,7 @@ import { Body_Condition } from "./Body_Condition.js";
 import { Warranty_Types } from "./Warranty_Types.js";
 import { Region } from "./Region.js";
 import { Cylinder_Types } from "./Cylinder_Types.js";
+import { Steering_Types } from "./Steering_Types.js";
 
 export const AdvertisementOptions = () => {
   let options = [];
@@ -121,6 +122,13 @@ export const WarrantyTypes = () => {
 export const CylinderTypes = () => {
   let options = [];
   for (const [key, val] of Object.entries(Cylinder_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+export const SteeringTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Steering_Types)) {
     options.push({ value: key, label: val });
   }
   return options;

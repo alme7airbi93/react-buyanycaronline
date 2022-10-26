@@ -1,13 +1,20 @@
 import { Form } from "react-bootstrap";
+import { Button,} from "react-bootstrap";
 import React, { useContext } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
+import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
 
 
-const Detail = () => {
+
+const Detail = (props) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
 
+
+  const updateData = () => {
+    props.nextStep(StepsStateInDetail);
+  };
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
@@ -57,6 +64,18 @@ const Detail = () => {
           }}
         />
       </Form.Group>
+      <div className="d-flex justify-content-space-between">
+      <Button
+        right
+        className="back_btn"
+        onClick={() => props.nextStep(StepsStateInSummary)}
+      >
+        Back
+      </Button>
+      <Button className="next_btn" onClick={() => updateData()}>
+        Next
+      </Button>
+      </div>
     </React.Fragment>
   );
 };
