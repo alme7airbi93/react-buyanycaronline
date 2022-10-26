@@ -1,4 +1,4 @@
-import {doc, addDoc, getDoc, collection, updateDoc, getDocs} from "firebase/firestore";
+import {doc, addDoc, getDoc, collection, updateDoc, getDocs,arrayUnion} from "firebase/firestore";
 import {
 	checkAdvertisemntType,
 	checkTypeOfAdvertisement
@@ -78,5 +78,23 @@ export const getAllAdvertisement = async () => {
 		throw Error("Advertisement not found");
 	}
 };
+
+export const updateArrayField = async (advertId = null, value) =>{
+	console.log("================= UPDATING ARRAY FIELD =================");
+	console.log(value)
+	try{
+		let docRef = doc(db, doc_collection, advertId);
+		let update_doc = await updateDoc(docRef, {
+			_photos: arrayUnion(...value)
+		});
+		return{success:"success", msg:"data updated successfully"}
+	}
+	catch(e){
+		return{ success:false, msg:e}
+
+	}
+	
+
+}
 
 

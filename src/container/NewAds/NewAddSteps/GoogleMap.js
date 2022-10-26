@@ -7,7 +7,7 @@ import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 
 
 import "./scrollbar.css";
-import { createAdvertisement,updateAdvertisement } from "../../../common/repository/AdvertisementDB";
+import { createAdvertisement,updateAdvertisement,updateArrayField} from "../../../common/repository/AdvertisementDB";
 import {
 	getDownloadURL,
 	uploadString,
@@ -48,24 +48,24 @@ const GoogleMap = (props) => {
 	  }
 
 
-	const savePhotos = (id) => {
+	const savePhotos = async (id) => {
 		const url = [];
-		photos.forEach((data)=> {
-			uploadImageNow(data,id).then((res)=>url.push(res))
-		})
-		advertisement._photos = url;
-		console.log(advertisement);
-		updateAdvertisement(id,advertisement).then(res=>console.log(res,'res image url saved'))
+		for(let i= 0; i<photos.length;i++){
+			await uploadImageNow(photos[i],id).then((res)=>url.push(res))
+		}
+		// advertisement._photos = url;
+		// console.log(advertisement);
+		updateArrayField(id,url).then(res=>console.log(res,'res image url saved'))
 
 	}
 
 	const saveData = () =>{
 		var dt = advertisement;
 		dt.photos = [];
-		createAdvertisement(advertisement).then((res)=>{
+		createAdvertisement(advertisement).then(async (res)=>{
 			if(res.success){
 				console.log(res.data,res)
-				savePhotos(res.data)
+				await savePhotos(res.data)
 				alert('Data uploaded successfully')
 			}
 		})
@@ -92,7 +92,7 @@ const GoogleMap = (props) => {
 						<br /> 
 					</Col>
 					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInPhoto)} >Back</Button>
+						<Button right className="back_btn" onClick={() => props.nextStep(StepsStateInPhoto)} >Back</Button>
 						<Button className="next_btn" onClick={saveData}>Done</Button>
 					</Col> 
 				</Row>
