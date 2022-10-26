@@ -11,20 +11,16 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   const ctx = useContext(UserContext);
-  const user = ctx.getUserData()
+  const user = ctx.getUserData();
 
   //State
-  const [adsData, setAdsData] = useState([])
+  const [adsData, setAdsData] = useState([]);
 
-
-  useEffect(() => {
-
-  },[])
+  useEffect(() => {}, []);
 
   const profileHandler = () => {
     navigate("/new-ads");
   };
-
 
   const [open, setOpen] = useState(false);
   const handleOpen = (val) => {
@@ -48,35 +44,30 @@ const UserProfile = () => {
           <Col md={6} className="user_info">
             <h5>Manage Ads</h5>
             <hr />
-            {
-              adsData && adsData.length ? (
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <p>
-                      Title: <span>ad.title</span>
-                    </p>
-                    <p>
-                      Price: <span>ad.price</span>
-                    </p>
-                    <p>
-                      Description: <span>ad.description</span>
-                    </p>
-                  </div>
-                  <div>
-                    <button className="search_btn mb-3">Modify</button>
-                    <button className="search_btn">Mark as Sold</button>
-                  </div>
+            {adsData && adsData.length ? (
+              <div className="d-flex justify-content-between">
+                <div>
+                  <p>
+                    Title: <span>ad.title</span>
+                  </p>
+                  <p>
+                    Price: <span>ad.price</span>
+                  </p>
+                  <p>
+                    Description: <span>ad.description</span>
+                  </p>
                 </div>
-              )
-                : (
-                  <>
-                    <h5>You have not published any advertisement yet</h5>
-                    <br />
-                  </>
-
-                )
-            }
+                <div>
+                  <button className="search_btn mb-3">Modify</button>
+                  <button className="search_btn">Mark as Sold</button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <h5>You have not published any advertisement yet</h5>
+                <br />
+              </>
+            )}
           </Col>
           <Col md={2} className="user_info">
             <h5>New Ad?</h5>

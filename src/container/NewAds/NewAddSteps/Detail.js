@@ -59,6 +59,8 @@ const Detail = (props) => {
   };
 
 
+  useEffect(()=>{
+  },[])
 
 
   
@@ -71,7 +73,7 @@ const Detail = (props) => {
         <hr />
         <Row className="justify-content-center">
           <Col md={12}>
-            {advertisement.type?.kind !== "Number Plates" && (
+            {advertisement._advertisement_type !== "Plate Numbers" && (
               <Form id="center-col">
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
@@ -187,7 +189,7 @@ const Detail = (props) => {
                     />
                   </Form.Group>
                 )}
-                {advertisement.type?.kind == "Used Cars for sale" && (
+                {advertisement._advertisement_type == "Used Cars for sale" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -280,7 +282,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement.type?.kind == "MotorCycles" && (
+                {advertisement._advertisement_type == "Motorcycles" && (
                   <div>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
@@ -321,115 +323,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement.type?.kind == "Boats" && (
-                  <div>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>
-                        Length :
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Length"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              length: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>Type :</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Type"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              type: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>Hours :</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Hours"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              hours: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                  </div>
-                )}
-              </Form>
-            )}
-
-            {advertisement.type?.kind == "Number Plates" && (
-              <Form id="center-col">
-                <h5>Plate Number</h5>
-                <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>Number :</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter Number"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          number: data.target.value,
-                        },
-                      });
-                    }}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>
-                    Number Code :
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter Number code"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          number_code: data.target.value,
-                        },
-                      });
-                    }}
-                  />
-                </Form.Group>
-                {user.phone === undefined && (
-                  <Form.Group className="mb-3">
-                    <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Enter Phone number"
-                      onChange={(data) => {
-                        setAdvertisement({
-                          ...advertisement,
-                          onwer_phone: data.target.value,
-                        });
-                      }}
-                    />
-                  </Form.Group>
-                )}
+               
               </Form>
             )}
           </Col>

@@ -4,6 +4,8 @@ import { StepsStateInPhoto, StepsStateInDetail } from "../stepsState";
 import { NewAdvertisement } from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import UserProfile from "../../UserProfile/UserProfile";
+import { useNavigate } from "react-router-dom";
 
 import "./scrollbar.css";
 import {
@@ -21,6 +23,7 @@ import {
 } from "firebase/storage";
 
 const GoogleMap = (props) => {
+  let navigate = useNavigate();
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
   const [photos, setPhotos] = useState();
@@ -47,14 +50,14 @@ const GoogleMap = (props) => {
     return url;
   };
 
-  const savePhotos = (id) => {
+  const savePhotos = async (id) => {
     const url = [];
-    photos.forEach((data) => {
-      uploadImageNow(data, id).then((res) => url.push(res));
-    });
-    advertisement._photos = url;
-    console.log(advertisement);
-    updateAdvertisement(id, advertisement).then((res) =>
+    for (let i = 0; i < photos.length; i++) {
+      await uploadImageNow(photos[i], id).then((res) => url.push(res));
+    }
+    // advertisement._photos = url;
+    // console.log(advertisement);
+    updateArrayField(id, url).then((res) =>
       console.log(res, "res image url saved")
     );
   };
@@ -68,6 +71,7 @@ const GoogleMap = (props) => {
         console.log(res.data, res);
         savePhotos(res.data);
         setLoading(false);
+        navigate("/user-profile");
         alert("Data uploaded successfully");
       }
     });
@@ -114,8 +118,8 @@ const GoogleMap = (props) => {
       {loading && (
         <>
           <div className="loder">
-            <div class="spinner-border" role="status">
-              <span class="visually-hidden"></span>
+            <div className="spinner-border text-dark" role="status">
+              <span className="visually-hidden"></span>
             </div>
           </div>
         </>

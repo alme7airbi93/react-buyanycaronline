@@ -1,18 +1,53 @@
 import { Form, Button } from "react-bootstrap";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import { BoatOptions } from "../../../../common/data/SelectOptions.js";
 import Select from "react-select";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { StepsStateInDetail, StepsStateInSummary} from "../../stepsState";
+import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import Boat from "../../../../common/models/Boat";
+import { StepsStateInPhoto } from "../../stepsState";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
 
+ 
+
+  const [boatData,setBoatData] =  useState({
+    length:'',
+    type:'',
+    hours:'',
+  })
+
+  useEffect(()=>{
+    setBoatData({...boatData,
+      length:advertisement.length,
+      type:advertisement.type,
+      hours:advertisement.hours,
+    })
+
+  },[])
+
   const updateData = () => {
-    props.nextStep(StepsStateInDetail);
+    if (FormDataValidation(boatData)) {
+      const d = Object.assign(new Boat(), 
+      {...advertisement,
+        _length: boatData.length,
+        // _type:boatData.type,
+        _hours:boatData.hours,
+      });
+      adsCtx.setAds(d);
+      props.nextStep(StepsStateInDetail);
+    } else {
+      alert("Please enter required fields");
+    }
   };
+
+  // const updateData = () => {
+  //   props.nextStep(StepsStateInDetail);
+  // };
 
   return (
     <React.Fragment>
@@ -23,10 +58,10 @@ const Detail = (props) => {
           type="number"
           placeholder="Enter length"
           className="input-fields-theme"
-          value={advertisement.length}
+          value={boatData.length}
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setBoatData({
+              ...boatData,
               length: data.target.value,
             });
           }}
@@ -39,12 +74,12 @@ const Detail = (props) => {
             placeholder={"Select types"}
             options={BoatOptions()}
             value={BoatOptions().find(
-              (obj) => obj.value === advertisement.type
+              (obj) => obj.value === boatData.type
             )}
             isSearchable={false}
             onChange={(data) => {
-              setAdvertisement({
-                ...advertisement,
+              setBoatData({
+                ...boatData,
                 type: data.value,
               });
             }}
@@ -58,10 +93,10 @@ const Detail = (props) => {
           type="number"
           className="input-fields-theme"
           placeholder="Enter hours"
-          value={advertisement.hours}
+          value={boatData.hours}
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setBoatData({
+              ...boatData,
               hours: data.target.value,
             });
           }}

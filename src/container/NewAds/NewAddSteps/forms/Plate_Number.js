@@ -1,17 +1,51 @@
 import { Form } from "react-bootstrap";
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import { Button,} from "react-bootstrap";
 import { NewAdvertisement } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
-import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
+import { StepsStateInSummary,StepsStateInPhoto } from "../../stepsState";
+import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import PlateNumber from "../../../../common/models/PlateNumber";
 
 
 const Detail = (props ) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
+  // const updateData = () => {
+  //   props.nextStep(StepsStateInDetail);
+  //};
+
+  const [plateData,setPlateData] =  useState({
+    city:'',
+    number:'',
+    number_code:'',
+  })
+
+  useEffect(()=>{
+    setPlateData({...plateData,
+      city:advertisement.city,
+      number:advertisement.number,
+      number_code:advertisement.numberCode,
+    })
+
+  },[])
+
   const updateData = () => {
-    props.nextStep(StepsStateInDetail);
+    if (FormDataValidation(plateData)) {
+      const d = Object.assign(new PlateNumber(), 
+      {...advertisement,
+        _city: plateData.city,
+        _number:plateData.number,
+        _numberCode:plateData.number_code,
+      });
+      adsCtx.setAds(d);
+      props.nextStep(StepsStateInPhoto);
+    } else {
+      alert("Please enter required fields");
+    }
   };
+
+
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
@@ -21,9 +55,9 @@ const Detail = (props ) => {
           placeholder="Enter City"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
-              citry: data.target.value});
+            setPlateData({
+              ...plateData,
+              city: data.target.value});
           }}
         />
       </Form.Group>
@@ -34,8 +68,8 @@ const Detail = (props ) => {
           placeholder="Enter number"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setPlateData({
+              ...plateData,
               number: data.target.value});
           }}
         />
@@ -48,8 +82,8 @@ const Detail = (props ) => {
           placeholder="Enter number_code"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setPlateData({
+              ...plateData,
               number_code: (data.target.value)});
           }}
         />

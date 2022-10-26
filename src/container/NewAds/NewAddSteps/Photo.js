@@ -5,6 +5,7 @@ import {NewAdvertisement} from "../../../context/Context";
 import ImageUploader from "react-images-upload";
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
 import Car from "../../../common/models/Car";
 import {
 	getDownloadURL,
@@ -19,6 +20,7 @@ import {
 const UploadAndDisplayImage = (props) => {
 	const [selectedImage, setSelectedImage] = useState(null);  
 	const [photos, setphotos]=useState([]);
+
 	const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
   
@@ -29,8 +31,10 @@ const UploadAndDisplayImage = (props) => {
 
 
 	const updateData = ()=>{
+		const instance =  checkAdvertisemntType(advertisement)
+		console.log(instance);
 		if(photos.length){
-			const d = Object.assign(new Car(),
+			const d = Object.assign(instance,
 				{
 					...advertisement,
 					_photos:photos
@@ -41,37 +45,6 @@ const UploadAndDisplayImage = (props) => {
 
 	}
 
-	const uploadImageToCloud = ()=>{
-		
-		photos.forEach((data)=>uploadImageNow(data))
-
-	}
-
-	
-
-
-	const uploadImageNow = async (file) => {
-		const imagePath = 'ads/'
-		if (!file) {
-		  alert('Image cannnot be blank')
-		  return
-		}
-		const storage = getStorage()
-		const storageRef = ref(storage, imagePath + `/${file.name}`)
-		const task = await uploadBytes(storageRef, file).then((res) =>
-		  console.log(res.ref),
-		)
-		const url = await getDownloadURL(storageRef)
-		// await uploadEventImage(eventId, url, imageType)
-		// toast('image uploaded successfully')
-		// setLoading(false)
-		// refreshData(true)
-	  }
-
-	useEffect(() => {
-		console.log(advertisement, "Advertisment in Main Category");
-		console.log(Object.getPrototypeOf(advertisement), "Object Checking");
-	  }, []);
 
 	return (
 		<React.Fragment>     
