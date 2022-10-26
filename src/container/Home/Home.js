@@ -4,12 +4,12 @@ import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Select from "react-select";
 import { makes, models} from "../../common/data";
-import {AdvertisementOptions} from "../../common/data/SelectOptions";
-
+import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionTypes} from "../../common/data/SelectOptions";
+import CategorySelection from "../NewAds/NewAddSteps/CategorySelection";
+import { ManufacturingYearsOptions } from "../../common/data/SelectOptions";
 
 
 const Home = () => {
-
 	const [advSearch, setAdvSearch] = useState(false);
 
 	const [vehicleValue, setVehicle] = useState("");
@@ -125,31 +125,31 @@ const Home = () => {
 													<div className={`${rowClass} ${toggleClass}`}>
 														<Select
 															placeholder={"Select Year"}
-															options={options}
+															options={ManufacturingYearsOptions()}
 														/>
 													</div>
 													<div className={`${rowClass} ${toggleClass}`}>
 														<Select
 															placeholder={"Select Color"}
-															options={options}
+															options={ColorTypes()}
 														/>
 													</div>
 													<div className={`${rowClass} ${toggleClass}`}>
 														<Select
 															placeholder={"Select Transmission"}
-															options={options}
+															options={TransmitionTypes()}
 														/>
 													</div>
 													<div className={`${rowClass} ${toggleClass}`}>
 														<Select
 															placeholder={"Select FuelType"}
-															options={options}
+															options={FuelTypes()}
 														/>
 													</div>
 													<div className={`${rowClass} ${toggleClass}`}>
 														<Select
 															placeholder={"Select Condition"}
-															options={options}
+															options={BodyCondition()}
 														/>
 													</div>
 													<div className="col-md-3">

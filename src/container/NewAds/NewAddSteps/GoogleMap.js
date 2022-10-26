@@ -1,104 +1,127 @@
-import React, {useState, useContext, Component, useEffect} from "react";
-import {Button, Col, Row, Form} from "react-bootstrap";
-import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
-import {NewAdvertisement} from "../../../context/Context";
+import React, { useState, useContext, Component, useEffect } from "react";
+import { Button, Col, Row, Form } from "react-bootstrap";
+import { StepsStateInPhoto, StepsStateInDetail } from "../stepsState";
+import { NewAdvertisement } from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 
-
 import "./scrollbar.css";
-import { createAdvertisement,updateAdvertisement } from "../../../common/repository/AdvertisementDB";
 import {
-	getDownloadURL,
-	uploadString,
-	uploadBytes,
-	getStorage,
-	listAll,
-	ref,
-	uploadBytesResumable,
-  } from 'firebase/storage'
-
+  createAdvertisement,
+  updateAdvertisement,
+} from "../../../common/repository/AdvertisementDB";
+import {
+  getDownloadURL,
+  uploadString,
+  uploadBytes,
+  getStorage,
+  listAll,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const GoogleMap = (props) => {
-  
-	const adsCtx =  useContext(AdvertismentCtx)
-	const advertisement = adsCtx.ads;
-	const [photos,setPhotos] = useState()
+  const adsCtx = useContext(AdvertismentCtx);
+  const advertisement = adsCtx.ads;
+  const [photos, setPhotos] = useState();
+  const [loading, setLoading] = useState(false);
 
-	const center = { lat: 24.4539, lng: 54.3773 };
-	const zoom = 4;
-	
-	useEffect(()=>{
-		setPhotos(advertisement.photos)
-		//console.log(advertisement,'in Map')
-	},[])
+  const center = { lat: 24.4539, lng: 54.3773 };
+  const zoom = 4;
 
+  useEffect(() => {
+    setPhotos(advertisement.photos);
+    //console.log(advertisement,'in Map')
+  }, []);
 
-	const uploadImageNow = async (file,id) => {
-		const imagePath = 'advertisement/'+id;
-		const date = new Date();
-		const filename = Math.floor(date.getTime() / 1000);
-		const storage = getStorage()
-		const storageRef = ref(storage, imagePath + `/${filename}`)
-		await uploadString(storageRef, file[0],'data_url').then((res) =>
-		  console.log(res.ref),
-		)
-		const url = await getDownloadURL(storageRef)
-		return url
-	  }
+  const uploadImageNow = async (file, id) => {
+    const imagePath = "advertisement/" + id;
+    const date = new Date();
+    const filename = Math.floor(date.getTime() / 1000);
+    const storage = getStorage();
+    const storageRef = ref(storage, imagePath + `/${filename}`);
+    await uploadString(storageRef, file[0], "data_url").then((res) =>
+      console.log(res.ref)
+    );
+    const url = await getDownloadURL(storageRef);
+    return url;
+  };
 
+  const savePhotos = (id) => {
+    const url = [];
+    photos.forEach((data) => {
+      uploadImageNow(data, id).then((res) => url.push(res));
+    });
+    advertisement._photos = url;
+    console.log(advertisement);
+    updateAdvertisement(id, advertisement).then((res) =>
+      console.log(res, "res image url saved")
+    );
+  };
 
-	const savePhotos = (id) => {
-		const url = [];
-		photos.forEach((data)=> {
-			uploadImageNow(data,id).then((res)=>url.push(res))
-		})
-		advertisement._photos = url;
-		console.log(advertisement);
-		updateAdvertisement(id,advertisement).then(res=>console.log(res,'res image url saved'))
+  const saveData = () => {
+    setLoading(true);
+    var dt = advertisement;
+    dt.photos = [];
+    createAdvertisement(advertisement).then((res) => {
+      if (res.success) {
+        console.log(res.data, res);
+        savePhotos(res.data);
+        setLoading(false);
+        alert("Data uploaded successfully");
+      }
+    });
+  };
 
-	}
-
-	const saveData = () =>{
-		var dt = advertisement;
-		dt.photos = [];
-		createAdvertisement(advertisement).then((res)=>{
-			if(res.success){
-				console.log(res.data,res)
-				savePhotos(res.data)
-				alert('Data uploaded successfully')
-			}
-		})
-	}
-    
-	return (    
-		<React.Fragment>     
-			<Col md={5} className="find_details">
-				<h5>Select location</h5>
-				<hr/>
-				<Row className="justify-content-center">
-					<Col md={10} id="center-pos">
-						<div style={{ height: "60vh", width: "100%" }}>
-							<GoogleMapReact
-								bootstrapURLKeys={{ key: "AIzaSyDnZHCNVuYH8lZSMZtuHzJ4677eUi6AE8w" }}
-								defaultCenter={center}
-								defaultZoom={zoom}
-								onClick={ev => {
-									setAdvertisement({...advertisement, "location":{"lat":ev.lat, "long":ev.lng}});                                                                
-								}}
-							>
-							</GoogleMapReact>            
-						</div>
-						<br /> 
-					</Col>
-					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInPhoto)} >Back</Button>
-						<Button className="next_btn" onClick={saveData}>Done</Button>
-					</Col> 
-				</Row>
-			</Col>            
-		</React.Fragment>
-	);     
+  return (
+    <React.Fragment>
+      <Col md={5} className="find_details">
+        <h5>Select location</h5>
+        <hr />
+        <Row className="justify-content-center">
+          <Col md={10} id="center-pos">
+            <div style={{ height: "60vh", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{
+                  key: "AIzaSyDnZHCNVuYH8lZSMZtuHzJ4677eUi6AE8w",
+                }}
+                defaultCenter={center}
+                defaultZoom={zoom}
+                onClick={(ev) => {
+                  setAdvertisement({
+                    ...advertisement,
+                    location: { lat: ev.lat, long: ev.lng },
+                  });
+                }}
+              ></GoogleMapReact>
+            </div>
+            <br />
+          </Col>
+          <Col md={10} className="btn-group">
+            <Button
+              right
+              className="back_btn"
+              onClick={() => props.onClick(StepsStateInPhoto)}
+            >
+              Back
+            </Button>
+            <Button className="next_btn" onClick={saveData}>
+              Done
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+      {loading && (
+        <>
+          <div className="loder">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+          </div>
+        </>
+      )}
+    </React.Fragment>
+  );
 };
 
 export default GoogleMap;
