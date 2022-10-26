@@ -60,7 +60,6 @@ const Detail = (props) => {
 
 
   useEffect(()=>{
-    console.log(advertisement._advertisement_type == "Motorcycles", 'ads Type in details page')
   },[])
 
 
@@ -74,7 +73,7 @@ const Detail = (props) => {
         <hr />
         <Row className="justify-content-center">
           <Col md={12}>
-            {advertisement._advertisement_type !== "Number Plates" && (
+            {advertisement._advertisement_type !== "Plate Numbers" && (
               <Form id="center-col">
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
@@ -325,61 +324,6 @@ const Detail = (props) => {
                 )}
 
                
-              </Form>
-            )}
-
-            {advertisement._advertisement_type == "Number Plates" && (
-              <Form id="center-col">
-                <h5>Plate Number</h5>
-                <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>Number :</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter Number"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          number: data.target.value,
-                        },
-                      });
-                    }}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>
-                    Number Code :
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    placeholder="Enter Number code"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          number_code: data.target.value,
-                        },
-                      });
-                    }}
-                  />
-                </Form.Group>
-                {user.phone === undefined && (
-                  <Form.Group className="mb-3">
-                    <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Enter Phone number"
-                      onChange={(data) => {
-                        setAdvertisement({
-                          ...advertisement,
-                          onwer_phone: data.target.value,
-                        });
-                      }}
-                    />
-                  </Form.Group>
-                )}
               </Form>
             )}
           </Col>
