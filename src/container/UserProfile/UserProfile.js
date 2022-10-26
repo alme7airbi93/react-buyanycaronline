@@ -6,6 +6,7 @@ import { UserContext } from "../../context/Context";
 import AccountSettings from "./AccountSettings/AccountSettings";
 import EditProfile from "../../components/Modal/Editprofile/EditProfile";
 import { getUserByUsername } from "../../common/repository/UserDB";
+import { getUsersAdvertisement } from "../../common/repository/AdvertisementDB";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -18,7 +19,13 @@ const UserProfile = () => {
 
 
   useEffect(() => {
+    getUsersAdvertisement(user._id).then((res)=>{
+      if(res.success){
+        console.log(res.data)
+        setAdsData(res.data)
+      }
 
+    })
   },[])
 
   const profileHandler = () => {

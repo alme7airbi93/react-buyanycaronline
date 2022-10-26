@@ -1,4 +1,4 @@
-import {doc, addDoc, getDoc, collection, updateDoc, getDocs,arrayUnion} from "firebase/firestore";
+import {doc, addDoc, getDoc, collection, updateDoc, getDocs,arrayUnion,query,where} from "firebase/firestore";
 import {
 	checkAdvertisemntType,
 	checkTypeOfAdvertisement
@@ -93,8 +93,24 @@ export const updateArrayField = async (advertId = null, value) =>{
 		return{ success:false, msg:e}
 
 	}
-	
+}
 
+export const getUsersAdvertisement = async(userId)=>{
+	try{
+		console.log(userId,'userId')
+		const q = query(collection(db,doc_collection ), where("_owner._id", '==', userId))
+		const querySnapshot = await getDocs(q);
+		let ads = [];
+		querySnapshot.forEach((doc) => {
+			ads.push({...doc.data(),_id:doc.id})
+		});
+		return{success:true,data:ads}
+
+	}
+	catch(e){
+		return{success:false,msg:e}
+
+	}
 }
 
 
