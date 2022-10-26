@@ -6,7 +6,7 @@ import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
 
 
-const Detail = (props) => {
+const Detail = (props ) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
   const updateData = () => {

@@ -1,31 +1,74 @@
-import React, {useState, useContext, Component} from "react";
+import React, {useState, useContext, Component, useEffect} from "react";
 import {Button, Col, Row, Form} from "react-bootstrap";
 import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
 import {NewAdvertisement} from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
-import AdvertisementRepo from "../../../common/repository/AdvertisementRepo";
 
 
 import "./scrollbar.css";
+import { createAdvertisement,updateAdvertisement } from "../../../common/repository/AdvertisementDB";
+import {
+	getDownloadURL,
+	uploadString,
+	uploadBytes,
+	getStorage,
+	listAll,
+	ref,
+	uploadBytesResumable,
+  } from 'firebase/storage'
+
 
 const GoogleMap = (props) => {
   
 	const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
+	const [photos,setPhotos] = useState()
 
 	const center = { lat: 24.4539, lng: 54.3773 };
-	const zoom = 4;    
+	const zoom = 4;
+	
+	useEffect(()=>{
+		setPhotos(advertisement.photos)
+		//console.log(advertisement,'in Map')
+	},[])
 
-	const print=()=>{
-		const adv_JSONstring = JSON.stringify(advertisement); 
-		console.log(advertisement);        
-		// console.log(adv_JSONstring);        
-	};
+
+	const uploadImageNow = async (file,id) => {
+		const imagePath = 'advertisement/'+id;
+		const date = new Date();
+		const filename = Math.floor(date.getTime() / 1000);
+		const storage = getStorage()
+		const storageRef = ref(storage, imagePath + `/${filename}`)
+		await uploadString(storageRef, file[0],'data_url').then((res) =>
+		  console.log(res.ref),
+		)
+		const url = await getDownloadURL(storageRef)
+		return url
+	  }
+
+
+	const savePhotos = (id) => {
+		const url = [];
+		photos.forEach((data)=> {
+			uploadImageNow(data,id).then((res)=>url.push(res))
+		})
+		advertisement._photos = url;
+		console.log(advertisement);
+		updateAdvertisement(id,advertisement).then(res=>console.log(res,'res image url saved'))
+
+	}
 
 	const saveData = () =>{
-		const adsInstance =  new AdvertisementRepo();
-		adsInstance.storeData(advertisement).then((res)=>console.log(res))
+		var dt = advertisement;
+		dt.photos = [];
+		createAdvertisement(advertisement).then((res)=>{
+			if(res.success){
+				console.log(res.data,res)
+				savePhotos(res.data)
+				alert('Data uploaded successfully')
+			}
+		})
 	}
     
 	return (    

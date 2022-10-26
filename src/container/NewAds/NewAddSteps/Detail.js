@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { StepsStateInMainCategory, StepsStateInPhoto } from "../stepsState";
 import { NewAdvertisement, UserContext } from "../../../context/Context";
 import Select from "react-select";
+import Car from "../../../common/models/Car";
 
 import {
   FuelTypes,
@@ -16,26 +17,53 @@ import {
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js";
-const Detail = (props) => {
-  // const [condition_bool, setcondition_bool] = useState(false);
-  // const [warranty_bool, setwarranty_bool] = useState(false);
+import { FormDataValidation } from "../../../common/validations/FormDataValidation";
 
+const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
 
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
-  useEffect(() => {}, []);
 
-  let [type, setType] = useState(advertisement._Fuel_Types);
-  let [color, setColor] = useState(advertisement._Color_Types);
-  let [condition, setCondition] = useState(advertisement._Body_Condition);
-  let [steeringside, setSteeringside] = useState(advertisement._Steering_Types);
-  let [warrantyTypes, setWarrantyTypes] = useState(
-    advertisement._Warranty_Types
-  );
-  console.log(type, "fuletype");
+
+  const [carDetails, setCarDetails] = useState({
+    color:advertisement._color,
+    manufacturingYear: advertisement._bodyType,
+    fuleType: advertisement._Fuel_Types,
+    region:'',
+    condition:advertisement._Body_Condition,
+    warrantyTypes:advertisement._Warranty_Types,
+    steeringside:advertisement._Steering_Types
+
+  });
+
+  const updateData = () => {
+    if (FormDataValidation(carDetails)) {
+      console.log(advertisement,'before')
+      const d = Object.assign(new Car(), 
+      {...advertisement,
+        _color: carDetails.color,
+        _year: carDetails.manufacturingYear,
+        _fuel_type:carDetails.fuleType,
+        _region:carDetails.region,
+        _condition:carDetails.condition,
+        _warranty:carDetails.warrantyTypes,
+      });
+      adsCtx.setAds(d);
+      props.nextStep(StepsStateInPhoto);
+    } else {
+      alert("Please enter required fields");
+    }
+  };
+
+
+
+
+  
+
+
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
@@ -48,26 +76,13 @@ const Detail = (props) => {
                 <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Color :</Form.Label>
-                  {/* <Form.Control
-                    as="textarea"
-                    placeholder="Enter Color"
-                    onChange={(data) => {
-                      setAdvertisement({
-                        ...advertisement,
-                        type: {
-                          ...advertisement.type,
-                          color: data.target.value,
-                        },
-                      });
-                    }}
-                  /> */}
                   <Select
                     placeholder={"Color"}
                     options={ColorTypes()}
-                    value={ColorTypes().find((obj) => obj.label === color)}
+                    value={ColorTypes().find((obj) => obj.label === carDetails.color)}
                     isSearchable={false}
                     onChange={(data) => {
-                      setColor(data.label);
+                      setCarDetails({...carDetails,color:data.label});
                     }}
                   />
                 </Form.Group>
@@ -79,9 +94,12 @@ const Detail = (props) => {
                     placeholder={"Select"}
                     options={ManufacturingYearsOptions()}
                     value={ManufacturingYearsOptions().find(
-                      (obj) => obj.label === type
+                      (obj) => obj.label === carDetails.manufacturingYear
                     )}
                     isSearchable={true}
+                    onChange={(data)=>{
+                      setCarDetails({...carDetails,manufacturingYear:data.label});
+                    }}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -90,10 +108,10 @@ const Detail = (props) => {
                     <Select
                       placeholder={"Fuel Type"}
                       options={FuelTypes()}
-                      value={FuelTypes().find((obj) => obj.label === type)}
+                      value={FuelTypes().find((obj) => obj.label === carDetails.fuleType)}
                       isSearchable={false}
                       onChange={(data) => {
-                        setType(data.label);
+                      setCarDetails({...carDetails,fuleType:data.label});
                       }}
                     />
                   </div>
@@ -103,57 +121,38 @@ const Detail = (props) => {
                   <Select
                     placeholder={"Manufacturing Region"}
                     options={RegionalOption()}
-                    value={RegionalOption().find((obj) => obj.label === type)}
+                    value={RegionalOption().find((obj) => obj.label === carDetails.region)}
                     isSearchable={false}
                     onChange={(data) => {
-                      setType(data.label);
+                      setCarDetails({...carDetails,region:data.label});
                     }}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Condition :</Form.Label>
-                  {/* <Form.Control
-                    type="checkbox"
-                    placeholder="Enter Condition"
-                    onChange={() => {
-                      if (condition_bool === false) {
-                        setcondition_bool(true);
-                        setAdvertisement({
-                          ...advertisement,
-                          type: { ...advertisement.type, condition: true },
-                        });
-                      } else {
-                        setcondition_bool(false);
-                        setAdvertisement({
-                          ...advertisement,
-                          type: { ...advertisement.type, condition: false },
-                        });
-                      }
-                    }}
-                  /> */}
                   <Select
                     placeholder={"Body Condition"}
                     options={BodyCondition()}
                     value={BodyCondition().find(
-                      (obj) => obj.label === condition
+                      (obj) => obj.label === carDetails.condition
                     )}
                     isSearchable={false}
                     onChange={(data) => {
-                      setCondition(data.label);
+                      setCarDetails({...carDetails,condition:data.label});
                     }}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>Warrenty :</Form.Label>
+                  <Form.Label style={{ color: "#fff" }}>Warranty :</Form.Label>
                   <Select
                     placeholder={"Enter Warrenty"}
                     options={WarrantyTypes()}
                     value={WarrantyTypes().find(
-                      (obj) => obj.label === warrantyTypes
+                      (obj) => obj.label === carDetails.warrantyTypes
                     )}
                     isSearchable={false}
                     onChange={(data) => {
-                      setWarrantyTypes(data.label);
+                      setCarDetails({...carDetails,warrantyTypes:data.label});
                     }}
                   />
                 </Form.Group>
@@ -165,11 +164,11 @@ const Detail = (props) => {
                     placeholder={"Steering Side"}
                     options={SteeringTypes()}
                     value={SteeringTypes().find(
-                      (obj) => obj.label === steeringside
+                      (obj) => obj.label === carDetails.steeringside
                     )}
                     isSearchable={false}
                     onChange={(data) => {
-                      setSteeringside(data.label);
+                      setCarDetails({...carDetails,steeringside:data.label});
                     }}
                   />
                 </Form.Group>
@@ -451,7 +450,7 @@ const Detail = (props) => {
             <Button
               className="next_btn"
               id="center-pos"
-              onClick={() => props.nextStep(StepsStateInPhoto)}
+              onClick={updateData}
             >
               Next
             </Button>
