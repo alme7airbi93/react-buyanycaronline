@@ -17,6 +17,7 @@ const UserProfile = () => {
 
   //State
   const [adsData, setAdsData] = useState([]);
+  const [ads,setAds] = useState({})
 
   useEffect(() => {
     getUsersAdvertisement(user._id).then((res) => {
@@ -40,14 +41,15 @@ const UserProfile = () => {
   const handleclose = () => {
     setOpen(false);
   };
-  const Modifyication = (val) => {
+  const Modifyication = (val,ad) => {
+       console.log(ad,'ad');
+       setAds(ad)
     setOpenmodification(val);
-    // console.log(val);
+  
   };
   const closemodification = () => {
     setOpenmodification(false);
   };
-  console.log(adsData);
 
   return (
     <div className={"user_info_main"}>
@@ -80,7 +82,7 @@ const UserProfile = () => {
                     <div>
                       <button
                         className="search_btn mb-3"
-                        onClick={() => Modifyication(true)}
+                        onClick={() => Modifyication(true,ad)}
                       >
                         Modify
                       </button>
@@ -104,7 +106,7 @@ const UserProfile = () => {
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />
-        <Modify open={openmodification} handleclose={closemodification} />
+        <Modify open={openmodification} ads={ads} handleclose={closemodification} />
       </Container>
     </div>
   );

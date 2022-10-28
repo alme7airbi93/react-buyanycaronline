@@ -114,3 +114,30 @@ export const getUsersAdvertisement = async(userId)=>{
 }
 
 
+export const getSearchAdvertisement = async (filterData) => {
+
+
+	const qr = collection(db,doc_collection );
+	const queryConstraints = []
+	filterData.forEach((item) => {
+		queryConstraints.push(where(item.key, '==', item.value));
+	});
+
+	const q = query(qr,...queryConstraints)
+	
+
+	const querySnapshot = await getDocs(q);
+	let ads = [];
+
+	if (querySnapshot.size !== 0) {
+		querySnapshot.forEach((data) => {
+			ads.push({...data.data(), _id: data.id});
+		});
+
+		console.log(ads);
+		return {success: true, data: ads};
+	} else {
+		throw Error("Advertisement not found");
+	}
+};
+

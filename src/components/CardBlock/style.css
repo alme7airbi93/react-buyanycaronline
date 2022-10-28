@@ -1,0 +1,36 @@
+.card-block{
+    color:#000;
+}
+.card-block h5{
+font-weight: 600;
+font-size: 16px;
+margin:0px
+}
+.card-block p{
+    font-weight: 500;
+    font-size: 12px;
+    color:#333
+}
+.tags{
+    margin:0px;
+    list-style: none;
+    padding:0px;
+    font-size: 12px;
+   
+}
+.tags li{
+border:1px solid red;
+padding:3px 8px;
+margin:5px 0px 5px 0px;
+border-radius: 6px;
+font-weight: 600;
+display: inline-block;
+margin-right: 10px;
+}
+.card-block h4{
+    font-weight: 600;
+    font-size: 18px;
+    color:#000;
+    margin:0px;
+    text-align: right;
+}

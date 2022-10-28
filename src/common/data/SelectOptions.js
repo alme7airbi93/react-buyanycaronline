@@ -18,7 +18,7 @@ import { Steering_Types } from "./Steering_Types.js";
 export const AdvertisementOptions = () => {
   let options = [];
   for (const [key, val] of Object.entries(Advertisement_Types)) {
-    options.push({ value: key, label: val });
+    options.push({ value: val, label: val });
   }
   return options;
 };
@@ -105,6 +105,7 @@ export const ColorTypes = () => {
   }
   return options;
 };
+
 export const BodyCondition = () => {
   let options = [];
   for (const [key, val] of Object.entries(Body_Condition)) {
