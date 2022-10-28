@@ -24,9 +24,12 @@ const UpdatePasswordModal = (props) => {
 
 
   const updateData = ()=>{
-    
     updateUserPassword(user.username,oldPassword,newPassword)
-    .then((res)=>console.log(res))
+    .then((res) =>{
+        console.log(res)
+        props.handleclose('password')
+      }
+    )
   }
 
   return (

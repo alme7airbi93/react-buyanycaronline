@@ -20,18 +20,10 @@ const Modify = (props) => {
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
-  const [title, setTitle] = useState(props.ads._title);
-  const [phone, setPhone] = useState(user.phone);
-  const [ads, setAds] = useState(props.ads);
+const allAds = props.ads;
+  const [ads, setAds] = useState(allAds);
 
 
-
-useEffect(() => {
-  setAds(props.ads)
-
-console.log(ads,'adss')
-
-},[setAds])
 
 const updateAds = () => {
   console.log(ads);
@@ -51,28 +43,28 @@ const updateAds = () => {
         <Modal.Body>
         
           <Row className="login-modal-content text-dark">
-            {ads ? (
+           
             <Form className="w-100">
-              {
-                Object.keys(props.ads).map((key) => (
+              {/* {
+                Object.keys(props.ads).map((key) => ( */}
                   <div className="d-flex align-items-center">
                     <div className="col-md-4">
-                      <p className="text-light">{key} :</p>
+                      <p className="text-light">Title :</p>
                     </div>
                     <div className="col-md-8">
                       <InputGroup className="mb-3">
                         <FormControl
                           type={"test"}
                           name="title"
-                          value={ads[key]}
-                          onChange={(e) => setAds({...ads,key:e.target.value})}
+                          value={ads._title}
+                          onChange={(e) => setAds({...ads,_title:e.target.value})}
                           aria-describedby="basic-addon1"
                         />
                       </InputGroup>
                     </div>
                   </div>
-                ))
-              }
+                {/* ))
+              } */}
 
               
 
@@ -82,9 +74,7 @@ const updateAds = () => {
                 </Button>
               </div>
             </Form>
-            )
-            :
-            (<></>)}
+         
           </Row>
         </Modal.Body>
       </div>

@@ -36,10 +36,15 @@ const AccountSettings = () => {
 
 	useEffect(() => {
 		setLoading(true)
+
+
+    console.log(user,'userrr')
+
 		getUserByUsername(user.username)
 			.then((res) => {
 				if (res.success) {
 					setDbUser(res.data)
+          console.log(res.data,'userrrr')
 					setLoading(false)
 				}
 			})
@@ -56,6 +61,8 @@ const AccountSettings = () => {
 		updateUserProfile(updatedData._id,updatedData)
 		.then((res)=>{
 			if(res.success){
+        setDbUser({...dbUser,_phone:phoneNumber})
+      //  ctx.setUserData({...user,_phone:phoneNumber})
 				alert('Data updated Successfully')
 				handleclose('phone')
 			}
