@@ -1,13 +1,14 @@
 class User {
 
 
-	constructor(username = "", role = -1, phone = "", surename = "") {
+	constructor(username = "", role = -1, phone = "", surename = "",signInMethod = undefined) {
 		this._id = "";
 		this._username = username;
 		this._role = role;
 		this._phone = phone;
 		this._surename = "";
 		this._surename = surename;
+		this._signInMethod = [signInMethod];
 		Object.preventExtensions(this);
 	}
 

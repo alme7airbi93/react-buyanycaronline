@@ -35,7 +35,7 @@ const Detail = (props) => {
     region:'',
     condition:advertisement._Body_Condition,
     warrantyTypes:advertisement._Warranty_Types,
-    steeringside:advertisement._Steering_Types
+    // steeringside:advertisement._Steering_Types
 
   });
 
@@ -158,7 +158,7 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                <Form.Group className="mb-3">
+                {/* <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>
                     Steering Types :
                   </Form.Label>
@@ -173,7 +173,7 @@ const Detail = (props) => {
                       setCarDetails({...carDetails,steeringside:data.label});
                     }}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 {user.phone === undefined && (
                   <Form.Group className="mb-3">
                     <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
