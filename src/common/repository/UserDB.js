@@ -3,6 +3,8 @@ import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
 import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
 import {db} from "./main.js";
 import User from "../models/User.js";
+import { getAuth, updatePassword,reauthenticateWithCredential,EmailAuthProvider } from "firebase/auth";
+import { async } from "@firebase/util";
 
 const doc_collection = "users";
 
@@ -94,5 +96,30 @@ export const getAllUsers = async () => {
 	});
 
 };
+
+
+export const updateUserPassword =  async(email,oldpassword, newPassword) =>{
+	console.log(email)
+	const auth = getAuth();
+	const user = auth.currentUser;
+	const credentials =  EmailAuthProvider.credential(email,oldpassword)
+	return reauthenticateWithCredential(user,credentials)
+	.then(()=>{
+		updatePassword(user,newPassword)
+		.then(()=>{
+			return {success: true};
+		})
+		.catch(()=>{
+			console.log(err)
+		})
+
+	})
+	.catch((err)=>{
+		alert('Old password is wrong')
+		console.log(err)
+		return {success: false,};
+
+	})
+}
 
 

@@ -8,6 +8,7 @@ import EditProfile from "../../components/Modal/Editprofile/EditProfile";
 import { getUserByUsername } from "../../common/repository/UserDB";
 import { getUsersAdvertisement } from "../../common/repository/AdvertisementDB";
 import Modify from "../../components/Modal/Modify/Modify";
+import Loder from "../../common/loder/Loder";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -18,9 +19,12 @@ const UserProfile = () => {
   //State
   const [adsData, setAdsData] = useState([]);
   const [ads,setAds] = useState({})
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getUsersAdvertisement(user._id).then((res) => {
+      setLoading(false);
       if (res.success) {
         // console.log(res.data);
         setAdsData(res.data);
@@ -108,6 +112,7 @@ const UserProfile = () => {
         <EditProfile open={open} handleclose={handleclose} />
         <Modify open={openmodification} ads={ads} handleclose={closemodification} />
       </Container>
+      {loading && <Loder />}
     </div>
   );
 };
