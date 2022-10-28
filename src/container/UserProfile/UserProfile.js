@@ -7,40 +7,47 @@ import AccountSettings from "./AccountSettings/AccountSettings";
 import EditProfile from "../../components/Modal/Editprofile/EditProfile";
 import { getUserByUsername } from "../../common/repository/UserDB";
 import { getUsersAdvertisement } from "../../common/repository/AdvertisementDB";
+import Modify from "../../components/Modal/Modify/Modify";
 
 const UserProfile = () => {
   const navigate = useNavigate();
 
   const ctx = useContext(UserContext);
-  const user = ctx.getUserData()
+  const user = ctx.getUserData();
 
   //State
-  const [adsData, setAdsData] = useState([])
-
+  const [adsData, setAdsData] = useState([]);
 
   useEffect(() => {
-    getUsersAdvertisement(user._id).then((res)=>{
-      if(res.success){
-        console.log(res.data)
-        setAdsData(res.data)
+    getUsersAdvertisement(user._id).then((res) => {
+      if (res.success) {
+        // console.log(res.data);
+        setAdsData(res.data);
       }
-
-    })
-  },[])
+    });
+  }, []);
 
   const profileHandler = () => {
     navigate("/new-ads");
   };
 
-
   const [open, setOpen] = useState(false);
+  const [openmodification, setOpenmodification] = useState(false);
   const handleOpen = (val) => {
     setOpen(val);
-    console.log(val);
+    // console.log(val);
   };
   const handleclose = () => {
     setOpen(false);
   };
+  const Modifyication = (val) => {
+    setOpenmodification(val);
+    // console.log(val);
+  };
+  const closemodification = () => {
+    setOpenmodification(false);
+  };
+  console.log(adsData);
 
   return (
     <div className={"user_info_main"}>
@@ -55,35 +62,39 @@ const UserProfile = () => {
           <Col md={6} className="user_info">
             <h5>Manage Ads</h5>
             <hr />
-            {
-              adsData && adsData.length ? (
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <p>
-                      Title: <span>ad.title</span>
-                    </p>
-                    <p>
-                      Price: <span>ad.price</span>
-                    </p>
-                    <p>
-                      Description: <span>ad.description</span>
-                    </p>
+            <div className=" ad_list">
+              {adsData && adsData.length ? (
+                adsData.map((ad) => (
+                  <div className="ad_data d-flex justify-content-between">
+                    <div>
+                      <p>
+                        Title: <span>{ad._title}</span>
+                      </p>
+                      <p>
+                        Price: <span>{ad._price}</span>
+                      </p>
+                      <p>
+                        Description: <span>{ad._description}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <button
+                        className="search_btn mb-3"
+                        onClick={() => Modifyication(true)}
+                      >
+                        Modify
+                      </button>
+                      <button className="search_btn">Mark as Sold</button>
+                    </div>
                   </div>
-                  <div>
-                    <button className="search_btn mb-3">Modify</button>
-                    <button className="search_btn">Mark as Sold</button>
-                  </div>
-                </div>
-              )
-                : (
-                  <>
-                    <h5>You have not published any advertisement yet</h5>
-                    <br />
-                  </>
-
-                )
-            }
+                ))
+              ) : (
+                <>
+                  <h5>You have not published any advertisement yet</h5>
+                  <br />
+                </>
+              )}
+            </div>
           </Col>
           <Col md={2} className="user_info">
             <h5>New Ad?</h5>
@@ -93,6 +104,7 @@ const UserProfile = () => {
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />
+        <Modify open={openmodification} handleclose={closemodification} />
       </Container>
     </div>
   );

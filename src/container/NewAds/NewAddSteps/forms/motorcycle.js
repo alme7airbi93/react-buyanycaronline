@@ -38,7 +38,7 @@ const Detail = (props) => {
           }}
         /> */}
         <Select
-          placeholder={"Fuel Type"}
+          placeholder={"Engine Size"}
           options={EngineTypes()}
           value={EngineTypes().find((obj) => obj.label === type)}
           isSearchable={false}
@@ -63,7 +63,7 @@ const Detail = (props) => {
         /> */}
         <div>
           <Select
-            placeholder={"Fuel Type"}
+            placeholder={"Distance"}
             options={TravelDisttance()}
             value={TravelDisttance().find((obj) => obj.label === distance)}
             isSearchable={false}
