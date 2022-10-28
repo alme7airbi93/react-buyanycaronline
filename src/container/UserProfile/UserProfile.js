@@ -7,6 +7,7 @@ import AccountSettings from "./AccountSettings/AccountSettings";
 import EditProfile from "../../components/Modal/Editprofile/EditProfile";
 import { getUserByUsername } from "../../common/repository/UserDB";
 import { getUsersAdvertisement } from "../../common/repository/AdvertisementDB";
+import Modify from "../../components/Modal/Modify/Modify";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -31,12 +32,20 @@ const UserProfile = () => {
   };
 
   const [open, setOpen] = useState(false);
+  const [openmodification, setOpenmodification] = useState(false);
   const handleOpen = (val) => {
     setOpen(val);
     // console.log(val);
   };
   const handleclose = () => {
     setOpen(false);
+  };
+  const Modifyication = (val) => {
+    setOpenmodification(val);
+    // console.log(val);
+  };
+  const closemodification = () => {
+    setOpenmodification(false);
   };
   console.log(adsData);
 
@@ -69,7 +78,12 @@ const UserProfile = () => {
                       </p>
                     </div>
                     <div>
-                      <button className="search_btn mb-3">Modify</button>
+                      <button
+                        className="search_btn mb-3"
+                        onClick={() => Modifyication(true)}
+                      >
+                        Modify
+                      </button>
                       <button className="search_btn">Mark as Sold</button>
                     </div>
                   </div>
@@ -90,6 +104,7 @@ const UserProfile = () => {
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />
+        <Modify open={openmodification} handleclose={closemodification} />
       </Container>
     </div>
   );
