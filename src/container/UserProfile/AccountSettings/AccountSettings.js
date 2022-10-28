@@ -7,6 +7,7 @@ import { updateUserPassword } from "../../../common/repository/UserDB";
 import { BsPencilSquare } from "react-icons/bs";
 import "./AccountSetting.css";
 import User from "../../../common/models/User";
+import UpdatePasswordModal from "../../../components/Modal/UpdatePasswordModal/UpdatePasswordModal";
 
 const AccountSettings = () => {
   const ctx = useContext(UserContext);
@@ -15,15 +16,21 @@ const AccountSettings = () => {
   const [dbUser, setDbUser] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = (val) => {
-    setOpen(val);
-    // console.log(val);
+  const [open, setOpen] = useState({
+	phone:false,
+	password:false
+
+  });
+
+
+  const handleOpen = (type) => {
+    setOpen({...open,[type]:true});
   };
-  const handleclose = () => {
-    setOpen(false);
-  };	const [password,setPassword] = useState(null);
-	const [confirmPass, setConfirmPass] = useState(null);
+
+  const handleclose = (type) => {
+    setOpen({...open,[type]:false});
+  };	
+
 
   //Fetching Live user from databse
 
@@ -43,35 +50,6 @@ const AccountSettings = () => {
 			})
 	}, [])
 
-	const updatePassword = ()=>{
-		if(password != confirmPass  ){
-			alert("Password and Confirm password do not match")
-			return
-		}
-		else if(password == ''){
-			alert("Cannot be blank")
-			return
-		}
-		else{
-			updateUserPassword(password)
-			.then((res)=>{
-				console.log(res)
-				if(res.success){
-					alert('Password updated successfully')
-				}
-				else{
-					alert('Something went wrong')
-				}
-			})
-			.catch((err)=>{
-				console.log(err)
-				// alert('Something went wrong')
-				
-			})
-			
-		}
-
-	}
 
 	const updatePhone = (phoneNumber)=>{
 		const updatedData =  Object.assign(new User(),{...dbUser,_phone:phoneNumber})
@@ -79,7 +57,7 @@ const AccountSettings = () => {
 		.then((res)=>{
 			if(res.success){
 				alert('Data updated Successfully')
-				setOpen(false);
+				handleclose('phone')
 			}
 			
 		})
@@ -96,7 +74,13 @@ const AccountSettings = () => {
           <p>
             Username : <span>{dbUser.username}</span>
           </p>
-          <p>Update Password</p>
+          <p>
+            Update Password{" "}
+            <BsPencilSquare
+              onClick={()=>handleOpen('password')}
+              className="cs_pointer text-light"
+            />
+          </p>
         </>
       );
     } else {
@@ -119,7 +103,7 @@ const AccountSettings = () => {
 		  <p>Phone:<span>{dbUser._phone}</span>
 		  <BsPencilSquare
                 className="cs_pointer text-light"
-                onClick={handleOpen}
+                onClick={()=>handleOpen('phone')}
               />
 		  
 		  </p>
@@ -127,8 +111,12 @@ const AccountSettings = () => {
       )}
 
       <Addmobile 
-	  open={open} 
+	  open={open.phone} 
 	  updatePhone = {updatePhone}
+	  handleclose={handleclose} />
+
+      <UpdatePasswordModal 
+	  open={open.password} 
 	  handleclose={handleclose} />
     </React.Fragment>
   );

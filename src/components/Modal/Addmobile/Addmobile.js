@@ -22,11 +22,11 @@ const Addmobile = (props) => {
   }
 
   return (
-    <Modal className="EditProfile" show={props.open} onHide={props.handleclose}>
+    <Modal className="EditProfile" show={props.open} onHide={()=>props.handleclose('phone')}>
       <div className="modal_main_div">
         <Modal.Header className="modal_header">
           <Modal.Title>Modify data</Modal.Title>
-          <h3 onClick={props.handleclose} style={{ cursor: "pointer" }}>
+          <h3 onClick={()=>props.handleclose('phone')} style={{ cursor: "pointer" }}>
             x
           </h3>
         </Modal.Header>

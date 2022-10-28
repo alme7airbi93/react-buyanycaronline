@@ -21,6 +21,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import Loder from "../../../common/loder/Loder";
 
 const GoogleMap = (props) => {
   let navigate = useNavigate();
@@ -115,15 +116,7 @@ const GoogleMap = (props) => {
           </Col>
         </Row>
       </Col>
-      {loading && (
-        <>
-          <div className="loder">
-            <div className="spinner-border text-dark" role="status">
-              <span className="visually-hidden"></span>
-            </div>
-          </div>
-        </>
-      )}
+      {loading && <Loder />}
     </React.Fragment>
   );
 };
