@@ -3,6 +3,8 @@ import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
 import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
 import {db} from "./main.js";
 import User from "../models/User.js";
+import { getAuth, updatePassword } from "firebase/auth";
+import { async } from "@firebase/util";
 
 const doc_collection = "users";
 
@@ -94,5 +96,21 @@ export const getAllUsers = async () => {
 	});
 
 };
+
+
+export const updateUserPassword =  async(newPassword) =>{
+	const auth = getAuth();
+	const user = auth.currentUser;
+	return updatePassword(user, newPassword)
+	.then((res) => {
+		console.log('update pass respone',res)
+		return {success: true};
+	})
+	.catch((error)=>{
+		console.log(error)
+		return {success: false,};
+
+	})
+}
 
 
