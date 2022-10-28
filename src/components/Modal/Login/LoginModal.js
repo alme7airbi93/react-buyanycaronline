@@ -56,7 +56,7 @@ const LoginModal = (props) => {
 					setloginError(data.error);
 				}
 				else{
-					setUser(data.profile);
+					ctx.setUserData(data.profile)
 					document.cookie=`userToken=${data.token}`;
 					navigate("/user-profile");
 					handleClose();

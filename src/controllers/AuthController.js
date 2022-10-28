@@ -16,10 +16,12 @@ export const signUpWithEmailAndPassword = (user, password) => {
 
 	return createUserWithEmailAndPassword(auth, user.username, password)
 		.then((data)=>{
+			console.log(data,'data returned')
 			return data.user.getIdToken();
 		})
 		.then((idtoken)=>{
 			const token = idtoken;
+			console.log(user)
 			saveUser(user);
 			return { token: token };
 		})
@@ -73,6 +75,7 @@ export const GoogleSignin = async () => {
 	return await signInWithPopup(auth, googleProvider)
 		.then(async (result) => {
 			// This gives you a Google Access Token. You can use it to access the Google API.
+			console.log(result)
 			const credential = GoogleAuthProvider.credentialFromResult(result);
 			const token = credential.accessToken;
 			// The signed-in user info.
@@ -81,9 +84,13 @@ export const GoogleSignin = async () => {
 				return  {profile: data.data, token: token};
 			}).catch(async () => {
 				console.log("Saving user !");
-				let user = new User(googleUser.email, User_Roles.CUSTOMER, "", googleUser.displayName);
-				await saveUser(user);
-				return {profile: user, token: token};
+				let user = new User(googleUser.email, User_Roles.CUSTOMER, "", googleUser.displayName,credential.providerId);
+				return await saveUser(user).then((res)=>{
+					const usernew = Object.assign(new User(), {...user, _id: res.data});
+					console.log(usernew, 'user instance')
+					return {profile:usernew, token: token};
+				});
+				
 			});
 		})
 		.catch((error) => {

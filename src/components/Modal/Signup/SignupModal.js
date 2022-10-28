@@ -62,7 +62,7 @@ const SignupModal = (props) => {
 	const RegisterDataHandler = (e) => {
 		e.preventDefault();
 		if(password === confirmPassword) {
-			signUpWithEmailAndPassword(new User(email, User_Roles.CUSTOMER, "", name), password)
+			signUpWithEmailAndPassword(new User(email, User_Roles.CUSTOMER, "", name,'email'), password)
 				.then((data)=>{
 					if(data.token)
 					{
