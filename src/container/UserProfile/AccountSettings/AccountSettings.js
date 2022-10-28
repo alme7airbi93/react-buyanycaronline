@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
-import { getUserByUsername } from "../../../common/repository/UserDB";
+import { getUserByUsername, updateUserProfile } from "../../../common/repository/UserDB";
 import Addmobile from "../../../components/Modal/Addmobile/Addmobile";
 import { UserContext } from "../../../context/Context";
 import { updateUserPassword } from "../../../common/repository/UserDB";
 import { BsPencilSquare } from "react-icons/bs";
 import "./AccountSetting.css";
-import Updatepassword from "../../../components/Modal/Updatepassword/Updatepassword";
+import User from "../../../common/models/User";
 
 const AccountSettings = () => {
   const ctx = useContext(UserContext);
@@ -14,6 +14,7 @@ const AccountSettings = () => {
 
   const [dbUser, setDbUser] = useState({});
   const [loading, setLoading] = useState(true);
+
   const [open, setOpen] = useState(false);
   const handleOpen = (val) => {
     setOpen(val);
@@ -72,8 +73,23 @@ const AccountSettings = () => {
 
 	}
 
+	const updatePhone = (phoneNumber)=>{
+		const updatedData =  Object.assign(new User(),{...dbUser,_phone:phoneNumber})
+		updateUserProfile(updatedData._id,updatedData)
+		.then((res)=>{
+			if(res.success){
+				alert('Data updated Successfully')
+				setOpen(false);
+			}
+			
+		})
+
+
+	}
+
   const UserAccountDisplay = () => {
     if (dbUser._signInMethod[0] == "email") {
+		console.log(dbUser,'dbUser')
       return (
         <>
           <p>Linked Account Type: Email</p>
@@ -100,21 +116,20 @@ const AccountSettings = () => {
           <h5>Account Settings</h5>
           <hr />
           {UserAccountDisplay()}
-          {dbUser._phone == "" ? (
-            <p>
-              Add phone number
-              <BsPencilSquare
+		  <p>Phone:<span>{dbUser._phone}</span>
+		  <BsPencilSquare
                 className="cs_pointer text-light"
                 onClick={handleOpen}
               />
-            </p>
-          ) : (
-            <p>{dbUser._phone}</p>
-          )}
+		  
+		  </p>
         </>
       )}
 
-      <Addmobile open={pass} handleclose={handleclose} />
+      <Addmobile 
+	  open={open} 
+	  updatePhone = {updatePhone}
+	  handleclose={handleclose} />
     </React.Fragment>
   );
 };

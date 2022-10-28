@@ -9,14 +9,17 @@ import {
   Col,
   Alert,
 } from "react-bootstrap";
-import { getUsersAdvertisement } from "../../../common/repository/AdvertisementDB";
 
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../../context/Context";
+import React, { useState } from "react";
 const Addmobile = (props) => {
-  const ctx = useContext(UserContext);
-  const user = ctx.getUserData();
-  const [admobile, setAdmobile] = useState();
+
+  const [addPhone, setAddPhone] = useState('');
+  
+  const updatePhoneNumber = ()=>{
+    if(addPhone !=''){
+      props.updatePhone(addPhone)
+    }
+  }
 
   return (
     <Modal className="EditProfile" show={props.open} onHide={props.handleclose}>
@@ -41,15 +44,15 @@ const Addmobile = (props) => {
                       type={"telephone"}
                       name="Mobile"
                       aria-label="Mobile"
-                      value={admobile}
-                      onChange={(e) => setAdmobile(e.target.value)}
+                      value={addPhone}
+                      onChange={(e) => setAddPhone(e.target.value)}
                       aria-describedby="basic-addon1"
                     />
                   </InputGroup>
                 </div>
               </div>
               <div className="d-flex justify-content-center">
-                <Button type="submit" className="w-25 modal_btn">
+                <Button onClick={updatePhoneNumber} type="button" className="w-25 modal_btn">
                   Update
                 </Button>
               </div>
