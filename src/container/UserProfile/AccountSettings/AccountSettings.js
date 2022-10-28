@@ -14,12 +14,20 @@ const AccountSettings = () => {
   const [dbUser, setDbUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState(false);
   const handleOpen = (val) => {
     setOpen(val);
     // console.log(val);
   };
+
   const handleclose = () => {
     setOpen(false);
+  };
+  const handlePasswordopen = (val2) => {
+    setPassword(val2);
+  };
+  const handlePasswordclose = () => {
+    setPassword(false);
   };
   //Fetching Live user from databse
 
@@ -46,7 +54,13 @@ const AccountSettings = () => {
           <p>
             Username : <span>{dbUser.username}</span>
           </p>
-          <p>Update Password</p>
+          <p>
+            Update Password{" "}
+            <BsPencilSquare
+              onClick={handlePasswordopen}
+              className="cs_pointer text-light"
+            />
+          </p>
         </>
       );
     } else {
@@ -80,7 +94,8 @@ const AccountSettings = () => {
         </>
       )}
 
-      <Addmobile open={pass} handleclose={handleclose} />
+      <Addmobile open={open} handleclose={handleclose} />
+      <Updatepassword open={password} handleclose={handlePasswordclose} />
     </React.Fragment>
   );
 };
