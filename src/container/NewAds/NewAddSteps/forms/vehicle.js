@@ -6,18 +6,32 @@ import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { CylinderTypes } from "../../../../common/data/SelectOptions.js";
 import Select from "react-select";
 import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
+import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import HeavyVehicle from "../../../../common/models/HeavyVehicle";
 
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
-  const [condition_bool, setcondition_bool] = useState(false);
-  const [warranty_bool, setwarranty_bool] = useState(false);
-  const [carDetails, setCarDetails] = useState({
-    cylindertypes: advertisement._cylindertypes,
+
+
+  const [details, setDetails] = useState({
+    capacity_weight: advertisement._capacityWeight,
+    numberOfCylinders:advertisement._numberOfCylinders
   });
   const updateData = () => {
-    props.nextStep(StepsStateInDetail);
+    console.log(details);
+    if (FormDataValidation(details)) {
+      const d = Object.assign(new HeavyVehicle(), 
+      {...advertisement,
+        _capacityWeight: details.capacity_weight,
+        _numberOfCylinders: details.cylindertypes,
+      });
+      adsCtx.setAds(d);
+      props.nextStep(StepsStateInDetail);
+    } else {
+      alert("Please enter required fields");
+    }
   };
 
   return (
@@ -37,15 +51,15 @@ const Detail = (props) => {
         <Select
           placeholder={"No. of Cylinders"}
           options={CylinderTypes()}
-          defaultValue={carDetails.body_type}
+          defaultValue={details.cylindertypes}
           value={CylinderTypes().find(
-            (obj) => obj.value === advertisement.cylindertypes
+            (obj) => obj.value === advertisement.numberOfCylinders
           )}
           isSearchable={false}
           onChange={(data) => {
-            setCarDetails({
-              ...carDetails,
-              _cylindertypes: data.value,
+            setDetails({
+              ...details,
+              numberOfCylinders: data.value,
             });
           }}
         />
@@ -57,8 +71,8 @@ const Detail = (props) => {
           type="number"
           placeholder="Enter capacity_weight"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setDetails({
+              ...details,
               capacity_weight: data.target.value,
             });
           }}

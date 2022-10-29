@@ -18,6 +18,7 @@ import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js";
 import { FormDataValidation } from "../../../common/validations/FormDataValidation";
+import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
@@ -42,7 +43,8 @@ const Detail = (props) => {
   const updateData = () => {
     if (FormDataValidation(carDetails)) {
       console.log(advertisement,'before')
-      const d = Object.assign(new Car(), 
+      const classInstance = checkAdvertisemntType(advertisement)
+      const d = Object.assign(classInstance, 
       {...advertisement,
         _color: carDetails.color,
         _year: carDetails.manufacturingYear,

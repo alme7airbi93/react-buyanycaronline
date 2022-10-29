@@ -11,6 +11,7 @@ import "./scrollbar.css";
 import {
   createAdvertisement,
   updateAdvertisement,
+  updateArrayField
 } from "../../../common/repository/AdvertisementDB";
 import {
   getDownloadURL,
@@ -58,7 +59,7 @@ const GoogleMap = (props) => {
     }
     // advertisement._photos = url;
     // console.log(advertisement);
-    updateArrayField(id, url).then((res) =>
+    await updateArrayField(id, url).then((res) =>
       console.log(res, "res image url saved")
     );
   };
@@ -72,7 +73,7 @@ const GoogleMap = (props) => {
         console.log(res.data, res);
         savePhotos(res.data);
         setLoading(false);
-        navigate("/user-profile");
+        // navigate("/user-profile");
         alert("Data uploaded successfully");
       }
     });
