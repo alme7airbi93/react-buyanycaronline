@@ -23,6 +23,7 @@ import ManageAds from "./container/ManageAds/ManageAds";
 import MonitorPage from "./container/MonitorPage/MonitorPage";
 import {UserContext} from "./context/Context";
 import { UserContextProvider } from "./context/Context";
+import AdsEdit from "./container/AdsEdit/AdsEdit";
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
 					<Route exact path='/contact' element={<Contact />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='*' element={<Error />} />
+					<Route exact path={`/ads-edit/:Id`} element={<UserRoutes Component={AdsEdit} />}/>
 				</Routes>
 				<Footer />
 			</Router>

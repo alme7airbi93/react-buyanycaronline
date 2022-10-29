@@ -57,6 +57,17 @@ class Car extends Vehicle {
 	set horsePower(value) {
 		this._horsePower = value;
 	}
+
+	getAlldata (){
+		return{
+			distance:this.distance,
+			bodyType : this.bodyType,
+			transmission : this.transmission,
+			numberOfCylinders : this.numberOfCylinders,
+			horsePower : this.horsePower,
+		}
+
+	}
 }
 
 export default Car;

@@ -33,9 +33,7 @@ const UserProfile = () => {
   }, []);
 
 
-  useEffect(() => {
-   console.log(ads,'adsss')
-  }, [setAds]);
+
 
 
   const profileHandler = () => {
@@ -51,10 +49,17 @@ const UserProfile = () => {
   const handleclose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    console.log(ads,openmodification,'adsss')
+   }, [ads,openmodification,Modify]);
+
+
   const Modifyication = (val,ad) => {
-       console.log(ad,'ad');
+       console.log(ad,ad._id,'ad');
     setAds(ad)
-    setOpenmodification(val);
+    navigate("/ads-edit/"+ad._id);
+   // setOpenmodification(val);
   
   };
   const closemodification = () => {
@@ -116,8 +121,14 @@ const UserProfile = () => {
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />
+        {/* {ads ? (
         <Modify open={openmodification} ads={ads} handleclose={closemodification} />
-      </Container>
+        )
+        :
+        (
+         <></>
+        )} */}
+        </Container>
       {loading && <Loder />}
     </div>
   );
