@@ -32,6 +32,12 @@ const UserProfile = () => {
     });
   }, []);
 
+
+  useEffect(() => {
+   console.log(ads,'adsss')
+  }, [setAds]);
+
+
   const profileHandler = () => {
     navigate("/new-ads");
   };
@@ -47,7 +53,7 @@ const UserProfile = () => {
   };
   const Modifyication = (val,ad) => {
        console.log(ad,'ad');
-       setAds(ad)
+    setAds(ad)
     setOpenmodification(val);
   
   };
@@ -61,9 +67,9 @@ const UserProfile = () => {
         <Row>
           <Col md={5} className="user_info">
             <AccountSettings />
-            <button className="search_btn" onClick={() => handleOpen(true)}>
+            {/* <button className="search_btn" onClick={() => handleOpen(true)}>
               Edit
-            </button>
+            </button> */}
           </Col>
           <Col md={6} className="user_info">
             <h5>Manage Ads</h5>

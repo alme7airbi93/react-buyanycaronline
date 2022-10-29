@@ -25,6 +25,7 @@ const UserLogin = () => {
 					setloginError(data.error);
 				}
 				else{
+					console.log(data.profile,'profilee')
 					ctx.setUserData(data.profile)
 					// setUser(data.profile);
 					document.cookie=`userToken=${data.token}`;
