@@ -58,7 +58,8 @@ const UserProfile = () => {
   const Modifyication = (val,ad) => {
        console.log(ad,ad._id,'ad');
     setAds(ad)
-    navigate("/ads-edit/"+ad._id);
+    // navigate("/ads-edit/"+ad._id);
+    navigate("/car-detail/"+ad._id);
    // setOpenmodification(val);
   
   };

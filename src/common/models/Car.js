@@ -14,6 +14,7 @@ class Car extends Vehicle {
 		this._transmission = transmission;
 		this._numberOfCylinders = numberOfCylinders;
 		this._horsePower = horsePower;
+		this._views = views;
 		Object.preventExtensions(this);
 	}
 
@@ -60,11 +61,26 @@ class Car extends Vehicle {
 
 	getAlldata (){
 		return{
+			title:this.title,
+			
+			advertisement_type: this.advertisement_type,
+			make:this.make,
+			modal:this.modal,
+			year:this.year,
+			price:this.price,
+			views:this.views,
+			transmission : this.transmission,
+			fuel_type: this.fuel_type,
 			distance:this.distance,
 			bodyType : this.bodyType,
-			transmission : this.transmission,
 			numberOfCylinders : this.numberOfCylinders,
 			horsePower : this.horsePower,
+			color: this.color,
+			condition: this.condition,
+			region:this.region,
+			warranty:this.warranty,
+			description: this.description,
+			
 		}
 
 	}

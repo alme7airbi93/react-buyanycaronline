@@ -111,12 +111,13 @@ const Home = () => {
 			searchArr.push(condition)
 		}
 		console.log('searchArr',searchArr)
-		getSearchAdvertisement(searchArr).then(res => {
-			console.log(res,'res')
-			setResultData(res.data)
-		}).catch(err => {
-			alert(err)
-		})
+		navigation("/car-search/?result="+JSON.stringify(searchArr))
+		// getSearchAdvertisement(searchArr).then(res => {
+		// 	console.log(res,'res')
+		// 	setResultData(res.data)
+		// }).catch(err => {
+		// 	alert(err)
+		// })
 	}
 
 	const setMakeHandle = (value ) => {

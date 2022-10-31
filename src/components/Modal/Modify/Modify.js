@@ -13,7 +13,7 @@ import {
 
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../../context/Context";
-import { updateAdvertisement } from "../../../common/repository/AdvertisementDB";
+import { updateAdsById } from "../../../common/repository/AdvertisementDB";
 import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
 
 
@@ -22,27 +22,33 @@ const Modify = (props) => {
   const user = ctx.getUserData();
 
   const [ads, setAds] = useState(props.ads);
+  const [title, setTitle] = useState(props.ads._title);
+  const [description, setDescription] = useState(props.ads._description);
+  const [price, setPrice] = useState(props.ads._price);
 
-
-
-const updateAds = () => {
-  console.log(ads);
-  updateAdvertisement(ads._id)
-}
 
 useEffect(()=>{
   console.log(props.ads,'adss')
-  setAds(props.ads)
-  if(props.ads){
-    let ads = props.ads;
-    let instance = checkAdvertisemntType(ads)
-    const newdata = Object.assign(instance,{...ads})
-    console.log(newdata,'newdarta')
-    const modifyData = newdata.getAlldata()
-    console.log(modifyData,'modifyData')
-  }
-},[props.ads,ads])
+  setTitle(props.ads._title)
+},[setAds])
 
+
+const updateAds = () => {
+  let data = {
+    _title:title,
+    _description:description,
+    _price:price
+  };
+
+  updateAdsById(props.ads._id,data).then(res => {
+   
+    if(res.success === true){
+      alert("Advertisement modify successfully.")
+      props.handleclose();
+    }
+  })
+
+}
 
   return (
     <Modal className="EditProfile" show={props.open} onHide={props.handleclose}>
@@ -58,31 +64,61 @@ useEffect(()=>{
           <Row className="login-modal-content text-dark">
            
             <Form className="w-100">
-              {
-                Object.keys(props.ads).map((key) => (
+              
                   <div className="d-flex align-items-center">
                     <div className="col-md-4">
-                      <p className="text-light">{key} :</p>
+                      <p className="text-light">Title :</p>
                     </div>
                     <div className="col-md-8">
                       <InputGroup className="mb-3">
                         <FormControl
                           type={"test"}
-                          name={ads[key]}
-                          value={ads[key]}
-                          onChange={(e) => setAds({...ads,key:e.target.value})}
+                          name={'title'}
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
                           aria-describedby="basic-addon1"
                         />
                       </InputGroup>
                     </div>
                   </div>
-               ))
-              } 
 
+                  <div className="d-flex align-items-center">
+                    <div className="col-md-4">
+                      <p className="text-light">Description :</p>
+                    </div>
+                    <div className="col-md-8">
+                      <InputGroup className="mb-3">
+                        <FormControl
+                          type={"test"}
+                          name={'description'}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          aria-describedby="basic-addon1"
+                        />
+                      </InputGroup>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center">
+                    <div className="col-md-4">
+                      <p className="text-light">Price :</p>
+                    </div>
+                    <div className="col-md-8">
+                      <InputGroup className="mb-3">
+                        <FormControl
+                          type={"number"}
+                          name={'price'}
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                          aria-describedby="basic-addon1"
+                        />
+                      </InputGroup>
+                    </div>
+                  </div>
               
 
               <div className="d-flex justify-content-center">
-                <Button type="submit" className="w-25 modal_btn" onClick={() => updateAds()}>
+                <Button type="button" className="w-25 modal_btn" onClick={() => updateAds()}>
                   Update
                 </Button>
               </div>

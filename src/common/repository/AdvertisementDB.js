@@ -50,6 +50,22 @@ export const updateAdvertisement = async (advertId = null, value) => {
 	}
 };
 
+export const updateAdsById = async (advertId = null, value) => {
+
+	try{
+		console.log(value,'value')
+		let docRef = doc(db, doc_collection, advertId);
+		let update_doc = await updateDoc(docRef, value);
+		console.log("Response for update ", update_doc);
+		return {success: true, data: update_doc};
+	}
+	catch(e){
+		return{ success:false, msg:e}
+
+	}
+
+}
+
 
 export const getAdvertisementById = async (advertId = null) => {
 	const docRef = doc(db, doc_collection, advertId);

@@ -18,3 +18,6 @@
 .car_title span , .car_desc span{
     color: #fff;
 }
+.search_btn{
+    max-width:120px;
+}

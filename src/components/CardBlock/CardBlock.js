@@ -5,9 +5,17 @@ const CardBlock = ({item}) => {
 
     return(
         <Card className="p-3 card-block">
-            <h5>{item._title}</h5>
-            
-            <p className="m-0"><b>Launch in {item._year}</b></p>
+
+            <div className="d-flex justify-content-between">
+                <div>
+                    <h5>{item._title}</h5>
+                    <p className="m-0"><b>Year {item._year}</b></p>
+                </div>
+                <div>
+                    <h4>{item._price}/-</h4>
+                </div>
+            </div>
+
             <p >{item._description}</p>
             <ul className="tags">
                 <li>Color: {item._color}</li>
@@ -20,8 +28,8 @@ const CardBlock = ({item}) => {
                 
             </ul>
           
-            <h4>{item._price}</h4>
-            <p className="p-0 m-0">{item._condition}</p>
+          
+            <p className="p-0 m-0 mt-2">{item._condition}</p>
         </Card>
     )
 }
