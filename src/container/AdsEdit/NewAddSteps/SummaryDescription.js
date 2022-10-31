@@ -14,22 +14,23 @@ import Motorcycle from "../../../common/models/Motorcycle.js";
 import PlateNumber from "../../../common/models/PlateNumber.js";
 import {Advertisement_Types} from "../../../common/data/Advertisement_Types.js";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getAdvertisementById } from "../../../common/repository/AdvertisementDB.js";
+
 
 const SummaryDescription = (props) => {
 
 	// eslint-disable-next-line no-unused-vars
 	const adsCtx =  useContext(AdvertismentCtx)
-	//const advertisement = adsCtx.ads;
-	const advertisement = props.ads;
 	const ctx  = useContext(UserContext);
 	const user = ctx.getUserData();
+	const params = useParams();
 	
-console.log(advertisement._title,'advertisement')
-
-	let [title, setTitle] = useState(advertisement._title);
-	let [price, setPrice] = useState(advertisement._price);
-	let [desc, setDesc] = useState(advertisement._description);
-	let [type, setType] = useState(advertisement._advertisement_type);
+	let [title, setTitle] = useState();
+	let [price, setPrice] = useState();
+	let [desc, setDesc] = useState();
+	let [type, setType] = useState();
 
 
 	const checkAdvertisemntType = () => {
@@ -48,6 +49,15 @@ console.log(advertisement._title,'advertisement')
 			return new Accessories(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
 		} else throw Error("Not an Advertisement"+JSON.stringify(type));
 	};
+
+	useEffect(()=>{
+		getAdvertisementById(params.id).then(()=>{
+			const adver = checkAdvertisemntType(res.data)
+			adsCtx.setAds(adver)
+
+		})
+
+	},[])
 	
 
 	const handler=()=>{
