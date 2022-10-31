@@ -1,5 +1,5 @@
 import {Button, Col, Form} from "react-bootstrap";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Select from "react-select";
 import {Advertisement_states} from "../../../common/data/Advertisement_states.js";
 import {AdvertisementOptions, } from "../../../common/data/SelectOptions.js";
@@ -23,7 +23,7 @@ const SummaryDescription = (props) => {
 	const advertisement = props.ads;
 	const ctx  = useContext(UserContext);
 	const user = ctx.getUserData();
-	
+
 console.log(advertisement._title,'advertisement')
 
 	let [title, setTitle] = useState(advertisement._title);
@@ -48,6 +48,11 @@ console.log(advertisement._title,'advertisement')
 			return new Accessories(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
 		} else throw Error("Not an Advertisement"+JSON.stringify(type));
 	};
+
+	useEffect(()=>{
+		setType()
+
+	})
 	
 
 	const handler=()=>{
