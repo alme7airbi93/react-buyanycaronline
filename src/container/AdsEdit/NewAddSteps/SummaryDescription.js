@@ -14,45 +14,55 @@ import Motorcycle from "../../../common/models/Motorcycle.js";
 import PlateNumber from "../../../common/models/PlateNumber.js";
 import {Advertisement_Types} from "../../../common/data/Advertisement_Types.js";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import { useParams } from "react-router-dom";
+import { getAdvertisementById } from "../../../common/repository/AdvertisementDB.js";
+
 
 const SummaryDescription = (props) => {
 
 	// eslint-disable-next-line no-unused-vars
 	const adsCtx =  useContext(AdvertismentCtx)
-	//const advertisement = adsCtx.ads;
-	const advertisement = props.ads;
 	const ctx  = useContext(UserContext);
 	const user = ctx.getUserData();
-
-console.log(advertisement._title,'advertisement')
-
-	let [title, setTitle] = useState(advertisement._title);
-	let [price, setPrice] = useState(advertisement._price);
-	let [desc, setDesc] = useState(advertisement._description);
-	let [type, setType] = useState(advertisement._advertisement_type);
+	const params = useParams();
+	
+	let [title, setTitle] = useState();
+	let [price, setPrice] = useState();
+	let [desc, setDesc] = useState();
+	let [type, setType] = useState();
+	let [ads, setAds] = useState();
 
 
 	const checkAdvertisemntType = () => {
 		console.log(type);
 		if (type === Advertisement_Types.Cars) {
-			return new Car(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new Car(title, desc, price, {}, user, [], type, 0);
 		} else if (type === Advertisement_Types.Motorcycles) {
-			return new Motorcycle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new Motorcycle(title, desc, price, {}, user, [], type, 0);
 		} else if (type === Advertisement_Types.HeavyVehicles) {
-			return new HeavyVehicle(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new HeavyVehicle(title, desc, price, {}, user, [], type, 0);
 		} else if (type === Advertisement_Types.Boats) {
-			return new Boat(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new Boat(title, desc, price, {}, user, [], type, 0);
 		} else if (type === Advertisement_Types.PlateNumber) {
-			return new PlateNumber(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new PlateNumber(title, desc, price, {}, user, [], type, 0);
 		} else if (type === Advertisement_Types.Accessories) {
-			return new Accessories(title, desc, price, {}, user, [], type, 0, Advertisement_states.Pending);
+			return new Accessories(title, desc, price, {}, user, [], type, 0);
 		} else throw Error("Not an Advertisement"+JSON.stringify(type));
 	};
 
 	useEffect(()=>{
-		setType()
+		if(params && params.Id){
+			getAdvertisementById(params.Id).then((res)=>{
+				
+				const adver = checkAdvertisemntType(res.data)
+				console.log(adver,'resdata')
+				adsCtx.setAds(adver)
+				setAds(adver)
+				console.log(adver,'adver')
+			})
+		}
 
-	})
+	},[params])
 	
 
 	const handler=()=>{
