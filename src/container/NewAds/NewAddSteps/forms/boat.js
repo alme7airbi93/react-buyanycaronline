@@ -35,7 +35,7 @@ const Detail = (props) => {
       const d = Object.assign(new Boat(), 
       {...advertisement,
         _length: boatData.length,
-        // _type:boatData.type,
+         _category:boatData.type,
         _hours:boatData.hours,
       });
       adsCtx.setAds(d);

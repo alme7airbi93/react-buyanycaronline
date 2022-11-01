@@ -24,7 +24,7 @@ const CardBlock = ({item}) => {
                 <li>HP: {item._horsePower}</li>
                 <li>Region: {item._region}</li>
                 <li>Transmission: {item._transmission}</li>
-                <li>_warranty: {item._warranty}</li>
+                <li>warranty: {item._warranty}</li>
                 
             </ul>
           

@@ -39,5 +39,26 @@ class Boat extends Vehicle {
 	set hours(value) {
 		this._hours = value;
 	}
+
+	getAlldata (){
+		return{
+			title:this.title,
+			advertisement_type: this.advertisement_type,
+			category : this.category,
+			length:this.length,
+			_hours:this._hours,
+			price:this.price,
+			color: this.color,
+			year:this.year,
+			fuel_type: this.fuel_type,
+			region:this.region,
+			condition: this.condition,
+			warranty:this.warranty,
+			views:this.views,
+			description: this.description,
+			
+		}
+
+	}
 }
 export default Boat;

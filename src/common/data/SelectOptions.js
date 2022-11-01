@@ -17,8 +17,8 @@ import { Steering_Types } from "./Steering_Types.js";
 
 export const AdvertisementOptions = () => {
   let options = [];
-  for (const [key, val] of Object.entries(Advertisement_Types)) {
-    options.push({ value: val, label: val });
+  for (const [key, val, index] of Object.entries(Advertisement_Types)) {
+    options.push({ value: val, label: val, key:key});
   }
   return options;
 };

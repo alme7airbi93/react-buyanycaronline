@@ -1,0 +1,13 @@
+.phone-input-group{
+    background: #fff;
+    padding: 5px;
+    border-radius: 4px;
+
+}
+.PhoneInputInput {
+    outline: 0;
+    border: 0;
+    font-size: 14px;
+    padding: 6px;
+    width:100%;
+}

@@ -17,3 +17,22 @@ html {
 hr{
   background-color: rgb(255, 255, 255);
 }
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  text-align: center;
+  /* background: #ffffff61; */
+}
+.loader .spinner-border {
+  margin: auto;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}

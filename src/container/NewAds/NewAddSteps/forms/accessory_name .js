@@ -1,22 +1,84 @@
 import { Form } from "react-bootstrap";
 import { Button,} from "react-bootstrap";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
-
-
+import Accessories from "../../../../common/models/Boat";
+import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import { makes } from "../../../../common/data";
+import Select from "react-select";
+import {
+  createAdvertisement
+} from "../../../../common/repository/AdvertisementDB";
 
 const Detail = (props) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
+  const makes_option = makes()
 
 
-  const updateData = () => {
-    props.nextStep(StepsStateInDetail);
+  const [detail, setDetail] = useState({
+    category:'',
+    accessory_name:'',
+    vehicle_make:'',
+    vehicle_year:'',
+    vehicle_model:'',
+  })
+
+
+  const updateAccessories = () => {
+    
+    if (FormDataValidation(detail)) {
+      const d = Object.assign(new Accessories(), 
+      {...advertisement,
+        _category:detail.category,
+        _accessory_name:detail.accessory_name,
+        _vehicle_year:detail.vehicle_year,
+        _vehicle_model:detail.vehicle_model,
+     //   _vehicle_make:detail.vehicle_make
+      });
+      console.log(advertisement)
+      adsCtx.setAds(d);
+      console.log(advertisement)
+      createAdvertisement(advertisement).then((res) => {
+      if (res.success) {
+        console.log(res.data, res);
+        setLoading(false);
+         navigate("/user-profile");
+        alert("Data uploaded successfully");
+      }
+    });
+    } else {
+      alert("Please enter required fields");
+    }
   };
+
   return (
     <React.Fragment>
+
+      <Form.Group className="mb-3">
+        <Form.Label style={{ color: "#fff" }}>Category :</Form.Label>
+        <div className="mb-3">
+        <Select
+            placeholder={"Select types"}
+            options={makes_option.filter(item => item.parent_id === '3')}
+            defaultValue={detail.category}
+            value={makes_option.find(
+              (obj) => obj.value === detail.category
+            )}
+            isSearchable={false}
+            onChange={(data) => {
+              setDetail({
+                ...detail,
+                category: data.label,
+              });
+            }}
+          />
+        </div>
+      </Form.Group>
+
+
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>accessory_name </Form.Label>
         <Form.Control
@@ -24,8 +86,8 @@ const Detail = (props) => {
           placeholder="Enter accessory_name"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setDetail({
+              ...detail,
               accessory_name: data.target.value });
           }}
         />
@@ -35,7 +97,8 @@ const Detail = (props) => {
             <Form.Control type="date" 
             className="input-fields-theme"
             placeholder="Enter vehicle_year" onChange={data => {
-                setAdvertisement({...advertisement, vehicle_year : data.target.value});
+              setDetail({
+                ...detail, vehicle_year : data.target.value});
             }}/>
         </Form.Group>       
       <Form.Group className="mb-3">
@@ -45,8 +108,8 @@ const Detail = (props) => {
           placeholder="Enter vehicle_model"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setDetail({
+              ...detail,
               vehicle_model: data.target.value });
           }}
         />
@@ -58,8 +121,8 @@ const Detail = (props) => {
           placeholder="Enter vehicle_make"
           className="input-fields-theme"
           onChange={(data) => {
-            setAdvertisement({
-              ...advertisement,
+            setDetail({
+              ...detail,
               vehicle_make: (data.target.value)});
           }}
         />
@@ -72,7 +135,7 @@ const Detail = (props) => {
       >
         Back
       </Button>
-      <Button className="next_btn" onClick={() => updateData()}>
+      <Button className="next_btn" onClick={() => updateAccessories()}>
         Next
       </Button>
       </div>

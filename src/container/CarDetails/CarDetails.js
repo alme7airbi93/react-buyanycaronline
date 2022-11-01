@@ -58,7 +58,6 @@ const CarDetails = () => {
 							  <p>{key}: <span> {data[key]} </span></p>
 							  </div>
 							))}
-							
 						</div>
 						<button
                         className="search_btn mb-3"

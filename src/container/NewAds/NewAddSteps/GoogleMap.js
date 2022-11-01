@@ -40,6 +40,7 @@ const GoogleMap = (props) => {
   }, []);
 
   const uploadImageNow = async (file, id) => {
+
     const imagePath = "advertisement/" + id;
     const date = new Date();
     const filename = Math.floor(date.getTime() / 1000);
@@ -50,6 +51,7 @@ const GoogleMap = (props) => {
     );
     const url = await getDownloadURL(storageRef);
     return url;
+
   };
 
   const savePhotos = async (id) => {
@@ -73,7 +75,7 @@ const GoogleMap = (props) => {
         console.log(res.data, res);
         savePhotos(res.data);
         setLoading(false);
-        // navigate("/user-profile");
+         navigate("/user-profile");
         alert("Data uploaded successfully");
       }
     });

@@ -11,6 +11,10 @@ import {
 } from "react-bootstrap";
 
 import React, { useState } from "react";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import './addMobile.css'
+
 const Addmobile = (props) => {
 
   const [addPhone, setAddPhone] = useState('');
@@ -39,15 +43,20 @@ const Addmobile = (props) => {
                 </div>
                 <div className="col-md-8">
                   {}
-                  <InputGroup className="mb-3">
-                    <FormControl
+                  <InputGroup className="mb-3 phone-input-group">
+                    {/* <FormControl
                       type={"telephone"}
                       name="Mobile"
                       aria-label="Mobile"
                       value={addPhone}
                       onChange={(e) => setAddPhone(e.target.value)}
                       aria-describedby="basic-addon1"
-                    />
+                    /> */}
+                    <PhoneInput
+                    placeholder="Enter phone number"
+                    value={addPhone}
+                    country="US"
+                    onChange={setAddPhone}/>
                   </InputGroup>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import {
   HorsePowerOptions,
   TransmitionTypes,
 } from "../../../../common/data/SelectOptions.js";
+import { makes } from "../../../../common/data";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { useState } from "react";
 import { StepsStateInDetail, StepsStateInSummary } from "../../stepsState";
@@ -16,12 +17,14 @@ import Car from "../../../../common/models/Car";
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
+  const makes_option = makes()
 
   const [carDetails, setCarDetails] = useState({
     body_type: advertisement._bodyType,
     transmition: advertisement._transmission,
     power: advertisement._horsePower,
   });
+
 
   const updateData = () => {
     if (FormDataValidation(carDetails)) {
@@ -46,16 +49,16 @@ const Detail = (props) => {
         <div className="mb-3">
           <Select
             placeholder={"Select types"}
-            options={MotorcycleOptions()}
+            options={makes_option.filter(item => item.parent_id === '1')}
             defaultValue={carDetails.body_type}
-            value={MotorcycleOptions().find(
+            value={makes_option.find(
               (obj) => obj.value === advertisement.body_type
             )}
             isSearchable={false}
             onChange={(data) => {
               setCarDetails({
                 ...carDetails,
-                body_type: data.value,
+                body_type: data.label,
               });
             }}
           />

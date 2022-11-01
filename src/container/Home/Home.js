@@ -7,8 +7,7 @@ import { makes, models} from "../../common/data";
 import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionTypes} from "../../common/data/SelectOptions";
 import CategorySelection from "../NewAds/NewAddSteps/CategorySelection";
 import { ManufacturingYearsOptions } from "../../common/data/SelectOptions";
-import { getSearchAdvertisement } from "../../common/repository/AdvertisementDB";
-import CardBlock from "../../components/CardBlock/CardBlock";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Home = () => {
 	const [advSearch, setAdvSearch] = useState(false);
@@ -25,6 +24,8 @@ const Home = () => {
 	const [transmissionType, setTransmissionType] = useState("");
 	const [resultData,setResultData] = useState([]);
 	const [vehicalMakeValue,setVehicalMakeValue] = useState("");
+	const [filterMakes,setFilterMakes] = useState([]);
+	const [loading,setLoading] = useState(false);
 
 	const navigation = useNavigate();
 	const changePageHandler = () => {
@@ -45,45 +46,40 @@ const Home = () => {
 	let makes_options = makes();
 	let models_options = models();
 
-	console.log("vehicles ", makes_options);
+	console.log("vehicles ", models_options);
+
 	const setVehicleHandle = (value) => {
+
+		setLoading(true)
 		setVehicle(value);
-		var arr = [];
-		if(value){
-			value.key = '_advertisement_type'; 
-			arr.push(value)
+		let makesArray = [];
+		if(value.key === 'Cars'){
+			makesArray = makes_options.filter(item => item.parent_id === '1');
 		}
-		getSearchAdvertisement(arr).then(res => {
-			console.log(JSON.stringify(res.data[0]._make))
-			setVehicalMakeValue(JSON.stringify(res.data[0]._make))
-		}).catch(err => {
-			alert(err)
-		})
+		else if(value.key === 'Motorcycles'){
+			makesArray = makes_options.filter(item => item.parent_id === '2');
+		}
+		else if(value.key === 'HeavyVehicles'){
+			makesArray = makes_options.filter(item => item.parent_id === '4');
+		}
+		else if(value.key === 'Boats'){
+			makesArray = makes_options.filter(item => item.parent_id === '5');
+		}
+		else if(value.key === 'Accessories'){
+			makesArray = makes_options.filter(item => item.parent_id === '3');
+		}
+		else if(value.key === 'PlateNumber'){
+			makesArray = makes_options.filter(item => item.parent_id === '6');
+		}
+		setFilterMakes(makesArray);
 		
 		setMake("");
-		setModelFirst("");
-		setTypeDropdown(false);
+		setLoading(false)
+		// setModelFirst("");
+		// setTypeDropdown(false);
+		
 	};
 
-	const clearFilter = async() => {
-		setVehicle("");
-		setMake("");
-		setModelFirst("");
-		setTypeDropdown(false);
-		setYear("");
-		setColorType("");
-		setConditions("");
-		setFuelType("");
-		setTransmissionType("");
-
-		var searchArr = [];
-		getSearchAdvertisement(searchArr).then(res => {
-			console.log(res,'res')
-			setResultData(res.data)
-		}).catch(err => {
-			alert(err)
-		})
-	}
 	const getSearch = async() => {
 		var searchArr = [];
 		if(vehicleValue){
@@ -111,13 +107,8 @@ const Home = () => {
 			searchArr.push(condition)
 		}
 		console.log('searchArr',searchArr)
-		navigation("/car-search/?result="+JSON.stringify(searchArr))
-		// getSearchAdvertisement(searchArr).then(res => {
-		// 	console.log(res,'res')
-		// 	setResultData(res.data)
-		// }).catch(err => {
-		// 	alert(err)
-		// })
+	navigation('/car-search', { state: searchArr })
+		
 	}
 
 	const setMakeHandle = (value ) => {
@@ -173,16 +164,19 @@ const Home = () => {
 																value={vehicleValue}
 															/>
 														</div>
-														{/* <div className={rowClass}>
+														
+														<div className={rowClass}>
+															{vehicleValue ? (
 															<Select
 																placeholder = {vehicleValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Makes" : "Select Types"}
-																options={makes_options.filter(item => (item.value === "0" || (item.parent_id === vehicalMakeValue )))}
+																options={filterMakes}
 																onChange={(e) => setMakeHandle(e)}
 																value= {makeValue}
 																isSearchable={false}
 															/>
-														</div> */}
-														{/* <div className={rowClass}>
+															):(<></>)}
+														</div>
+														<div className={rowClass}>
 															{isTypeDropdown ?
 																<Select
 																	placeholder = {makeValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Models" : "Select Types"}
@@ -192,7 +186,7 @@ const Home = () => {
 																	isSearchable={false}
 																/>
 																: ""}
-														</div> */}
+														</div>
 														{/* meand of $ ????? */}
 														<div className={`${rowClass} ${toggleClass}`}>
 															<Select
@@ -242,9 +236,9 @@ const Home = () => {
 														<div className="col-md-3">
 															<Button className="first-section-btn" onClick={() => getSearch()}>SEARCH</Button>
 														</div>
-														<div className="col-md-3">
+														{/* <div className="col-md-3">
 															<Button className="first-section-btn" onClick={() => clearFilter()}>CLEAR</Button>
-														</div>
+														</div> */}
 													</div>
 													<a className='adv_search_btn'
 														onClick={() => setAdvSearch(!advSearch)}
@@ -258,20 +252,15 @@ const Home = () => {
 							</div>
 						</div>
 					</div>
-				</div>
-				{resultData.length && (											
-				<div className={"home-main-div"}>
-					<div className="container">
-						<div className='row home-row-div'>
-							{resultData.map((item) => (
-								<div className="col-md-3 mt-4">
-									<CardBlock item={item}/>
-								</div>
-							))}
+					{loading === true ? (
+						<div className="loader">
+							<Spinner animation="border" variant="danger" />
 						</div>
-					</div>
+					)
+					:
+					(<></>)}
 				</div>
-			)}
+			
 
 
 		</React.Fragment>

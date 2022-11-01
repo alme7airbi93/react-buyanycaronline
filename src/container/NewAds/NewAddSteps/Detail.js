@@ -160,22 +160,7 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                {/* <Form.Group className="mb-3">
-                  <Form.Label style={{ color: "#fff" }}>
-                    Steering Types :
-                  </Form.Label>
-                  <Select
-                    placeholder={"Steering Side"}
-                    options={SteeringTypes()}
-                    value={SteeringTypes().find(
-                      (obj) => obj.label === carDetails.steeringside
-                    )}
-                    isSearchable={false}
-                    onChange={(data) => {
-                      setCarDetails({...carDetails,steeringside:data.label});
-                    }}
-                  />
-                </Form.Group> */}
+               
                 {user.phone === undefined && (
                   <Form.Group className="mb-3">
                     <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
@@ -284,46 +269,7 @@ const Detail = (props) => {
                   </div>
                 )}
 
-                {advertisement._advertisement_type == "Motorcycles" && (
-                  <div>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>
-                        Engine Size :
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Engine Size"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              engine_size: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "#fff" }}>
-                        Distance :
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter Distance"
-                        onChange={(data) => {
-                          setAdvertisement({
-                            ...advertisement,
-                            type: {
-                              ...advertisement.type,
-                              distance: parseInt(data.target.value),
-                            },
-                          });
-                        }}
-                      />
-                    </Form.Group>
-                  </div>
-                )}
+              
 
                
               </Form>

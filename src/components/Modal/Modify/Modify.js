@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-bootstrap";
 // import "./edit.css";
+import Spinner from 'react-bootstrap/Spinner';
 
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../../context/Context";
@@ -25,6 +26,7 @@ const Modify = (props) => {
   const [title, setTitle] = useState(props.ads._title);
   const [description, setDescription] = useState(props.ads._description);
   const [price, setPrice] = useState(props.ads._price);
+  const [loading,setLoading] = useState(false)
 
 
 useEffect(()=>{
@@ -34,6 +36,7 @@ useEffect(()=>{
 
 
 const updateAds = () => {
+  setLoading(true)
   let data = {
     _title:title,
     _description:description,
@@ -41,11 +44,13 @@ const updateAds = () => {
   };
 
   updateAdsById(props.ads._id,data).then(res => {
-   
     if(res.success === true){
       alert("Advertisement modify successfully.")
       props.handleclose();
     }
+    setLoading(false)
+  }).catch(err => {
+    setLoading(false)
   })
 
 }
@@ -127,6 +132,13 @@ const updateAds = () => {
           </Row>
         </Modal.Body>
       </div>
+      {loading === true ? (
+				<div className="loader">
+					<Spinner animation="border" variant="danger" />
+				</div>
+			)
+			:
+			(<></>)}
     </Modal>
   );
 };

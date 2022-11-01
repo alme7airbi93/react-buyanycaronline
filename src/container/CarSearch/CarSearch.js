@@ -7,13 +7,14 @@ import { ManufacturingYearsOptions } from "../../common/data/SelectOptions";
 import { getSearchAdvertisement } from "../../common/repository/AdvertisementDB";
 import CardBlock from "../../components/CardBlock/CardBlock";
 import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionTypes} from "../../common/data/SelectOptions";
-
+import { useLocation } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 const height = window.innerHeight;
 const CarSearch = () => {
 
-	const [searchParams, setSearchParams] = useSearchParams();
-   const query = JSON.parse(searchParams.get("result"))
+// 	const [searchParams, setSearchParams] = useSearchParams();
+//    const query = JSON.parse(searchParams.get("result"))
 
 
 	const [vehicleValue, setVehicle] = useState("");
@@ -23,7 +24,9 @@ const CarSearch = () => {
 	const [fuelType, setFuelType] = useState("");
 	const [transmissionType, setTransmissionType] = useState("");
 	const [resultData,setResultData] = useState([]);
+	const [loading, setLoading] = useState(true);
 
+	const { state } = useLocation();
 
 	const options = [
 		{ value: "corolla", label: "corolla" },
@@ -31,12 +34,14 @@ const CarSearch = () => {
 	];
 
 	useEffect(() => {
-		console.log(query)
-		getSearchAdvertisement(query).then(res => {
+		console.log(state)
+		getSearchAdvertisement(state).then(res => {
 			console.log(res,'res')
 			setResultData(res.data)
+			setLoading(false)
 		}).catch(err => {
 			alert(err)
+			setLoading(false)
 		})
 
 	},[])
@@ -46,6 +51,7 @@ const CarSearch = () => {
 	};
 
 	const getSearch = async() => {
+		setLoading(true)
 		var searchArr = [];
 		if(vehicleValue){
 			vehicleValue.key = '_advertisement_type'; 
@@ -75,11 +81,32 @@ const CarSearch = () => {
 		getSearchAdvertisement(searchArr).then(res => {
 			console.log(res,'res')
 			setResultData(res.data)
+			setLoading(false)
 		}).catch(err => {
 			alert(err)
+			setLoading(false)
 		})
 	}
+	const clearFilter = async() => {
+		setLoading(true)
+		setVehicle("");
+		setTypeDropdown(false);
+		setYear("");
+		setColorType("");
+		setConditions("");
+		setFuelType("");
+		setTransmissionType("");
 
+		var searchArr = [];
+		getSearchAdvertisement(searchArr).then(res => {
+			console.log(res,'res')
+			setResultData(res.data)
+			setLoading(false)
+		}).catch(err => {
+			alert(err)
+			setLoading(false)
+		})
+	}
 
 	return (
 		<div className="main-carSearch-div">
@@ -146,14 +173,20 @@ const CarSearch = () => {
 									<Button type="button" onClick={() => getSearch()} className="first-section-btn">SEARCH</Button>
 								</div>
 							</div>
+							<div className="col-md-12">
+								<div className={"mb-3"}>
+									<Button type="button" onClick={() => clearFilter()} className="clear-btn">Clear Filter</Button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
-					<div className="col-md-7 carSearch-result-div" style={{height:height - 180,overflow:'auto'}}>
+					<div className="col-md-7 carSearch-result-div" style={{height:height - 180,overflow:'auto',minHeight: '510px'}}>
 						<h3 className="d-flex justify-content-between"><span>Search Result</span><span>({resultData.length})</span></h3>
 						<hr/>
 
 						{resultData.map((item) => (
-							<div className="col-md-12 mb-3">
+							<div className="col-md-12 mb-3" key={item._id}>
 								<CardBlock item={item}/>
 							</div>
 						))}
@@ -165,6 +198,13 @@ const CarSearch = () => {
 					</div>
 				</div>
 			</div>
+			{loading === true ? (
+				<div className="loader">
+					<Spinner animation="border" variant="danger" />
+				</div>
+			)
+			:
+			(<></>)}
 		</div>
 	);
 };
