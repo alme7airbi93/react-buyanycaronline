@@ -7,7 +7,7 @@ import {
   HorsePowerOptions,
   TransmitionTypes,
 } from "../../../../common/data/SelectOptions.js";
-import { makes } from "../../../../common/data";
+import { makes,models } from "../../../../common/data";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { useState } from "react";
 import { StepsStateInDetail, StepsStateInSummary } from "../../stepsState";
@@ -18,20 +18,24 @@ const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
   const makes_option = makes()
+  const models_options = models();
 
   const [carDetails, setCarDetails] = useState({
-    body_type: advertisement._bodyType,
+    make: advertisement._make,
+    modal:advertisement._modal,
     transmition: advertisement._transmission,
     power: advertisement._horsePower,
   });
-
+  
+  const [makeValue, setMakeValue] = useState();
 
   const updateData = () => {
     if (FormDataValidation(carDetails)) {
       console.log(advertisement,'before')
       const d = Object.assign(new Car(), 
       {...advertisement,
-        _bodyType: carDetails.body_type,
+        _modal:carDetails.modal,
+        _make: carDetails.make,
         _transmission: carDetails.transmition,
         _horsePower:carDetails.power,
       });
@@ -45,25 +49,48 @@ const Detail = (props) => {
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>Body Type :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Make :</Form.Label>
         <div className="mb-3">
           <Select
             placeholder={"Select types"}
             options={makes_option.filter(item => item.parent_id === '1')}
-            defaultValue={carDetails.body_type}
+            defaultValue={carDetails.make}
             value={makes_option.find(
-              (obj) => obj.value === advertisement.body_type
+              (obj) => obj.value === advertisement.make
             )}
             isSearchable={false}
             onChange={(data) => {
               setCarDetails({
                 ...carDetails,
-                body_type: data.label,
+                make: data.label,
               });
+              setMakeValue(data)
             }}
           />
         </div>
       </Form.Group>
+      {makeValue ? (
+          <Form.Group className="mb-3">
+          <Form.Label style={{ color: "#fff" }}>Modal :</Form.Label>
+          <div className="mb-3">
+            <Select
+              placeholder={"Select Modal"}
+              options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+              defaultValue={carDetails.modal}
+              value={models_options.find(
+                (obj) => obj.value === advertisement.modal
+              )}
+              isSearchable={false}
+              onChange={(data) => {
+                setCarDetails({
+                  ...carDetails,
+                  modal: data.label,
+                });
+              }}
+            />
+          </div>
+        </Form.Group>
+      ):(<></>)}
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Transmition :</Form.Label>
         {/* <Form.Control
@@ -82,7 +109,7 @@ const Detail = (props) => {
           options={TransmitionTypes()}
           defaultValue={carDetails.transmition}
           value={TransmitionTypes().find(
-            (obj) => obj.value === advertisement.body_type
+            (obj) => obj.value === advertisement.make
           )}
           isSearchable={false}
           onChange={(data) => {
@@ -100,7 +127,7 @@ const Detail = (props) => {
           options={HorsePowerOptions()}
           defaultValue={carDetails.power}
           value={HorsePowerOptions().find(
-            (obj) => obj.value === advertisement.body_type
+            (obj) => obj.value === advertisement.make
           )}
           isSearchable={false}
           onChange={(data) => {

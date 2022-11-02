@@ -17,14 +17,14 @@ const Detail = (props) => {
 
   const [boatData,setBoatData] =  useState({
     length:'',
-    type:'',
+    make:'',
     hours:'',
   })
 
   useEffect(()=>{
     setBoatData({...boatData,
       length:advertisement.length,
-      type:advertisement.type,
+      make:advertisement.make,
       hours:advertisement.hours,
     })
 
@@ -35,7 +35,7 @@ const Detail = (props) => {
       const d = Object.assign(new Boat(), 
       {...advertisement,
         _length: boatData.length,
-         _category:boatData.type,
+         _make:boatData.make,
         _hours:boatData.hours,
       });
       adsCtx.setAds(d);
@@ -68,24 +68,25 @@ const Detail = (props) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>type :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Make :</Form.Label>
         <div className="mb-3">
           <Select
             placeholder={"Select types"}
             options={BoatOptions()}
             value={BoatOptions().find(
-              (obj) => obj.value === boatData.type
+              (obj) => obj.value === boatData.make
             )}
             isSearchable={false}
             onChange={(data) => {
               setBoatData({
                 ...boatData,
-                type: data.value,
+                make: data.value,
               });
             }}
           />
         </div>
       </Form.Group>
+      
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>hours :</Form.Label>
         <Form.Control

@@ -19,7 +19,7 @@ const Detail = (props) => {
 
 
   const [detail, setDetail] = useState({
-    category:'',
+    make:'',
     accessory_name:'',
     vehicle_make:'',
     vehicle_year:'',
@@ -32,7 +32,7 @@ const Detail = (props) => {
     if (FormDataValidation(detail)) {
       const d = Object.assign(new Accessories(), 
       {...advertisement,
-        _category:detail.category,
+        _vehicle_make:detail.vehicle_make,
         _accessory_name:detail.accessory_name,
         _vehicle_year:detail.vehicle_year,
         _vehicle_model:detail.vehicle_model,
@@ -71,7 +71,7 @@ const Detail = (props) => {
             onChange={(data) => {
               setDetail({
                 ...detail,
-                category: data.label,
+                make: data.label,
               });
             }}
           />
@@ -123,7 +123,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setDetail({
               ...detail,
-              vehicle_make: (data.target.value)});
+              vehicle_make: data.target.value});
           }}
         />
       </Form.Group>

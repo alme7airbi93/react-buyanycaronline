@@ -5,22 +5,22 @@ class Motorcycle extends Vehicle {
 
 	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,
 		make = -1, modal = -1, features = [""], color = "", year = -1, condition = false, fuel_type = -1, warranty = false, region = -1,
-		engineSize= -1, distance= -1,bodyType = -1, category = -1) {
+		engineSize= -1, distance= -1, category = -1) {
 		super(title, description, price, location, owner, photos, advertisement_type, views, stat,
 			make, modal, features, color, year, condition, fuel_type, warranty, region);
 		this._engineSize = engineSize;
 		this._distance = distance;
 		this._category = category;
-		this._bodyType = bodyType;
+		this._make = make;
 		Object.preventExtensions(this);
 	}
 
-	get bodyType() {
-		return this._bodyType;
+	get make() {
+		return this._make;
 	}
 
-	set bodyType(value) {
-		this._bodyType = value;
+	set make(value) {
+		this._make = value;
 	}
 
 	get engineSize() {
@@ -58,7 +58,6 @@ class Motorcycle extends Vehicle {
 			views:this.views,
 			fuel_type: this.fuel_type,
 			distance:this.distance,
-			bodyType : this.bodyType,
 			color: this.color,
 			condition: this.condition,
 			region:this.region,

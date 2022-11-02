@@ -8,26 +8,33 @@ import Select from "react-select";
 import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
 import HeavyVehicle from "../../../../common/models/HeavyVehicle";
-import { makes } from "../../../../common/data";
+import { makes, models} from "../../../../common/data";
 
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
 
-  const makes_option = makes()
+  const makes_option = makes();
+  const models_options = models();
+
   const [details, setDetails] = useState({
-    body_type: advertisement._bodyType,
+    make: advertisement._make,
+    modal:advertisement._modal,
     capacity_weight: advertisement._capacityWeight,
     numberOfCylinders:advertisement._numberOfCylinders
   });
+
+  const [makeValue, setMakeValue] = useState();
+
 
   const updateData = () => {
     console.log(details);
     if (FormDataValidation(details)) {
       const d = Object.assign(new HeavyVehicle(), 
       {...advertisement,
-        _bodyType: details.body_type,
+        _make: details.make,
+        _modal:details.modal,
         _capacityWeight: details.capacity_weight,
         _numberOfCylinders: details.numberOfCylinders,
       });
@@ -41,25 +48,49 @@ const Detail = (props) => {
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
-      <Form.Label style={{ color: "#fff" }}>Body Type :</Form.Label>
+      <Form.Label style={{ color: "#fff" }}>Make :</Form.Label>
         <div className="mb-3">
           <Select
             placeholder={"Select types"}
             options={makes_option.filter(item => item.parent_id === '4')}
-            defaultValue={details.body_type}
+            defaultValue={details.make}
             value={makes_option.find(
-              (obj) => obj.value === advertisement.body_type
+              (obj) => obj.value === advertisement.make
             )}
             isSearchable={false}
             onChange={(data) => {
               setDetails({
                 ...details,
-                body_type: data.label,
+                make: data.label,
               });
+              setMakeValue(data)
             }}
           />
         </div>
       </Form.Group>
+      {makeValue ? (
+          <Form.Group className="mb-3">
+          <Form.Label style={{ color: "#fff" }}>Modal :</Form.Label>
+          <div className="mb-3">
+            <Select
+              placeholder={"Select Modal"}
+              options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+              defaultValue={details.modal}
+              value={models_options.find(
+                (obj) => obj.value === advertisement.modal
+              )}
+              isSearchable={false}
+              onChange={(data) => {
+                setDetails({
+                  ...details,
+                  modal: data.label,
+                });
+              }}
+            />
+          </div>
+        </Form.Group>
+      ):(<></>)}
+
 
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Number Of Cylinders :</Form.Label>

@@ -2,23 +2,23 @@ import Advertisement from "./Advertisement.js";
 import User from "./User.js";
 
 class Accessories extends Advertisement {
-	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,vehicle_make  = -1, vehicle_model  = -1, vehicle_year = -1,accessory_name ="",category = -1){
+	constructor(title = "", description = "", price = 0.0, location = {}, owner = User, photos = [""], advertisement_type = -1, views = -1, stat= -1,vehicle_make  = -1, vehicle_model  = -1, vehicle_year = -1,accessory_name ="",make = -1){
 
 		super(title, description, price, location, owner, photos, advertisement_type, views, stat);
 		this._vehicle_make = vehicle_make;
 		this._vehicle_model = vehicle_model;
 		this._vehicle_year = vehicle_year;
 		this._accessory_name = accessory_name;
-		this._category = category;
+		this._make = make;
 		Object.preventExtensions(this);
 	}
 
-	get category() {
-		return this._category;
+	get make() {
+		return this._make;
 	}
 
-	set category(value) {
-		this._category = value;
+	set make(value) {
+		this._make = value;
 	}
 	get vehicle_make() {
 		return this._vehicle_make;

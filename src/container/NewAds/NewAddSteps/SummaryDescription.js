@@ -1,5 +1,5 @@
 import {Button, Col, Form} from "react-bootstrap";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Select from "react-select";
 import {Advertisement_states} from "../../../common/data/Advertisement_states.js";
 import {AdvertisementOptions, } from "../../../common/data/SelectOptions.js";
@@ -27,6 +27,13 @@ const SummaryDescription = (props) => {
 	let [price, setPrice] = useState(advertisement._price);
 	let [desc, setDesc] = useState(advertisement._description);
 	let [type, setType] = useState(advertisement._advertisement_type);
+
+	let [errors, setErrors] = useState({
+		titleError:'',
+		priceError:'',
+		descriptionError:'',
+		typeError:'',
+	})
 
 	const checkAdvertisemntType = () => {
 		console.log(type);
@@ -67,6 +74,47 @@ const SummaryDescription = (props) => {
 		props.nextStep(StepsStateInMainCategory);
 	};
 
+	useEffect(() => {
+		// if(!title){
+		// 	setErrors({...errors,titleError:true})
+		// }
+		// else{
+		// 	setErrors({...errors,titleError:false})
+		// }
+	},[setTitle])
+
+	const handleValidate = (value,label) => {
+		if(value === ''){
+			if(label === 'title'){
+				setErrors({...errors,titleError:true})
+			}
+			else if(label === 'price'){
+				setErrors({...errors,priceError:true})
+			}
+			else if(label === 'desc'){
+				setErrors({...errors,descriptionError:true})
+			}
+			else{
+				setErrors({...errors,typeError:true})
+			}
+			
+		}
+		else{
+			if(label === 'title'){
+				setErrors({...errors,titleError:false})
+			}
+			else if(label === 'price'){
+				setErrors({...errors,priceError:false})
+			}
+			else if(label === 'desc'){
+				setErrors({...errors,descriptionError:false})
+			}
+			else{
+				setErrors({...errors,typeError:false})
+			}
+		}
+	}
+
 	return(
 		<React.Fragment>
 			<Col md={5} className="news_ads_details">
@@ -77,7 +125,11 @@ const SummaryDescription = (props) => {
 						<Form.Label style={{color: "#fff"}}>Title :</Form.Label>
 						<Form.Control className="input-fields-theme" type="text" value={title} placeholder="Enter Title" onChange={data=>{
 							setTitle(data.target.value);
+							handleValidate(data.target.value,'title')
 						}}/>
+						{errors.titleError === true ? (
+							<small style={{color:'red'}}>Please enter title.</small>
+						):(<></>)}
 					</Form.Group>
 
 					<Form.Group className="md-3">
@@ -89,21 +141,35 @@ const SummaryDescription = (props) => {
 								value={AdvertisementOptions().find(obj=> obj.label === type)}
 								isSearchable={false}
 								onChange={data => {
-									setType(data.label);}}
+									setType(data.label);
+									handleValidate(data.target.value,'category')	
+								}
+								}
 							/>
 						</div>
+						{errors.typeError === true ? (
+							<small style={{color:'red'}}>Please select category.</small>
+						):(<></>)}
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 						<Form.Label style={{color: "#fff"}}>Price :</Form.Label>
 						<Form.Control className="input-fields-theme" type="number" placeholder="Enter Price" value={price} onChange={data=>{
 							setPrice(parseFloat(data.target.value));
+							handleValidate(data.target.value,'price')	
 						}}/>
+						{errors.priceError === true ? (
+							<small style={{color:'red'}}>Please enter price.</small>
+						):(<></>)}
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 						<Form.Label style={{color: "#fff"}}>Description :</Form.Label>
 						<Form.Control className="input-fields-theme" as="textarea" rows={3} value={desc} placeholder="Description" onChange={data => {
 							setDesc(data.target.value);
+							handleValidate(data.target.value,'desc')	
 						}}/>
+						{errors.descriptionError === true ? (
+							<small style={{color:'red'}}>Please enter description.</small>
+						):(<></>)}
 					</Form.Group>
 					<Form.Group className="mb-3">
 						{/* eslint-disable-next-line react/prop-types */}
