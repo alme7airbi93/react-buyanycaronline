@@ -157,7 +157,7 @@ const Home = () => {
 											</div>
 											<form>
 												<div className="container">
-													<div className="row home-select-div">
+													<div className="row home-select-div pb-0">
 														{/* where to use "rowClass" props */}
 														<div className={rowClass}>
 															<Select
@@ -215,6 +215,13 @@ const Home = () => {
 																onChange = {(e) => setColorType(e)}
 															/>
 														</div>
+													   </div>
+
+														{(vehicleValue.key === 'PlateNumber' || vehicleValue.key === 'Accessories' ) ? (
+															<></>
+														):
+														(
+														<div className="row home-select-div1">
 														<div className={`${rowClass} ${toggleClass}`}>
 															<Select
 																placeholder={"Select Transmission"}
@@ -238,6 +245,9 @@ const Home = () => {
 																onChange = {(e) => setConditions(e)}
 															/>
 														</div>
+														</div>
+														)}
+														<div className="row  home-select-div1 pb-5" >
 														<div className="col-md-3">
 															<Button className="first-section-btn" onClick={() => getSearch()}>SEARCH</Button>
 														</div>
