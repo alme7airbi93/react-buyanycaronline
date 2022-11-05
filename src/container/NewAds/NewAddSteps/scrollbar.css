@@ -11,3 +11,17 @@
   justify-content: center;
 }
 
+.fileUploader .fileContainer {
+	background: #b1b1b1;
+  box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 5%);
+  position: relative;
+  border-radius: 10px;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px auto;
+  transition: all 0.3s ease-in;
+}
+

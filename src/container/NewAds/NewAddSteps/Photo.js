@@ -61,6 +61,7 @@ const UploadAndDisplayImage = (props) => {
 							maxFileSize={5242880}
 							withPreview={true}
 							style={{backgroundColor:'#3c3c3c'}}
+							
 						/>  
 						<br /> 
 						<br /> 

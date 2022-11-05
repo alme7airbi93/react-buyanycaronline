@@ -106,8 +106,13 @@ const Home = () => {
 			condition.key = '_condition'; 
 			searchArr.push(condition)
 		}
-		console.log('searchArr',searchArr)
-	navigation('/car-search', { state: searchArr })
+		if(vehicleValue.value == "Plate Numbers"){
+			navigation('/plate-numbers-search', { state: searchArr })
+		}else{
+			navigation('/car-search', { state: searchArr })
+		}
+		console.log('searchArr',vehicleValue)
+	// navigation('/car-search', { state: searchArr })
 		
 	}
 

@@ -25,7 +25,6 @@ const CarDetails = () => {
 			const newdata = Object.assign(instance,{...ads})
 			const modifyData = newdata.getAlldata()
 			setData(modifyData)
-			console.log(modifyData)
 		})
 
 	}, [id,setData,close,setAllData]);
@@ -54,8 +53,8 @@ const CarDetails = () => {
 					<Col md={6} className={"car_title"}>
 						<div className={"d-flex justify-content-around flex-wrap"}>
 							{Object.keys(data).map((key) => (
-                              <div key={key} style={{flex:'50%',display:(key === 'title' || key === 'price' || key === 'views' || key === 'advertisement_type') ? 'none' : 'flex'}}>
-							  <p>{key}: <span> {data[key]} </span></p>
+                              <div key={key} style={{flex:'50%',display:(key === 'title' || key === 'Price' || key === 'views' || key === 'advertisement_type') ? 'none' : 'flex'}}>
+							  <p>{key.toUpperCase()}: <span>  &nbsp;{data[key]} </span></p>
 							  </div>
 							))}
 						</div>

@@ -18,13 +18,15 @@ const CardBlock = ({item}) => {
 
             <p >{item._description}</p>
             <ul className="tags">
-                <li>Color: {item._color}</li>
-                <li>Type: {item._bodyType}</li>
-                <li>Fuel Type: {item._fuel_type}</li>
-                <li>HP: {item._horsePower}</li>
-                <li>Region: {item._region}</li>
-                <li>Transmission: {item._transmission}</li>
-                <li>warranty: {item._warranty}</li>
+            {item._fuel_type && <li>Color: {item._color}</li> }
+                {item._bodyType &&
+                    <li>Type: {item._bodyType}</li>
+                    }
+               {item._fuel_type && <li>Fuel Type: {item._fuel_type}</li>}
+               {item._horsePower &&<li>HP: {item._horsePower}</li>}
+               {item._region && <li>Region: {item._region}</li>}
+               {item._transmission &&<li>Transmission: {item._transmission}</li>}
+               {item._warranty &&  <li>warranty: {item._warranty}</li>}
                 
             </ul>
           

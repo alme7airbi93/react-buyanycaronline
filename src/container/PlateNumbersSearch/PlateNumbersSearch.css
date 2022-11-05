@@ -1,0 +1,88 @@
+.main-carSearch-div{
+    min-height: 100vh;
+    margin-top: 40px;
+}
+.carSearch-find-div{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.carSearch-result-div{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.carSearch-block-div{
+    background-color: rgba(22, 30, 33, 1);
+    border: 1px solid rgb(36, 49, 54);
+    padding: 20px;
+    text-align: center;
+    height: 500px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.car-select-btn{
+    height: 40px;
+    border: 0;
+    width: 150px;
+    outline: 0;
+    background: rgba(255, 255, 255, .1);
+    color: rgba(255, 255, 255, .55);
+    border-radius: 0;
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+.clear-btn{
+    color:#fff;
+    background: transparent;
+    width:100%;
+    border:0px;
+    font-size: 12px;
+    font-weight: 600;
+}
+/*responsive*/
+@media (max-width: 768px) {
+    .carSearch-find-div {
+        background-color: rgba(22, 30, 33, 1);
+        border: 1px solid rgb(36, 49, 54);
+        padding: 20px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .carSearch-result-div {
+        background-color: rgba(22, 30, 33, 1);
+        border: 1px solid rgb(36, 49, 54);
+        padding: 20px;
+        height: 100px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .carSearch-block-div {
+        background-color: rgba(22, 30, 33, 1);
+        border: 1px solid rgb(36, 49, 54);
+        padding: 20px;
+        text-align: center;
+        height: 500px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .car-select-btn {
+        height: 40px;
+        border: 0;
+        width: 100%;
+        outline: 0;
+        background: rgba(255, 255, 255, .1);
+        color: rgba(255, 255, 255, .55);
+        border-radius: 0;
+        font-size: 10px;
+        margin-bottom: 15px;
+    }
+}

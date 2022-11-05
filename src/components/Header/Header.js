@@ -99,6 +99,7 @@ const Header = () => {
 					<Nav className="me-auto Navbar-header-section">
 						<div className="navbar-nav Navbar-header-section ">
 							<NavLink className="nav-link"  to={"/"}>HOME </NavLink>
+							<NavLink className="nav-link"  to={"/plate-numbers-search"}>PLATE NUMBER</NavLink>
 							<NavLink className="nav-link"  to={"/car-search"}>CARS</NavLink>
 							<NavLink className="nav-link"  to={"/boat-search"}>BOAT</NavLink>
 							<NavLink className="nav-link"  to={"/about"}>ABOUT</NavLink>

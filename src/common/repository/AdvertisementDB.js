@@ -131,13 +131,16 @@ export const getUsersAdvertisement = async(userId)=>{
 
 
 export const getSearchAdvertisement = async (filterData) => {
-
+console.log(filterData,'sdfsdfsf');
 
 	const qr = collection(db,doc_collection );
 	const queryConstraints = []
-	filterData.forEach((item) => {
-		queryConstraints.push(where(item.key, '==', item.value));
-	});
+	if(filterData){
+		filterData.forEach((item) => {
+			queryConstraints.push(where(item.key, '==', item.value));
+		});
+	}
+	
 
 	const q = query(qr,...queryConstraints)
 	

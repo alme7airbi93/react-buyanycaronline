@@ -11,6 +11,7 @@ import Home from "./container/Home/Home";
 import BoatSearch from "./container/BoatSearch/BoatSearch";
 import BoatDetails from "./container/BoatDetails/BoatDetails";
 import CarSearch from "./container/CarSearch/CarSearch";
+import PlateNumbersSearch from "./container/PlateNumbersSearch/PlateNumbersSearch";
 import CarDetails from "./container/CarDetails/CarDetails";
 import About from "./container/About/About";
 import Contact from "./container/Contact/Contact";
@@ -35,6 +36,7 @@ const App = () => {
 				<Header />
 				<Routes>
 					<Route exact path='/' element={<Home />} />
+					<Route exact path='/plate-numbers-search' element={<PlateNumbersSearch />} />
 					<Route exact path='/car-search' element={<CarSearch />} />
 					<Route exact path='/car-detail/:Id' element={<CarDetails />} />
 					<Route exact path='/boat-search' element={<BoatSearch />} />
