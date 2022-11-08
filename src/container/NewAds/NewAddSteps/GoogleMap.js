@@ -13,6 +13,7 @@ import {
   updateAdvertisement,
   updateArrayField
 } from "../../../common/repository/AdvertisementDB";
+import { createAd } from "../../../controllers/AdsController";
 import {
   getDownloadURL,
   uploadString,
@@ -39,47 +40,23 @@ const GoogleMap = (props) => {
     //console.log(advertisement,'in Map')
   }, []);
 
-  const uploadImageNow = async (file, id) => {
 
-    const imagePath = "advertisement/" + id;
-    const date = new Date();
-    const filename = Math.floor(date.getTime() / 1000);
-    const storage = getStorage();
-    const storageRef = ref(storage, imagePath + `/${filename}`);
-    await uploadString(storageRef, file[0], "data_url").then((res) =>
-      console.log(res.ref)
-    );
-    const url = await getDownloadURL(storageRef);
-    return url;
 
-  };
-
-  const savePhotos = async (id) => {
-    const url = [];
-    for (let i = 0; i < photos.length; i++) {
-      await uploadImageNow(photos[i], id).then((res) => url.push(res));
-    }
-    // advertisement._photos = url;
-    // console.log(advertisement);
-    await updateArrayField(id, url).then((res) =>
-      console.log(res, "res image url saved")
-    );
-  };
+  
 
   const saveData = () => {
     setLoading(true);
     var dt = advertisement;
     dt.photos = [];
-    createAdvertisement(advertisement).then((res) => {
-      if (res.success) {
-        console.log(res.data, res);
-        savePhotos(res.data);
-        setLoading(false);
+    createAd(advertisement,photos).then((res) => {
+      console.log(res,'resresres')
+      
          navigate("/user-profile");
         alert("Data uploaded successfully");
-      }
+      
     });
   };
+
 
   return (
     <React.Fragment>

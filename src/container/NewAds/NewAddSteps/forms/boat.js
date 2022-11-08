@@ -6,6 +6,7 @@ import Select from "react-select";
 import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { StepsStateInDetail, StepsStateInSummary} from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
 import Boat from "../../../../common/models/Boat";
 import { StepsStateInPhoto } from "../../stepsState";
 
@@ -16,33 +17,29 @@ const Detail = (props) => {
  
 
   const [boatData,setBoatData] =  useState({
-    length:'',
-    make:'',
-    hours:'',
+    _length:'',
+    _make:'',
+    _hours:'',
   })
 
   useEffect(()=>{
     setBoatData({...boatData,
-      length:advertisement.length,
-      make:advertisement.make,
-      hours:advertisement.hours,
+      _length:advertisement._length,
+      _make:advertisement._make,
+      _hours:advertisement._hours,
     })
 
   },[])
 
   const updateData = () => {
-    if (FormDataValidation(boatData)) {
-      const d = Object.assign(new Boat(), 
-      {...advertisement,
-        _length: boatData.length,
-         _make:boatData.make,
-        _hours:boatData.hours,
-      });
-      adsCtx.setAds(d);
-      props.nextStep(StepsStateInDetail);
-    } else {
-      alert("Please enter required fields");
+    const resp =   AdsStepVerfication(advertisement,boatData)
+    if(resp.success){
+        adsCtx.setAds(resp.data);
+        props.nextStep(StepsStateInDetail);
     }
+    
+
+    props.nextStep(StepsStateInDetail);
   };
 
   // const updateData = () => {
@@ -58,11 +55,11 @@ const Detail = (props) => {
           type="number"
           placeholder="Enter length"
           className="input-fields-theme"
-          value={boatData.length}
+          value={boatData._length}
           onChange={(data) => {
             setBoatData({
               ...boatData,
-              length: data.target.value,
+              _length: data.target.value,
             });
           }}
         />
@@ -74,13 +71,13 @@ const Detail = (props) => {
             placeholder={"Select types"}
             options={BoatOptions()}
             value={BoatOptions().find(
-              (obj) => obj.value === boatData.make
+              (obj) => obj.value === boatData._make
             )}
             isSearchable={false}
             onChange={(data) => {
               setBoatData({
                 ...boatData,
-                make: data.value,
+                _make: data.value,
               });
             }}
           />
@@ -94,11 +91,11 @@ const Detail = (props) => {
           type="number"
           className="input-fields-theme"
           placeholder="Enter hours"
-          value={boatData.hours}
+          value={boatData._hours}
           onChange={(data) => {
             setBoatData({
               ...boatData,
-              hours: data.target.value,
+              _hours: data.target.value,
             });
           }}
         />

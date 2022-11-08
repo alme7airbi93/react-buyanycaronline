@@ -15,7 +15,7 @@ import {
   } from "firebase/storage";
  
 export const AdsStepVerfication = (adSelected,data) => {
-    console.log(data,'data')
+    console.log(data,'motorCycleDetails')
     console.log(FormDataValidation(data))
     if (FormDataValidation(data)) {
 
@@ -36,11 +36,15 @@ else{
 }
 
 
-export const createAd = async (advertisement) => {
+export const createAd = async (advertisement,photos) => {
    await createAdvertisement(advertisement).then(async(res) => {
         if (res.success) {
-          await savePhotos(res.data)
-          return {success:true,msg:'Advertisment posted successfully'}
+          console.log('Lorem Ipsum',res)
+          await savePhotosNew(res.data,photos).then(()=>{           
+              return {success:true,msg:'Advertisment posted successfully'}
+           
+
+          })
 
         }
         else{
@@ -50,14 +54,12 @@ export const createAd = async (advertisement) => {
 
 }
 
-const savePhotos = async (id) => {
+const savePhotosNew = async (id,photos) => {
     const url = [];
     for (let i = 0; i < photos.length; i++) {
       await uploadImageToStorage(photos[i], id).then((res) => url.push(res));
     }
-    await updateArrayField(id, url).then((res) =>
-      console.log(res, "res image url saved")
-    );
+    await updateArrayField(id, url).then((res) =>res);
   };
 
 

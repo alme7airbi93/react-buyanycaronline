@@ -11,48 +11,36 @@ import Select from "react-select";
 import {
   createAdvertisement
 } from "../../../../common/repository/AdvertisementDB";
-
+import { useNavigate } from "react-router-dom";
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
 const Detail = (props) => {
+  let navigate = useNavigate();
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
   const makes_option = makes()
 
 
   const [detail, setDetail] = useState({
-    make:'',
-    accessory_name:'',
-    vehicle_make:'',
-    vehicle_year:'',
-    vehicle_model:'',
+    _make:advertisement._make,
+    _accessory_name:advertisement._accessory_name,
+    _vehicle_make:advertisement._vehicle_make,
+    _vehicle_year:advertisement._vehicle_year,
+    _vehicle_model:advertisement._vehicle_model,
   })
-
-
-  const updateAccessories = () => {
-    
-    if (FormDataValidation(detail)) {
-      const d = Object.assign(new Accessories(), 
-      {...advertisement,
-        _vehicle_make:detail.vehicle_make,
-        _accessory_name:detail.accessory_name,
-        _vehicle_year:detail.vehicle_year,
-        _vehicle_model:detail.vehicle_model,
-     //   _vehicle_make:detail.vehicle_make
-      });
-      console.log(advertisement)
-      adsCtx.setAds(d);
-      console.log(advertisement)
-      createAdvertisement(advertisement).then((res) => {
-      if (res.success) {
-        console.log(res.data, res);
-        setLoading(false);
-         navigate("/user-profile");
-        alert("Data uploaded successfully");
-      }
-    });
-    } else {
-      alert("Please enter required fields");
-    }
+  const updateAccessories = async () => {
+    const resp =   AdsStepVerfication(advertisement,detail);
+    console.log(resp,'resp');
+  if(resp){
+   const saveDate = await createAdvertisement(resp.data)
+   if (saveDate.success) {
+    navigate("/user-profile");
+          alert("Data uploaded successfully");
+        }
+  }
   };
+
+
+ 
 
   return (
     <React.Fragment>
@@ -71,7 +59,7 @@ const Detail = (props) => {
             onChange={(data) => {
               setDetail({
                 ...detail,
-                make: data.label,
+                _make: data.label,
               });
             }}
           />
@@ -88,7 +76,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setDetail({
               ...detail,
-              accessory_name: data.target.value });
+              _accessory_name: data.target.value });
           }}
         />
       </Form.Group>
@@ -98,7 +86,7 @@ const Detail = (props) => {
             className="input-fields-theme"
             placeholder="Enter vehicle_year" onChange={data => {
               setDetail({
-                ...detail, vehicle_year : data.target.value});
+                ...detail, _vehicle_year : data.target.value});
             }}/>
         </Form.Group>       
       <Form.Group className="mb-3">
@@ -110,7 +98,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setDetail({
               ...detail,
-              vehicle_model: data.target.value });
+              _vehicle_model: data.target.value });
           }}
         />
       </Form.Group>
@@ -123,7 +111,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setDetail({
               ...detail,
-              vehicle_make: data.target.value});
+              _vehicle_make: data.target.value});
           }}
         />
       </Form.Group>

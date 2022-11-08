@@ -6,43 +6,43 @@ import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { StepsStateInSummary,StepsStateInPhoto } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
 import PlateNumber from "../../../../common/models/PlateNumber";
-
-
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
+import { createAdvertisement } from "../../../../common/repository/AdvertisementDB";
+import { async } from "@firebase/util";
+import { useNavigate } from "react-router-dom";
 const Detail = (props ) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
+  let navigate = useNavigate();
   // const updateData = () => {
   //   props.nextStep(StepsStateInDetail);
   //};
 
   const [plateData,setPlateData] =  useState({
-    city:'',
-    number:'',
-    number_code:'',
+    _city:'',
+    _number:'',
+    _numberCode:'',
   })
 
   useEffect(()=>{
     setPlateData({...plateData,
-      city:advertisement.city,
-      number:advertisement.number,
-      number_code:advertisement.numberCode,
+      _city:advertisement._city,
+      _number:advertisement._number,
+      _numberCode:advertisement._numberCode,
     })
 
   },[])
 
-  const updateData = () => {
-    if (FormDataValidation(plateData)) {
-      const d = Object.assign(new PlateNumber(), 
-      {...advertisement,
-        _city: plateData.city,
-        _number:plateData.number,
-        _numberCode:plateData.number_code,
-      });
-      adsCtx.setAds(d);
-      props.nextStep(StepsStateInPhoto);
-    } else {
-      alert("Please enter required fields");
-    }
+  const updateData = async () => {
+    const resp =   AdsStepVerfication(advertisement,plateData);
+    console.log(resp,'resp');
+  if(resp){
+   const saveDate = await createAdvertisement(resp.data)
+   if (saveDate.success) {
+    navigate("/user-profile");
+          alert("Data uploaded successfully");
+        }
+  }
   };
 
 
@@ -57,7 +57,7 @@ const Detail = (props ) => {
           onChange={(data) => {
             setPlateData({
               ...plateData,
-              city: data.target.value});
+              _city: data.target.value});
           }}
         />
       </Form.Group>
@@ -70,7 +70,7 @@ const Detail = (props ) => {
           onChange={(data) => {
             setPlateData({
               ...plateData,
-              number: data.target.value});
+              _number: data.target.value});
           }}
         />
       </Form.Group>
@@ -84,7 +84,7 @@ const Detail = (props ) => {
           onChange={(data) => {
             setPlateData({
               ...plateData,
-              number_code: (data.target.value)});
+              _numberCode: (data.target.value)});
           }}
         />
       </Form.Group>

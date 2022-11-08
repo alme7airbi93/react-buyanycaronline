@@ -9,7 +9,7 @@ import { StepsStateInDetail,StepsStateInSummary } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
 import HeavyVehicle from "../../../../common/models/HeavyVehicle";
 import { makes, models} from "../../../../common/data";
-
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
@@ -19,31 +19,23 @@ const Detail = (props) => {
   const models_options = models();
 
   const [details, setDetails] = useState({
-    make: advertisement._make,
-    modal:advertisement._modal,
-    capacity_weight: advertisement._capacityWeight,
-    numberOfCylinders:advertisement._numberOfCylinders
+    _make: advertisement._make,
+    _modal:advertisement._modal,
+    _capacityWeight: advertisement._capacityWeight,
+    _numberOfCylinders:advertisement._numberOfCylinders
   });
 
   const [makeValue, setMakeValue] = useState();
 
 
   const updateData = () => {
-    console.log(details);
-    if (FormDataValidation(details)) {
-      const d = Object.assign(new HeavyVehicle(), 
-      {...advertisement,
-        _make: details.make,
-        _modal:details.modal,
-        _capacityWeight: details.capacity_weight,
-        _numberOfCylinders: details.numberOfCylinders,
-      });
-      adsCtx.setAds(d);
-      props.nextStep(StepsStateInDetail);
-    } else {
-      alert("Please enter required fields");
+    const resp =   AdsStepVerfication(advertisement,details)
+    if(resp.success){
+        adsCtx.setAds(resp.data);
+        props.nextStep(StepsStateInDetail);
     }
-  };
+  
+    };
 
   return (
     <React.Fragment>
@@ -53,15 +45,15 @@ const Detail = (props) => {
           <Select
             placeholder={"Select types"}
             options={makes_option.filter(item => item.parent_id === '4')}
-            defaultValue={details.make}
+            defaultValue={details._make}
             value={makes_option.find(
-              (obj) => obj.value === advertisement.make
+              (obj) => obj.value === advertisement._make
             )}
             isSearchable={false}
             onChange={(data) => {
               setDetails({
                 ...details,
-                make: data.label,
+                _make: data.label,
               });
               setMakeValue(data)
             }}
@@ -75,15 +67,15 @@ const Detail = (props) => {
             <Select
               placeholder={"Select Modal"}
               options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
-              defaultValue={details.modal}
+              defaultValue={details._modal}
               value={models_options.find(
-                (obj) => obj.value === advertisement.modal
+                (obj) => obj.value === advertisement._modal
               )}
               isSearchable={false}
               onChange={(data) => {
                 setDetails({
                   ...details,
-                  modal: data.label,
+                  _modal: data.label,
                 });
               }}
             />
@@ -109,13 +101,13 @@ const Detail = (props) => {
           options={CylinderTypes()}
           defaultValue={details.cylindertypes}
           value={CylinderTypes().find(
-            (obj) => obj.value === advertisement.numberOfCylinders
+            (obj) => obj.value === advertisement._numberOfCylinders
           )}
           isSearchable={false}
           onChange={(data) => {
             setDetails({
               ...details,
-              numberOfCylinders: data.value,
+              _numberOfCylinders: data.value,
             });
           }}
         />
@@ -130,7 +122,7 @@ const Detail = (props) => {
           onChange={(data) => {
             setDetails({
               ...details,
-              capacity_weight: data.target.value,
+              _capacityWeight: data.target.value,
             });
           }}
         />

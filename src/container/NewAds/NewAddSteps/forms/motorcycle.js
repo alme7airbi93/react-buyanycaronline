@@ -11,46 +11,35 @@ import { TravelDisttance } from "../../../../common/data/SelectOptions.js";
 import { makes,models } from "../../../../common/data";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
 import Motorcycle from  "../../../../common/models/Motorcycle";
-
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
   const [condition_bool, setcondition_bool] = useState(false);
   const [warranty_bool, setwarranty_bool] = useState(false);
 
-  let [make, setMake] = useState(advertisement._make);
-  let [engine_size, setEngineSize] = useState(advertisement._engine_size);
 
-  let [distance, setDistance] = useState(advertisement._Travel_Disttance);
   const [makeValue, setMakeValue] = useState();
-  let [modal, setModal] = useState(advertisement._modal);
-
+  const [motorCycleDetails, setMoterCycleDetails] = useState({
+    _make: advertisement._make,
+    _modal:advertisement._modal,
+    _engineSize: advertisement._engineSize,
+    _distance: advertisement._distance,
+  });
 
   const makes_option = makes();
   const models_options = models()
 
+  
   const updateData = () => {
-    let detail = {
-      make: make,
-      modal:modal,
-      engine_size: engine_size,
-      distance: distance,
+    const resp =   AdsStepVerfication(advertisement,motorCycleDetails)
+    if(resp.success){
+        adsCtx.setAds(resp.data);
+        props.nextStep(StepsStateInDetail);
     }
-    if (FormDataValidation(detail)) {
-      const d = Object.assign(new Motorcycle(), 
-      {...advertisement,
-        _modal: modal,
-        _make: make,
-        _engineSize: engine_size,
-        _distance:distance,
-      });
-      adsCtx.setAds(d);
-      props.nextStep(StepsStateInDetail);
-    } else {
-      alert("Please enter required fields");
-    }
-
+    props.nextStep(StepsStateInDetail);
   };
+
 
   return (
     <React.Fragment>
@@ -60,10 +49,13 @@ const Detail = (props) => {
         <Select
           placeholder={"Engine Size"}
           options={EngineTypes()}
-          value={EngineTypes().find((obj) => obj.label === engine_size)}
+          value={EngineTypes().find((obj) => obj.label === advertisement._engineSize)}
           isSearchable={false}
           onChange={(data) => {
-            setEngineSize(data.label);
+            setMoterCycleDetails({
+              ...motorCycleDetails,
+              _engineSize: data.label,
+            });
           }}
         />
       </Form.Group>
@@ -74,13 +66,16 @@ const Detail = (props) => {
         <Select
             placeholder={"Select types"}
             options={makes_option.filter(item => item.parent_id === '2')}
-            defaultValue={make}
+            defaultValue={motorCycleDetails._make}
             value={makes_option.find(
-              (obj) => obj.value === advertisement.make
+              (obj) => obj.value === advertisement._make
             )}
             isSearchable={false}
             onChange={(data) => {
-              setMake(data.label);
+              setMoterCycleDetails({
+                ...motorCycleDetails,
+                _make: data.label,
+              });
               setMakeValue(data)
             }}
           />
@@ -93,13 +88,16 @@ const Detail = (props) => {
             <Select
               placeholder={"Select Modal"}
               options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
-              defaultValue={modal}
+              defaultValue={motorCycleDetails._modal}
               value={models_options.find(
-                (obj) => obj.value === advertisement.modal
+                (obj) => obj.value === advertisement._modal
               )}
               isSearchable={false}
               onChange={(data) => {
-                setModal(data.label);
+               setMoterCycleDetails({
+                ...motorCycleDetails,
+                _modal: data.label,
+              });
               }}
             />
           </div>
@@ -114,10 +112,14 @@ const Detail = (props) => {
           <Select
             placeholder={"Distance"}
             options={TravelDisttance()}
-            value={TravelDisttance().find((obj) => obj.label === distance)}
+            value={TravelDisttance().find((obj) => obj.label ===  advertisement._distance)}
             isSearchable={false}
             onChange={(data) => {
-              setDistance(data.label);
+              // setDistance(data.label);
+              setMoterCycleDetails({
+                ...motorCycleDetails,
+                _distance: data.label,
+              });
             }}
           />
         </div>

@@ -81,6 +81,7 @@ const Detail = (props) => {
                 });
               }}
             />
+            
           </div>
         </Form.Group>
       ):(<></>)}
