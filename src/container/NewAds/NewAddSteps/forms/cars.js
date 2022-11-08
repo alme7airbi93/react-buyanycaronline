@@ -12,6 +12,7 @@ import { AdvertismentCtx } from "../../../../context/AdvertismentContext.js";
 import { useState } from "react";
 import { StepsStateInDetail, StepsStateInSummary } from "../../stepsState";
 import { FormDataValidation } from "../../../../common/validations/FormDataValidation";
+import { AdsStepVerfication } from "../../../../controllers/AdsController";
 import Car from "../../../../common/models/Car";
 
 const Detail = (props) => {
@@ -21,29 +22,21 @@ const Detail = (props) => {
   const models_options = models();
 
   const [carDetails, setCarDetails] = useState({
-    make: advertisement._make,
-    modal:advertisement._modal,
-    transmition: advertisement._transmission,
-    power: advertisement._horsePower,
+    _make: advertisement._make,
+    _modal:advertisement._modal,
+    _transmission: advertisement._transmission,
+    _horsePower: advertisement._horsePower,
   });
   
   const [makeValue, setMakeValue] = useState();
 
   const updateData = () => {
-    if (FormDataValidation(carDetails)) {
-      console.log(advertisement,'before')
-      const d = Object.assign(new Car(), 
-      {...advertisement,
-        _modal:carDetails.modal,
-        _make: carDetails.make,
-        _transmission: carDetails.transmition,
-        _horsePower:carDetails.power,
-      });
-      adsCtx.setAds(d);
+  const resp =   AdsStepVerfication(advertisement,carDetails)
+  if(resp.success){
+      adsCtx.setAds(resp.data);
       props.nextStep(StepsStateInDetail);
-    } else {
-      alert("Please enter required fields");
-    }
+  }
+
   };
 
   return (
@@ -54,15 +47,15 @@ const Detail = (props) => {
           <Select
             placeholder={"Select types"}
             options={makes_option.filter(item => item.parent_id === '1')}
-            defaultValue={carDetails.make}
+            defaultValue={carDetails._make}
             value={makes_option.find(
-              (obj) => obj.value === advertisement.make
+              (obj) => obj.value === advertisement._make
             )}
             isSearchable={false}
             onChange={(data) => {
               setCarDetails({
                 ...carDetails,
-                make: data.label,
+                _make: data.label,
               });
               setMakeValue(data)
             }}
@@ -76,15 +69,15 @@ const Detail = (props) => {
             <Select
               placeholder={"Select Modal"}
               options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
-              defaultValue={carDetails.modal}
+              defaultValue={carDetails._modal}
               value={models_options.find(
-                (obj) => obj.value === advertisement.modal
+                (obj) => obj.value === advertisement._modal
               )}
               isSearchable={false}
               onChange={(data) => {
                 setCarDetails({
                   ...carDetails,
-                  modal: data.label,
+                  _modal: data.label,
                 });
               }}
             />
@@ -107,15 +100,15 @@ const Detail = (props) => {
         <Select
           placeholder={"Select"}
           options={TransmitionTypes()}
-          defaultValue={carDetails.transmition}
+          defaultValue={carDetails._transmission}
           value={TransmitionTypes().find(
-            (obj) => obj.value === advertisement.make
+            (obj) => obj.value === advertisement._transmission
           )}
           isSearchable={false}
           onChange={(data) => {
             setCarDetails({
               ...carDetails,
-              transmition: data.value,
+              _transmission: data.value,
             });
           }}
         />
@@ -125,15 +118,15 @@ const Detail = (props) => {
         <Select
           placeholder={"Select"}
           options={HorsePowerOptions()}
-          defaultValue={carDetails.power}
+          defaultValue={carDetails._horsePower}
           value={HorsePowerOptions().find(
-            (obj) => obj.value === advertisement.make
+            (obj) => obj.value === advertisement._horsePower
           )}
           isSearchable={false}
           onChange={(data) => {
             setCarDetails({
               ...carDetails,
-              power: data.value,
+              _horsePower: data.value,
             });
           }}
         />

@@ -75,12 +75,12 @@ const SummaryDescription = (props) => {
 	};
 
 	useEffect(() => {
-		// if(!title){
-		// 	setErrors({...errors,titleError:true})
-		// }
-		// else{
-		// 	setErrors({...errors,titleError:false})
-		// }
+		if(!title){
+			setErrors({...errors,titleError:true})
+		}
+		else{
+			setErrors({...errors,titleError:false})
+		}
 	},[setTitle])
 
 	const handleValidate = (value,label) => {

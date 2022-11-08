@@ -18,7 +18,6 @@ import {
 
 
 const UploadAndDisplayImage = (props) => {
-	const [selectedImage, setSelectedImage] = useState(null);  
 	const [photos, setphotos]=useState([]);
 
 	const adsCtx =  useContext(AdvertismentCtx)
@@ -26,7 +25,6 @@ const UploadAndDisplayImage = (props) => {
   
 	const onDrop = (pictures, pictureUrl) => {
 		setphotos([...photos,pictureUrl])
-		// adsCtx.setAds({...advertisement, "photos":pictureUrl});                
 	};
 
 

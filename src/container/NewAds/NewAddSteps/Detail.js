@@ -13,6 +13,7 @@ import {
   WarrantyTypes,
   SteeringTypes,
 } from "../../../common/data/SelectOptions.js";
+import { AdsStepVerfication } from "../../../controllers/AdsController";
 
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
@@ -30,33 +31,24 @@ const Detail = (props) => {
 
 
   const [carDetails, setCarDetails] = useState({
-    color:advertisement._color,
-    manufacturingYear: advertisement._bodyType,
-    fuleType: advertisement._Fuel_Types,
-    region:'',
-    condition:advertisement._Body_Condition,
-    warrantyTypes:advertisement._Warranty_Types,
+    _color:advertisement._color,
+    _year: advertisement._bodyType,
+    _fuel_type: advertisement._Fuel_Types,
+    _region:'',
+    _condition:advertisement._Body_Condition,
+    _warranty:advertisement._Warranty_Types,
     // steeringside:advertisement._Steering_Types
 
   });
 
   const updateData = () => {
-    if (FormDataValidation(carDetails)) {
-      console.log(advertisement,'before')
-      const classInstance = checkAdvertisemntType(advertisement)
-      const d = Object.assign(classInstance, 
-      {...advertisement,
-        _color: carDetails.color,
-        _year: carDetails.manufacturingYear,
-        _fuel_type:carDetails.fuleType,
-        _region:carDetails.region,
-        _condition:carDetails.condition,
-        _warranty:carDetails.warrantyTypes,
-      });
-      adsCtx.setAds(d);
+    const resp = AdsStepVerfication(advertisement,carDetails)
+    if(resp.success){
+      adsCtx.setAds(resp.data);
       props.nextStep(StepsStateInPhoto);
-    } else {
-      alert("Please enter required fields");
+    }
+    else{
+      alert('Something wrong')
     }
   };
 
@@ -77,16 +69,15 @@ const Detail = (props) => {
           <Col md={12}>
             {advertisement._advertisement_type !== "Plate Numbers" && (
               <Form id="center-col">
-                <h5>Vehicle</h5>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Color :</Form.Label>
                   <Select
                     placeholder={"Color"}
                     options={ColorTypes()}
-                    value={ColorTypes().find((obj) => obj.label === carDetails.color)}
+                    value={ColorTypes().find((obj) => obj.label === carDetails._color)}
                     isSearchable={false}
                     onChange={(data) => {
-                      setCarDetails({...carDetails,color:data.label});
+                      setCarDetails({...carDetails,_color:data.label});
                     }}
                   />
                 </Form.Group>
@@ -98,11 +89,11 @@ const Detail = (props) => {
                     placeholder={"Select"}
                     options={ManufacturingYearsOptions()}
                     value={ManufacturingYearsOptions().find(
-                      (obj) => obj.label === carDetails.manufacturingYear
+                      (obj) => obj.label === carDetails._year
                     )}
                     isSearchable={true}
                     onChange={(data)=>{
-                      setCarDetails({...carDetails,manufacturingYear:data.label});
+                      setCarDetails({...carDetails,_year:data.label});
                     }}
                   />
                 </Form.Group>
@@ -112,10 +103,10 @@ const Detail = (props) => {
                     <Select
                       placeholder={"Fuel Type"}
                       options={FuelTypes()}
-                      value={FuelTypes().find((obj) => obj.label === carDetails.fuleType)}
+                      value={FuelTypes().find((obj) => obj.label === carDetails._fuel_type)}
                       isSearchable={false}
                       onChange={(data) => {
-                      setCarDetails({...carDetails,fuleType:data.label});
+                      setCarDetails({...carDetails,_fuel_type:data.label});
                       }}
                     />
                   </div>
@@ -125,10 +116,10 @@ const Detail = (props) => {
                   <Select
                     placeholder={"Manufacturing Region"}
                     options={RegionalOption()}
-                    value={RegionalOption().find((obj) => obj.label === carDetails.region)}
+                    value={RegionalOption().find((obj) => obj.label === carDetails._region)}
                     isSearchable={false}
                     onChange={(data) => {
-                      setCarDetails({...carDetails,region:data.label});
+                      setCarDetails({...carDetails,_region:data.label});
                     }}
                   />
                 </Form.Group>
@@ -138,11 +129,11 @@ const Detail = (props) => {
                     placeholder={"Body Condition"}
                     options={BodyCondition()}
                     value={BodyCondition().find(
-                      (obj) => obj.label === carDetails.condition
+                      (obj) => obj.label === carDetails._condition
                     )}
                     isSearchable={false}
                     onChange={(data) => {
-                      setCarDetails({...carDetails,condition:data.label});
+                      setCarDetails({...carDetails,_condition:data.label});
                     }}
                   />
                 </Form.Group>
@@ -152,11 +143,11 @@ const Detail = (props) => {
                     placeholder={"Enter Warrenty"}
                     options={WarrantyTypes()}
                     value={WarrantyTypes().find(
-                      (obj) => obj.label === carDetails.warrantyTypes
+                      (obj) => obj.label === carDetails._warranty
                     )}
                     isSearchable={false}
                     onChange={(data) => {
-                      setCarDetails({...carDetails,warrantyTypes:data.label});
+                      setCarDetails({...carDetails,_warranty:data.label});
                     }}
                   />
                 </Form.Group>
