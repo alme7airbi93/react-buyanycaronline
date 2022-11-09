@@ -14,7 +14,7 @@ import { Warranty_Types } from "./Warranty_Types.js";
 import { Region } from "./Region.js";
 import { Cylinder_Types } from "./Cylinder_Types.js";
 import { Steering_Types } from "./Steering_Types.js";
-
+import { Price_Types } from "./Price_Types.js";
 export const AdvertisementOptions = () => {
   let options = [];
   for (const [key, val, index] of Object.entries(Advertisement_Types)) {
@@ -60,6 +60,15 @@ export const EngineTypes = () => {
   }
   return options;
 };
+
+export const PriceTypes = () => {
+  let options = [];
+  for (const [key, val] of Object.entries(Price_Types)) {
+    options.push({ value: key, label: val });
+  }
+  return options;
+};
+
 export const TravelDisttance = () => {
   let options = [];
   for (const [key, val] of Object.entries(Travel_Disttance)) {
@@ -134,3 +143,5 @@ export const SteeringTypes = () => {
   }
   return options;
 };
+
+

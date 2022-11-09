@@ -6,7 +6,7 @@ import Select from "react-select";
 import { makes, models} from "../../common/data";
 import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionTypes} from "../../common/data/SelectOptions";
 import CategorySelection from "../NewAds/NewAddSteps/CategorySelection";
-import { ManufacturingYearsOptions } from "../../common/data/SelectOptions";
+import { ManufacturingYearsOptions,PriceTypes } from "../../common/data/SelectOptions";
 import Spinner from 'react-bootstrap/Spinner';
 
 const Home = () => {
@@ -19,6 +19,7 @@ const Home = () => {
 
 	const [year, setYear] = useState("");
 	const [colorType, setColorType] = useState("");
+	const [priceType, setPriceType] = useState(0);
 	const [condition, setConditions] = useState("");
 	const [fuelType, setFuelType] = useState("");
 	const [transmissionType, setTransmissionType] = useState("");
@@ -93,6 +94,10 @@ const Home = () => {
 		if(colorType){
 			colorType.key = '_color'; 
 			searchArr.push(colorType)
+		}
+		if(priceType){
+			priceType.key = '_price'; 
+			searchArr.push(priceType)
 		}
 		if(fuelType){
 			fuelType.key = '_fuel_type'; 
@@ -193,10 +198,20 @@ const Home = () => {
 																: ""}
 														</div>
 														{/* meand of $ ????? */}
-														<div className={`${rowClass} ${toggleClass}`}>
+														</div>
+														
+													   
+
+														{(vehicleValue.key === 'PlateNumber' || vehicleValue.key === 'Accessories' ) ? (
+															<></>
+														):
+														(
+														<div className="row home-select-div1">
+															<div className={`${rowClass} ${toggleClass}`}>
 															<Select
 																placeholder={"Select Price"}
-																options={options}
+																options={PriceTypes()}
+																onChange = {(e) => setPriceType(e)}
 															/>
 														</div>
 														<div className={`${rowClass} ${toggleClass}`}>
@@ -215,13 +230,6 @@ const Home = () => {
 																onChange = {(e) => setColorType(e)}
 															/>
 														</div>
-													   </div>
-
-														{(vehicleValue.key === 'PlateNumber' || vehicleValue.key === 'Accessories' ) ? (
-															<></>
-														):
-														(
-														<div className="row home-select-div1">
 														<div className={`${rowClass} ${toggleClass}`}>
 															<Select
 																placeholder={"Select Transmission"}

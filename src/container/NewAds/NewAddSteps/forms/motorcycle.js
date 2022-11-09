@@ -50,7 +50,7 @@ const Detail = (props) => {
           placeholder={"Engine Size"}
           options={EngineTypes()}
           value={EngineTypes().find((obj) => obj.label === advertisement._engineSize)}
-          isSearchable={false}
+          isSearchable={true}
           onChange={(data) => {
             setMoterCycleDetails({
               ...motorCycleDetails,
@@ -70,7 +70,7 @@ const Detail = (props) => {
             value={makes_option.find(
               (obj) => obj.value === advertisement._make
             )}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               setMoterCycleDetails({
                 ...motorCycleDetails,
@@ -92,7 +92,7 @@ const Detail = (props) => {
               value={models_options.find(
                 (obj) => obj.value === advertisement._modal
               )}
-              isSearchable={false}
+              isSearchable={true}
               onChange={(data) => {
                setMoterCycleDetails({
                 ...motorCycleDetails,
@@ -113,7 +113,7 @@ const Detail = (props) => {
             placeholder={"Distance"}
             options={TravelDisttance()}
             value={TravelDisttance().find((obj) => obj.label ===  advertisement._distance)}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               // setDistance(data.label);
               setMoterCycleDetails({

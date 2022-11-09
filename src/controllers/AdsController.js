@@ -15,9 +15,9 @@ import {
   } from "firebase/storage";
  
 export const AdsStepVerfication = (adSelected,data) => {
-    console.log(data,'motorCycleDetails')
-    console.log(FormDataValidation(data))
-    if (FormDataValidation(data)) {
+  const isFormValid = FormDataValidation(data)
+  console.log(isFormValid,'isFormValid')
+    if (!isFormValid.error) {
 
     const classInstance = checkAdvertisemntType(adSelected)
     const dataObj = Object.assign(classInstance,
@@ -29,7 +29,7 @@ export const AdsStepVerfication = (adSelected,data) => {
     return {success:true,data:dataObj}
 }
 else{
-    alert('Please fill up required feild')
+    return {success:false,...isFormValid};
 
 }
 

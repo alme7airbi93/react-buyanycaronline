@@ -73,7 +73,7 @@ const Detail = (props) => {
             value={BoatOptions().find(
               (obj) => obj.value === boatData._make
             )}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               setBoatData({
                 ...boatData,

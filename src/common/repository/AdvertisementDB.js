@@ -137,7 +137,12 @@ console.log(filterData,'sdfsdfsf');
 	const queryConstraints = []
 	if(filterData){
 		filterData.forEach((item) => {
-			queryConstraints.push(where(item.key, '==', item.value));
+			if(item.key == '_price'){
+				queryConstraints.push(where(item.key,"<=",parseInt(item.value)));
+			}else{
+				queryConstraints.push(where(item.key, '==', item.value));
+			}
+			
 		});
 	}
 	
@@ -159,4 +164,5 @@ console.log(filterData,'sdfsdfsf');
 		throw Error("Advertisement not found");
 	}
 };
+
 

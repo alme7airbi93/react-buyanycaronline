@@ -49,7 +49,7 @@ const Detail = (props) => {
             value={makes_option.find(
               (obj) => obj.value === advertisement._make
             )}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               setDetails({
                 ...details,
@@ -71,7 +71,7 @@ const Detail = (props) => {
               value={models_options.find(
                 (obj) => obj.value === advertisement._modal
               )}
-              isSearchable={false}
+              isSearchable={true}
               onChange={(data) => {
                 setDetails({
                   ...details,
@@ -103,7 +103,7 @@ const Detail = (props) => {
           value={CylinderTypes().find(
             (obj) => obj.value === advertisement._numberOfCylinders
           )}
-          isSearchable={false}
+          isSearchable={true}
           onChange={(data) => {
             setDetails({
               ...details,

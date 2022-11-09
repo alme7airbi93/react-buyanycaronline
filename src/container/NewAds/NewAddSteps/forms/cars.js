@@ -20,6 +20,11 @@ const Detail = (props) => {
   const advertisement = adsCtx.ads;
   const makes_option = makes()
   const models_options = models();
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+
+  })
 
   const [carDetails, setCarDetails] = useState({
     _make: advertisement._make,
@@ -32,12 +37,18 @@ const Detail = (props) => {
 
   const updateData = () => {
   const resp =   AdsStepVerfication(advertisement,carDetails)
+  console.log(resp,'errorMessage')
   if(resp.success){
       adsCtx.setAds(resp.data);
       props.nextStep(StepsStateInDetail);
   }
+  else{
+    console.log(resp,'ShowError Message')
+    setError({error:true,errorKey:resp.errorField})
+  }
 
   };
+  console.log(error.errorKey)
 
   return (
     <React.Fragment>
@@ -60,6 +71,7 @@ const Detail = (props) => {
               setMakeValue(data)
             }}
           />
+          {error && error.errorKey == '_make'? (<p style={{ color: "red" }}>Make Field is required</p>):<></>}
         </div>
       </Form.Group>
       {makeValue ? (
@@ -73,7 +85,7 @@ const Detail = (props) => {
               value={models_options.find(
                 (obj) => obj.value === advertisement._modal
               )}
-              isSearchable={false}
+              isSearchable={true}
               onChange={(data) => {
                 setCarDetails({
                   ...carDetails,
@@ -81,7 +93,7 @@ const Detail = (props) => {
                 });
               }}
             />
-            
+           {error && error.errorKey == '_modal'? (<p style={{ color: "red" }}>Model Field is required</p>):<></>}
           </div>
         </Form.Group>
       ):(<></>)}
@@ -105,7 +117,7 @@ const Detail = (props) => {
           value={TransmitionTypes().find(
             (obj) => obj.value === advertisement._transmission
           )}
-          isSearchable={false}
+          isSearchable={true}
           onChange={(data) => {
             setCarDetails({
               ...carDetails,
@@ -113,6 +125,7 @@ const Detail = (props) => {
             });
           }}
         />
+         {error && error.errorKey == '_transmission'? (<p style={{ color: "red" }}>Transmition Field is required</p>):<></>}
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Engine Horse Power :</Form.Label>
@@ -123,7 +136,7 @@ const Detail = (props) => {
           value={HorsePowerOptions().find(
             (obj) => obj.value === advertisement._horsePower
           )}
-          isSearchable={false}
+          isSearchable={true}
           onChange={(data) => {
             setCarDetails({
               ...carDetails,
@@ -131,6 +144,7 @@ const Detail = (props) => {
             });
           }}
         />
+        {error && error.errorKey == '_horsePower'? (<p style={{ color: "red" }}>Engine Horse Power Field is required</p>):<></>}
       </Form.Group>
       <div className="d-flex justify-content-space-between">
         <Button

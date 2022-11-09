@@ -24,6 +24,11 @@ import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOf
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+
+  })
 
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
@@ -48,7 +53,7 @@ const Detail = (props) => {
       props.nextStep(StepsStateInPhoto);
     }
     else{
-      alert('Something wrong')
+      setError({error:true,errorKey:resp.errorField})
     }
   };
 
@@ -75,7 +80,7 @@ const Detail = (props) => {
                     placeholder={"Color"}
                     options={ColorTypes()}
                     value={ColorTypes().find((obj) => obj.label === carDetails._color)}
-                    isSearchable={false}
+                    isSearchable={true}
                     onChange={(data) => {
                       setCarDetails({...carDetails,_color:data.label});
                     }}
@@ -104,7 +109,7 @@ const Detail = (props) => {
                       placeholder={"Fuel Type"}
                       options={FuelTypes()}
                       value={FuelTypes().find((obj) => obj.label === carDetails._fuel_type)}
-                      isSearchable={false}
+                      isSearchable={true}
                       onChange={(data) => {
                       setCarDetails({...carDetails,_fuel_type:data.label});
                       }}
@@ -117,7 +122,7 @@ const Detail = (props) => {
                     placeholder={"Manufacturing Region"}
                     options={RegionalOption()}
                     value={RegionalOption().find((obj) => obj.label === carDetails._region)}
-                    isSearchable={false}
+                    isSearchable={true}
                     onChange={(data) => {
                       setCarDetails({...carDetails,_region:data.label});
                     }}
@@ -131,7 +136,7 @@ const Detail = (props) => {
                     value={BodyCondition().find(
                       (obj) => obj.label === carDetails._condition
                     )}
-                    isSearchable={false}
+                    isSearchable={true}
                     onChange={(data) => {
                       setCarDetails({...carDetails,_condition:data.label});
                     }}
@@ -145,7 +150,7 @@ const Detail = (props) => {
                     value={WarrantyTypes().find(
                       (obj) => obj.label === carDetails._warranty
                     )}
-                    isSearchable={false}
+                    isSearchable={true}
                     onChange={(data) => {
                       setCarDetails({...carDetails,_warranty:data.label});
                     }}

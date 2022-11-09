@@ -55,7 +55,7 @@ const Detail = (props) => {
             value={makes_option.find(
               (obj) => obj.value === detail.category
             )}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               setDetail({
                 ...detail,
