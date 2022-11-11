@@ -21,6 +21,7 @@ import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js
 import { FormDataValidation } from "../../../common/validations/FormDataValidation";
 import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
 
+
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
@@ -48,6 +49,10 @@ const Detail = (props) => {
 
   const updateData = () => {
     const resp = AdsStepVerfication(advertisement,carDetails)
+
+
+    console.log(resp,'resp');
+
     if(resp.success){
       adsCtx.setAds(resp.data);
       props.nextStep(StepsStateInPhoto);

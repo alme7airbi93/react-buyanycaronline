@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { FormDataValidation } from "../common/validations/FormDataValidation";
 import { checkAdvertisemntType
  } from "../common/validations/ClassesTypeOfValidations";
 
 import { createAdvertisement,updateArrayField } from "../common/repository/AdvertisementDB";
+
 
 import {
     getDownloadURL,
@@ -16,7 +18,14 @@ import {
  
 export const AdsStepVerfication = (adSelected,data) => {
   const isFormValid = FormDataValidation(data)
-  console.log(isFormValid,'isFormValid')
+
+
+
+
+  console.log(adSelected,'advertise selected')
+  const newAdvertise = {...adSelected,...data};
+  console.log(newAdvertise,'New Advertisement')
+
     if (!isFormValid.error) {
 
     const classInstance = checkAdvertisemntType(adSelected)
