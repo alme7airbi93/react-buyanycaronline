@@ -10,9 +10,10 @@ import Motorcycleform from "./forms/motorcycle";
 import Plate_Numberform from "./forms/Plate_Number";
 import Accessory_nameform from "./forms/accessory_name ";
 import Boatform from "./forms/boat";
-import Vehicleform from "./forms/vehicle";
+import HeavyVehicleform from "./forms/heavyVehicleform";
 import { useEffect } from "react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import { Advertisement_Types } from "../../../common/data/Advertisement_Types";
 
 const CategorySelection = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
@@ -30,21 +31,20 @@ const CategorySelection = (props) => {
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
-        <h5>FIND</h5>
-        <hr />
+ 
         <Row className="">
           <Col md="12">
-            {advertisement._advertisement_type === "Cars" ? (
+            {advertisement._advertisement_type === Advertisement_Types.Cars ? (
               <Carsform nextStep={props.nextStep} />
-            ) : advertisement._advertisement_type === "Heavy Vehicles" ? (
-              <Vehicleform nextStep={props.nextStep} />
-            ) : advertisement._advertisement_type === "Motorcycles" ? (
+            ) : advertisement._advertisement_type === Advertisement_Types.HeavyVehicles ? (
+              <HeavyVehicleform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.Motorcycles ? (
               <Motorcycleform nextStep={props.nextStep} />
-            ) : advertisement._advertisement_type === "Plate Numbers" ? (
+            ) : advertisement._advertisement_type === Advertisement_Types.PlateNumber ? (
               <Plate_Numberform nextStep={props.nextStep} />
-            ) : advertisement._advertisement_type === "Accessories" ? (
+            ) : advertisement._advertisement_type === Advertisement_Types.Accessories ? (
               <Accessory_nameform nextStep={props.nextStep} />
-            ) : advertisement._advertisement_type === "Boats" ? (
+            ) : advertisement._advertisement_type === Advertisement_Types.Boats ? (
               <Boatform nextStep={props.nextStep} />
             ) : null}
           </Col>

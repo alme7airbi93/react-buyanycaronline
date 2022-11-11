@@ -3,12 +3,14 @@ import "./CarSearch.css";
 import {Button} from "react-bootstrap";
 import Select from "react-select";
 import { useSearchParams } from "react-router-dom";
-import { ManufacturingYearsOptions } from "../../common/data/SelectOptions";
+import { ManufacturingYearsOptions,PriceTypes } from "../../common/data/SelectOptions";
 import { getSearchAdvertisement } from "../../common/repository/AdvertisementDB";
+
 import CardBlock from "../../components/CardBlock/CardBlock";
 import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionTypes} from "../../common/data/SelectOptions";
 import { useLocation } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
+import { makes, models} from "../../common/data";
 
 const height = window.innerHeight;
 const CarSearch = () => {
@@ -18,13 +20,20 @@ const CarSearch = () => {
 
 
 	const [vehicleValue, setVehicle] = useState("");
+	const [makeValue, setMake] = useState("");
+	const [modelFirstValue, setModelFirst] = useState("");
+	let [isTypeDropdown, setTypeDropdown] = useState(false);
+
 	const [year, setYear] = useState("");
 	const [colorType, setColorType] = useState("");
+
+	const [priceType, setPriceType] = useState(0);
 	const [condition, setConditions] = useState("");
 	const [fuelType, setFuelType] = useState("");
 	const [transmissionType, setTransmissionType] = useState("");
 	const [resultData,setResultData] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [filterMakes,setFilterMakes] = useState([]);
 
 	const { state } = useLocation();
 
@@ -32,22 +41,91 @@ const CarSearch = () => {
 		{ value: "corolla", label: "corolla" },
 		{ value: "civic", label: "civic" },
 	];
+	let rowClass, toggleClass;
+
+	let makes_options = makes();
+	let models_options = models();
+
 
 	useEffect(() => {
-		console.log(state)
+		console.log(state,'state')
+
+		state.forEach(function(item){
+			if(item.key === '_advertisement_type'){
+				setVehicleHandle(item)
+			}
+			if(item.key === '_make'){
+				setMakeHandle({value:item.label,label:item.label})
+			}
+			if(item.key === '_modal'){
+				setFirstModelHandle(item)
+			}
+
+			if(makeValue){
+				searchArr.push({value:makeValue.label,label:makeValue.label,key:'_make'})
+			}
+			if(modelFirstValue){
+				modelFirstValue.key = '_modal'; 
+				searchArr.push({value:modelFirstValue.label,label:modelFirstValue.label,key:'_modal'})
+			}
+			if(item.key === '_price'){
+				setPriceType(item)
+			}
+			if(item.key === '_year'){
+				setYear(item)
+			}
+			if(item.key === '_color'){
+				setColorType(item)
+			}
+			if(item.key === '_fuel_type'){
+				setFuelType(item)
+			}
+			if(item.key === '_transmission'){
+				setTransmissionType(item)
+			}
+			if(item.key === '_condition'){
+				setConditions(item)
+			}
+		})
+
+
 		getSearchAdvertisement(state).then(res => {
 			console.log(res,'res')
 			setResultData(res.data)
 			setLoading(false)
 		}).catch(err => {
-			alert(err)
+			alert("No data found")
 			setLoading(false)
 		})
 
 	},[])
 
 	const setVehicleHandle = (value) => {
+		setLoading(true)
 		setVehicle(value);
+		let makesArray = [];
+		if(value.key === 'Cars'){
+			makesArray = makes_options.filter(item => item.parent_id === '1');
+		}
+		else if(value.key === 'Motorcycles'){
+			makesArray = makes_options.filter(item => item.parent_id === '2');
+		}
+		else if(value.key === 'HeavyVehicles'){
+			makesArray = makes_options.filter(item => item.parent_id === '4');
+		}
+		else if(value.key === 'Boats'){
+			makesArray = makes_options.filter(item => item.parent_id === '5');
+		}
+		else if(value.key === 'Accessories'){
+			makesArray = makes_options.filter(item => item.parent_id === '3');
+		}
+		else if(value.key === 'PlateNumber'){
+			makesArray = makes_options.filter(item => item.parent_id === '6');
+		}
+		setFilterMakes(makesArray);
+		
+		setMake("");
+		setLoading(false)
 	};
 
 	const getSearch = async() => {
@@ -56,6 +134,17 @@ const CarSearch = () => {
 		if(vehicleValue){
 			vehicleValue.key = '_advertisement_type'; 
 			searchArr.push(vehicleValue)
+		}
+		if(makeValue){
+			searchArr.push({value:makeValue.label,label:makeValue.label,key:'_make'})
+		}
+		if(modelFirstValue){
+			modelFirstValue.key = '_modal'; 
+			searchArr.push({value:modelFirstValue.label,label:modelFirstValue.label,key:'_modal'})
+		}
+		if(priceType){
+			priceType.key = '_price'; 
+			searchArr.push(priceType)
 		}
 		if(year){
 			year.key = '_year'; 
@@ -90,7 +179,10 @@ const CarSearch = () => {
 	const clearFilter = async() => {
 		setLoading(true)
 		setVehicle("");
+		setPriceType("");
 		setTypeDropdown(false);
+		setMake("");
+		setFirstModelHandle("");
 		setYear("");
 		setColorType("");
 		setConditions("");
@@ -108,11 +200,27 @@ const CarSearch = () => {
 		})
 	}
 
+	const setMakeHandle = (value ) => {
+		const modelFirstLevelArrays = models_options.filter(item => item.parent_id === value.value);
+
+		if(modelFirstLevelArrays.length !== 0) {
+			setTypeDropdown(true);
+		} else {
+			setTypeDropdown(false);
+		}
+		setMake(value);
+		setModelFirst("");
+	};
+
+	const setFirstModelHandle = (value) => {
+		setModelFirst(value);
+	};
+
 	return (
 		<div className="main-carSearch-div">
 			<div className="container">
 				<div className="row">
-					<div className="col-md-2 carSearch-find-div">
+					<div className="col-md-3 carSearch-find-div">
 						<h5>FIND</h5>
 						<hr/>
 						<div className="row">
@@ -126,6 +234,46 @@ const CarSearch = () => {
 								isSearchable={false}
 								value={vehicleValue}
 							/>
+								</div>
+							</div>
+							{vehicleValue ? (
+							<div className="col-md-12">
+								<div className={"mb-3"}>
+								
+								<Select
+									placeholder = {vehicleValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Makes" : "Select Types"}
+									options={filterMakes}
+									onChange={(e) => setMakeHandle(e)}
+									value= {makeValue}
+									isSearchable={false}
+								/>
+								
+								</div>
+							</div>
+							):(<></>)}
+							{isTypeDropdown ?
+							<div className="col-md-12">
+								<div className={"mb-3"}>
+								
+									<Select
+										placeholder = {makeValue.value === undefined ? "Select...." : vehicleValue.value === "1" ? "Select Models" : "Select Types"}
+										onChange={(e) => setFirstModelHandle(e)}
+										options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+										value= {modelFirstValue}
+										isSearchable={false}
+									/>
+									
+								</div>
+							</div>
+                          : <></>}
+							<div className="col-md-12">
+								<div className={"mb-3"}>
+								<Select
+									placeholder={"Select Price"}
+									options={PriceTypes()}
+									value={priceType}
+									onChange = {(e) => setPriceType(e)}
+								/>
 								</div>
 							</div>
 							<div className="col-md-12">
@@ -181,7 +329,7 @@ const CarSearch = () => {
 							
 						</div>
 					</div>
-					<div className="col-md-7 carSearch-result-div" style={{height:height - 180,overflow:'auto',minHeight: '510px'}}>
+					<div className="col-md-6 carSearch-result-div" style={{height:height - 180,overflow:'auto',minHeight: '510px'}}>
 						<h3 className="d-flex justify-content-between"><span>Search Result</span><span>({resultData.length})</span></h3>
 						<hr/>
 

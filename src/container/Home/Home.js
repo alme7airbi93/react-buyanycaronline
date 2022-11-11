@@ -87,6 +87,14 @@ const Home = () => {
 			vehicleValue.key = '_advertisement_type'; 
 			searchArr.push(vehicleValue)
 		}
+		if(makeValue){
+			makeValue.key = '_make'; 
+			searchArr.push(makeValue)
+		}
+		if(modelFirstValue){
+			modelFirstValue.key = '_modal'; 
+			searchArr.push(modelFirstValue)
+		}
 		if(year){
 			year.key = '_year'; 
 			searchArr.push(year)
