@@ -27,10 +27,17 @@ export function UserContextProvider({ children }) {
 
     }
 
+    const clearUserData = () => {
+       localStorage.clear();
+        const user =  null;
+        return user;
+    }
+
     return (
         <UserContext.Provider value={{
             setUserData:(data)=>setUserData(data),
-            getUserData:()=>getUserData()
+            getUserData:()=>getUserData(),
+            clearUserData:()=>clearUserData()
         }}>
             {children}
         </UserContext.Provider>

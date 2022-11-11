@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
@@ -7,13 +7,15 @@ import { logOut } from "../../controllers/AuthController.js";
 import Dropdown from "../Dropdown";
 import LoginModal from "../Modal/Login/LoginModal";
 import SignupModal from "../Modal/Signup/SignupModal";
+import { UserContext } from "../../context/Context";
 
 
 const Header = () => {
 	const navigate = useNavigate();
 	const [loginShow, setLoginShow] = useState(false);
 	const [signupShow, setSignupShow] = useState(false);
-
+	const ctx = useContext(UserContext);
+	const user = ctx.getUserData();
 	// const [user]  = useContext(UserContext);
 
 	const closeLogin = ()=>{
@@ -37,16 +39,19 @@ const Header = () => {
 	const logoutHandler = ()=>{
 		logOut();
 		deleteCookie("userToken");
+		ctx.clearUserData();
 		navigate("/");
 	};
 
 	const getCookie = (cookieName) => {
-		let cookie = {};
-		document.cookie.split(";").forEach(function(el) {
-			let [key,value] = el.split("=");
-			cookie[key.trim()] = value;
-		});
-		return cookie[cookieName];
+		// let cookie = {};
+		// document.cookie.split(";").forEach(function(el) {
+		// 	let [key,value] = el.split("=");
+		// 	cookie[key.trim()] = value;
+		// });
+		// return cookie[cookieName];
+
+		
 	};
 
 	const deleteCookie = (name) => {
@@ -57,7 +62,7 @@ const Header = () => {
 
 	let btn;
 
-	if(userToken) {
+	if(user && user._id) {
 		btn = (
 			<div className="col-md-5 d-flex justify-content-end headers-button">
 				<Dropdown onClick={logoutHandler}/>

@@ -16,7 +16,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../../context/Context";
 import { updateAdsById } from "../../../common/repository/AdvertisementDB";
 import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
-
+import { updateAds } from "../../../controllers/AdsController";
 
 const Modify = (props) => {
   const ctx = useContext(UserContext);
@@ -35,7 +35,7 @@ useEffect(()=>{
 },[setAds])
 
 
-const updateAds = () => {
+const updateAdvertise = async() => {
   setLoading(true)
   let data = {
     _title:title,
@@ -43,15 +43,19 @@ const updateAds = () => {
     _price:price
   };
 
-  updateAdsById(props.ads._id,data).then(res => {
+  await updateAds(props.ads._id,data).then(res => {
+    console.log(res,'res')
     if(res.success === true){
       alert("Advertisement modify successfully.")
       props.handleclose();
+      setLoading(false)
+      }
+    else{
+      setLoading(false)
     }
-    setLoading(false)
-  }).catch(err => {
-    setLoading(false)
   })
+  
+ 
 
 }
 
@@ -123,7 +127,7 @@ const updateAds = () => {
               
 
               <div className="d-flex justify-content-center">
-                <Button type="button" className="w-25 modal_btn" onClick={() => updateAds()}>
+                <Button type="button" className="w-25 modal_btn" onClick={() => updateAdvertise()}>
                   Update
                 </Button>
               </div>

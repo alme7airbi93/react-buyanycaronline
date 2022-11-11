@@ -5,6 +5,11 @@ import { useParams } from "react-router-dom";
 import { getAdvertisementById } from "../../common/repository/AdvertisementDB";
 import { checkAdvertisemntType } from "../../common/validations/ClassesTypeOfValidations";
 import Modify from "../../components/Modal/Modify/Modify";
+import {BsFillTrashFill} from "react-icons/bs";
+import { updateAds } from "../../controllers/AdsController";
+import PhotoModal from "../../components/Modal/PhotoModal/PhotoModal";
+import { saveAdsPhotos } from "../../controllers/AdsController";
+import Spinner from 'react-bootstrap/Spinner';
 
 const CarDetails = () => {
 
@@ -13,6 +18,8 @@ const CarDetails = () => {
 	const [allData, setAllData] = useState({});
 	const [openmodification, setOpenmodification] = useState(false);
 	const [close, setClose] = useState(false);
+	const [imageModal,setImageModal] = useState(false);
+	const [loading,setLoading] = useState(false);
 
 	const id = params.Id
 
@@ -37,6 +44,43 @@ const CarDetails = () => {
 	 setOpenmodification(false);
 	 setClose(!close)
    };
+   const closeImageModal = () => {
+	setImageModal(false);
+   }
+
+   const savePhotos = async(allPhotos,propSetLoading) => {
+	await saveAdsPhotos(id,allPhotos).then(res => {
+		console.log(res,'res')
+		if(res.success === true){
+		alert(res.msg)
+		setImageModal();
+		propSetLoading(false)
+		}
+	})
+   }
+
+   const handleDelete = async(key) => {
+	setLoading(true)
+	if (confirm("Are you sure ? you want to delete this image.") == true) {
+		let NewPhotos = allData._photos.filter((item,index) => index !== key);
+		console.log(NewPhotos)
+		let data= {
+			photos:NewPhotos
+		}
+		await updateAds(id,data).then(res => {
+			console.log(res,'res')
+			if(res.success === true){
+			  alert("Image Deleted successfully")
+			  setClose(!close)
+			  setLoading(false)
+			  }
+			else{
+			  setLoading(false)
+			}
+		  })
+	}
+
+   }
 
 
 	return (
@@ -70,12 +114,60 @@ const CarDetails = () => {
 						<p>Viewed This: <span>{allData._views}</span></p>
 					</Col>
 				</Row>
+				{allData && allData._photos ? (
+				<Row className={"all-images"}>
+						{allData._photos.map((item,key) =>(
+							<Col md={3}>
+								<div className="image-block">
+									<img src={item} key={"photo"+key}/>
+									<a className="delete-link" onClick={()=>handleDelete(key)}>
+									<BsFillTrashFill
+										className="cs_pointer text-light"
+									/>
+									</a>
+								</div>
+							</Col>
+						))}		
+						<Col md={3}>
+							<div className="image-block pt-95">
+								<button className="search_btn" onClick={() => setImageModal(true)}>
+								Add Image
+								</button>
+							</div>
+						</Col>
+
+				</Row>
+				):
+				(
+				<Row className={"all-images"}>
+					<Col md={3}>
+						<div className="image-block pt-95">
+							<button className="search_btn" onClick={() => setImageModal(true)}>
+							Add Image
+							</button>
+						</div>
+					</Col>
+				</Row>
+				)}
 			</Container>
 			{allData && allData._title ? (
 			<Modify open={openmodification} ads={allData} handleclose={closemodification} />
 			):
 			(<></>)
 			}
+            {allData && allData._title ? (
+				<PhotoModal open={imageModal} ads={allData} savePhoto={savePhotos} handleClose={closeImageModal} />
+			):
+			(<></>)
+			}
+
+{loading === true ? (
+				<div className="loader">
+					<Spinner animation="border" variant="danger" />
+				</div>
+			)
+			:
+			(<></>)}
 		</div>
 	);
 };

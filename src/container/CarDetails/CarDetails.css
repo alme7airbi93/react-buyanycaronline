@@ -21,3 +21,39 @@
 .search_btn{
     max-width:120px;
 }
+
+.image-block img {
+    width: 100%;
+    max-height: 219px;
+    object-fit: scale-down;
+}
+
+.all-images {
+    margin-bottom: 22px;
+}
+
+.all-images .image-block {
+    background: #161e21;
+    border-radius: 6px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+    height: 219px;
+    object-fit: scale-down;
+}
+.delete-link{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background: #717171;
+    border-radius: 3px;
+}
+.search_btn {
+    display: block;
+    margin: auto;
+}
+.pt-95{
+    padding-top: 95px;
+}

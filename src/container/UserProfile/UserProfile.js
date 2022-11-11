@@ -71,13 +71,23 @@ const UserProfile = () => {
     <div className={"user_info_main"}>
       <Container>
         <Row>
-          <Col md={5} className="user_info">
+         <Col md={6} >
+          <Col md={12} className="user_info">
             <AccountSettings />
             {/* <button className="search_btn" onClick={() => handleOpen(true)}>
               Edit
             </button> */}
           </Col>
-          <Col md={6} className="user_info">
+         
+          <Col md={12} className="user_info">
+            <h5>New Ad?</h5>
+            <button className="search_btn" onClick={profileHandler}>
+              Click Here
+            </button>
+          </Col>
+        </Col>
+        <Col md={6} >
+          <Col md={12} className="user_info">
             <h5>Manage Ads</h5>
             <hr />
             <div className=" ad_list">
@@ -114,11 +124,6 @@ const UserProfile = () => {
               )}
             </div>
           </Col>
-          <Col md={2} className="user_info">
-            <h5>New Ad?</h5>
-            <button className="search_btn" onClick={profileHandler}>
-              Click Here
-            </button>
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />

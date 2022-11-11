@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useContext, useEffect} from "react";
 import "./Home.css";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
@@ -8,6 +8,7 @@ import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionT
 import CategorySelection from "../NewAds/NewAddSteps/CategorySelection";
 import { ManufacturingYearsOptions,PriceTypes } from "../../common/data/SelectOptions";
 import Spinner from 'react-bootstrap/Spinner';
+import { UserContext } from "../../context/Context";
 
 const Home = () => {
 	const [advSearch, setAdvSearch] = useState(false);
@@ -28,9 +29,22 @@ const Home = () => {
 	const [filterMakes,setFilterMakes] = useState([]);
 	const [loading,setLoading] = useState(false);
 
+	const ctx = useContext(UserContext);
+	const user = ctx.getUserData();
+
+
 	const navigation = useNavigate();
+
+
+
 	const changePageHandler = () => {
-		navigation("/login");
+		if(user && user._id){
+			navigation("/new-ads");
+		}
+		else{
+			navigation("/login");
+		}
+		
 	};
 
 	let rowClass, toggleClass;
