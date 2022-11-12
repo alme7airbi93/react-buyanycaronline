@@ -54,6 +54,7 @@ const CarDetails = () => {
 		if(res.success === true){
 		alert(res.msg)
 		setImageModal();
+		setClose(!close)
 		propSetLoading(false)
 		}
 	})
@@ -65,7 +66,7 @@ const CarDetails = () => {
 		let NewPhotos = allData._photos.filter((item,index) => index !== key);
 		console.log(NewPhotos)
 		let data= {
-			photos:NewPhotos
+			_photos:NewPhotos
 		}
 		await updateAds(id,data).then(res => {
 			console.log(res,'res')
