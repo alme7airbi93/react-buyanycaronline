@@ -26,7 +26,11 @@ const UploadAndDisplayImage = (props) => {
 	const onDrop = (pictures, pictureUrl) => {
 		setphotos([...photos,pictureUrl])
 	};
-
+	const [error,setError] = useState({
+		error:false,
+		errorKey:''
+	
+	  })
 
 	const updateData = ()=>{
 		const instance =  checkAdvertisemntType(advertisement)
@@ -39,7 +43,10 @@ const UploadAndDisplayImage = (props) => {
 				});
 			adsCtx.setAds(d);
 			props.nextStep(StepsStateInMap);
-		}
+		} else{
+			console.log(resp,'ShowError Message')
+			setError({error:true,errorKey:resp.errorField})
+		  }
 
 	}
 
@@ -64,6 +71,8 @@ const UploadAndDisplayImage = (props) => {
 						<br /> 
 						<br /> 
 					</Col>
+					{error ? (<p style={{ color: "red" }}>Please Select Photo</p>):<></>}
+
 					<Col md={10} className="btn-group" >
 						<Button right className="back_btn" onClick={() => props.nextStep(StepsStateInDetail)} >Back</Button>
 						<Button className="next_btn" onClick={updateData}>Next</Button>

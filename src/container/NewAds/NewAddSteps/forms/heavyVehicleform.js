@@ -14,7 +14,10 @@ import { AdsStepVerfication } from "../../../../controllers/AdsController";
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
-
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+  })
   const makes_option = makes();
   const models_options = models();
 
@@ -33,6 +36,9 @@ const Detail = (props) => {
     if(resp.success){
         adsCtx.setAds(resp.data);
         props.nextStep(StepsStateInDetail);
+    }else{
+      console.log(resp,'ShowError Message')
+      setError({error:true,errorKey:resp.errorField})
     }
   
     };
@@ -59,6 +65,7 @@ const Detail = (props) => {
             }}
           />
         </div>
+        {error && error.errorKey == '_make'? (<p style={{ color: "red" }}>Make Type Field is required</p>):<></>}
       </Form.Group>
       {makeValue ? (
           <Form.Group className="mb-3">
@@ -80,6 +87,7 @@ const Detail = (props) => {
               }}
             />
           </div>
+          {error && error.errorKey == '_modal'? (<p style={{ color: "red" }}>Model Type Field is required</p>):<></>}
         </Form.Group>
       ):(<></>)}
 
@@ -112,6 +120,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_numberOfCylinders'? (<p style={{ color: "red" }}>Number Of Cylinders Type Field is required</p>):<></>}
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Capacity Weight :</Form.Label>
         <Form.Control
@@ -127,6 +136,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_capacityWeight'? (<p style={{ color: "red" }}>Capacity Weight Type Field is required</p>):<></>}
       <div className="d-flex justify-content-space-between">
       <Button
         right

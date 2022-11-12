@@ -18,7 +18,10 @@ const Detail = (props) => {
   const adsCtx =  useContext(AdvertismentCtx)
 	const advertisement = adsCtx.ads;
   const makes_option = makes()
-
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+  })
 
   const [detail, setDetail] = useState({
     _make:advertisement._make,
@@ -30,12 +33,15 @@ const Detail = (props) => {
   const updateAccessories = async () => {
     const resp =   AdsStepVerfication(advertisement,detail);
     console.log(resp,'resp');
-  if(resp){
+  if(resp.success){
    const saveDate = await createAdvertisement(resp.data)
    if (saveDate.success) {
     navigate("/user-profile");
           alert("Data uploaded successfully");
         }
+  }else{
+    console.log(resp,'ShowError Message')
+    setError({error:true,errorKey:resp.errorField})
   }
   };
 
@@ -64,6 +70,7 @@ const Detail = (props) => {
             }}
           />
         </div>
+        {error && error.errorKey == '_make'? (<p style={{ color: "red" }}>Make Type Field is required</p>):<></>}
       </Form.Group>
 
 
@@ -80,6 +87,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_accessory_name'? (<p style={{ color: "red" }}>Accessory Name Type Field is required</p>):<></>}
       <Form.Group className="mb-3" >
             <Form.Label style={{color: "#fff"}}>vehicle_year :</Form.Label>
             <Form.Control type="date" 
@@ -88,7 +96,8 @@ const Detail = (props) => {
               setDetail({
                 ...detail, _vehicle_year : data.target.value});
             }}/>
-        </Form.Group>       
+        </Form.Group>    
+        {error && error.errorKey == '_vehicle_year'? (<p style={{ color: "red" }}>Vehicle Year Type Field is required</p>):<></>}   
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>vehicle_model  :</Form.Label>
         <Form.Control
@@ -102,6 +111,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_vehicle_model'? (<p style={{ color: "red" }}>Make Type Field is required</p>):<></>}
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>vehicle_make  :</Form.Label>
         <Form.Control
@@ -115,6 +125,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_vehicle_make'? (<p style={{ color: "red" }}>Vehicle Make Type Field is required</p>):<></>}
       <div className="d-flex justify-content-space-between">
       <Button
         right
@@ -130,5 +141,6 @@ const Detail = (props) => {
     </React.Fragment>
   );
 };
+
 
 export default Detail;

@@ -53,6 +53,7 @@ const Detail = (props) => {
       props.nextStep(StepsStateInPhoto);
     }
     else{
+      console.log(resp,'ShowError Message')
       setError({error:true,errorKey:resp.errorField})
     }
   };
@@ -85,7 +86,9 @@ const Detail = (props) => {
                       setCarDetails({...carDetails,_color:data.label});
                     }}
                   />
+                 
                 </Form.Group>
+                {error && error.errorKey == '_color'? (<p style={{ color: "red" }}>Color Field is required</p>):<></>}
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>
                     Manufacturing Year :
@@ -102,6 +105,7 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
+                {error && error.errorKey == '_year'? (<p style={{ color: "red" }}>Year Field is required</p>):<></>}
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Fuel Type :</Form.Label>
                   <div>
@@ -115,6 +119,7 @@ const Detail = (props) => {
                       }}
                     />
                   </div>
+                  {error && error.errorKey == '_fuel_type'? (<p style={{ color: "red" }}>Fuel Type Field is required</p>):<></>}
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Region :</Form.Label>
@@ -128,6 +133,8 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
+                {error && error.errorKey == '_region'? (<p style={{ color: "red" }}>Region Type Field is required</p>):<></>}
+
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Condition :</Form.Label>
                   <Select
@@ -142,6 +149,8 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
+                {error && error.errorKey == '_condition'? (<p style={{ color: "red" }}>Condition Type Field is required</p>):<></>}
+
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Warranty :</Form.Label>
                   <Select
@@ -156,7 +165,8 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-               
+                {error && error.errorKey == '_warranty'? (<p style={{ color: "red" }}>Warranty Type Field is required</p>):<></>}
+
                 {user.phone === undefined && (
                   <Form.Group className="mb-3">
                     <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
@@ -172,6 +182,7 @@ const Detail = (props) => {
                     />
                   </Form.Group>
                 )}
+                {error && error.errorKey == 'onwer_phone'? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
                 {advertisement._advertisement_type == "Used Cars for sale" && (
                   <div>
                     <Form.Group className="mb-3">
@@ -191,6 +202,8 @@ const Detail = (props) => {
                           });
                         }}
                       />
+                     {error && error.errorKey == 'onwer_phone'? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
+
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
