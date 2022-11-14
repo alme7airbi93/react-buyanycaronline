@@ -105,10 +105,13 @@ const AccountSettings = () => {
           </p>
           <p>
             Update Password{" "}
-            <BsPencilSquare
+            {/* <BsPencilSquare
               onClick={()=>handleOpen('password')}
               className="cs_pointer text-light"
-            />
+            /> */}
+            <a onClick={()=>handleOpen('password')}>
+            <img src="./assets/img/edit.png"/>
+            </a>
           </p>
         </>
       );
@@ -117,10 +120,13 @@ const AccountSettings = () => {
         <>
           <p><span>Linked Account Type: Google</span></p>
           <p className="d-flex justify-content-between"><span>Email: {dbUser._username}</span>
-            <BsPencilSquare
+            {/* <BsPencilSquare
               className="cs_pointer text-light"
               onClick={()=>handleOpen('email')}
-            />
+            /> */}
+            <a onClick={()=>handleOpen('email')}>
+            <img src="./assets/img/edit.png"/>
+            </a>
           </p>
         </>
       );
@@ -136,10 +142,13 @@ const AccountSettings = () => {
           {UserAccountDisplay()}
           <div className="d-flex justify-content-between">
 		      <div>Phone:<span> {dbUser._phone}</span> </div>
-		  <BsPencilSquare
+		  {/* <BsPencilSquare
                 className="cs_pointer text-light"
                 onClick={()=>handleOpen('phone')}
-              />
+              /> */}
+              <a onClick={()=>handleOpen('phone')}>
+            <img src="./assets/img/edit.png"/>
+            </a>
 		  </div>
 		 
         </>

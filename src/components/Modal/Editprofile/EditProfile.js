@@ -29,11 +29,11 @@ const user = ctx.getUserData();
 
 
   return (
-    <Modal className="EditProfile" show={props.open} onHide={props.handleclose}>
+    <Modal className="EditProfile" show={props.open} onHide={()=>props.handleclose('email')}>
       <div className="modal_main_div">
         <Modal.Header className="modal_header">
           <Modal.Title>Edit Profile</Modal.Title>
-          <h3 onClick={props.handleclose} style={{ cursor: "pointer" }}>
+          <h3 onClick={()=>props.handleclose('email')} style={{ cursor: "pointer" }}>
             x
           </h3>
         </Modal.Header>

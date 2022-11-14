@@ -73,6 +73,15 @@ export const logOut = ()=>{
 };
 
 
+// export const getGoogleCred = async() => {
+// 	return await signInWithPopup(auth, googleProvider)
+// 	.then(async (result) => {
+// 		// This gives you a Google Access Token. You can use it to access the Google API.
+// 		console.log(result)
+// 		return result;
+// 	})
+// }
+
 export const GoogleSignin = async () => {
 	return await signInWithPopup(auth, googleProvider)
 		.then(async (result) => {
