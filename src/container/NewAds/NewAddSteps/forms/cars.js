@@ -23,8 +23,8 @@ const Detail = (props) => {
   const [error,setError] = useState({
     error:false,
     errorKey:''
-
   })
+
 
   const [carDetails, setCarDetails] = useState({
     _make: advertisement._make,

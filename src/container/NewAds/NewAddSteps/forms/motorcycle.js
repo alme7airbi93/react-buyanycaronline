@@ -17,7 +17,10 @@ const Detail = (props) => {
   const advertisement = adsCtx.ads;
   const [condition_bool, setcondition_bool] = useState(false);
   const [warranty_bool, setwarranty_bool] = useState(false);
-
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+  })
 
   const [makeValue, setMakeValue] = useState();
   const [motorCycleDetails, setMoterCycleDetails] = useState({
@@ -36,8 +39,10 @@ const Detail = (props) => {
     if(resp.success){
         adsCtx.setAds(resp.data);
         props.nextStep(StepsStateInDetail);
+    }else{
+      console.log(resp,'ShowError Message')
+      setError({error:true,errorKey:resp.errorField})
     }
-    props.nextStep(StepsStateInDetail);
   };
 
 
@@ -59,6 +64,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_engineSize'? (<p style={{ color: "red" }}>EngineSize Type Field is required</p>):<></>}
 
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Make :</Form.Label>
@@ -80,6 +86,7 @@ const Detail = (props) => {
             }}
           />
       </Form.Group>
+      {error && error.errorKey == '_make'? (<p style={{ color: "red" }}>Make Type Field is required</p>):<></>}
 
       {makeValue ? (
           <Form.Group className="mb-3">
@@ -102,8 +109,10 @@ const Detail = (props) => {
             />
           </div>
         </Form.Group>
-      ):(<></>)}
+               
 
+      ):(<></>)}
+ {error && error.errorKey == '_modal'? (<p style={{ color: "red" }}>Modal Type Field is required</p>):<></>}
 
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Distance :</Form.Label>
@@ -124,6 +133,8 @@ const Detail = (props) => {
           />
         </div>
       </Form.Group>
+      {error && error.errorKey == '_distance'? (<p style={{ color: "red" }}>Distance Type Field is required</p>):<></>}
+
       <div className="d-flex justify-content-space-between">
       <Button
         right

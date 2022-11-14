@@ -17,7 +17,10 @@ const Detail = (props ) => {
   // const updateData = () => {
   //   props.nextStep(StepsStateInDetail);
   //};
-
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+  })
   const [plateData,setPlateData] =  useState({
     _city:'',
     _number:'',
@@ -36,13 +39,16 @@ const Detail = (props ) => {
   const updateData = async () => {
     const resp =   AdsStepVerfication(advertisement,plateData);
     console.log(resp,'resp');
-  if(resp){
+  if(resp.success){
    const saveDate = await createAdvertisement(resp.data)
    if (saveDate.success) {
     navigate("/user-profile");
           alert("Data uploaded successfully");
         }
-  }
+      }else{
+        console.log(resp,'ShowError Message')
+        setError({error:true,errorKey:resp.errorField})
+      }
   };
 
 
@@ -61,6 +67,8 @@ const Detail = (props ) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_city'? (<p style={{ color: "red" }}>City Type Field is required</p>):<></>}
+
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>number :</Form.Label>
         <Form.Control
@@ -74,6 +82,8 @@ const Detail = (props ) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_number'? (<p style={{ color: "red" }}>Number Type Field is required</p>):<></>}
+
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>number_code :</Form.Label>
         <Form.Control
@@ -88,6 +98,8 @@ const Detail = (props ) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_numberCode'? (<p style={{ color: "red" }}>Number Code Type Field is required</p>):<></>}
+
       <div className="d-flex justify-content-space-between">
       <Button
         right

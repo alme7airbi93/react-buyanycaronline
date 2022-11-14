@@ -13,6 +13,10 @@ import { StepsStateInPhoto } from "../../stepsState";
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
+  const [error,setError] = useState({
+    error:false,
+    errorKey:''
+  })
 
  
 
@@ -34,13 +38,16 @@ const Detail = (props) => {
   const updateData = () => {
     const resp =   AdsStepVerfication(advertisement,boatData)
     if(resp.success){
-        adsCtx.setAds(resp.data);
-        props.nextStep(StepsStateInDetail);
-    }
-    
-
-    props.nextStep(StepsStateInDetail);
+      adsCtx.setAds(resp.data);
+      props.nextStep(StepsStateInDetail);
+  }
+  else{
+    console.log(resp,'ShowError Message')
+    setError({error:true,errorKey:resp.errorField})
+  }
   };
+
+ 
 
   // const updateData = () => {
   //   props.nextStep(StepsStateInDetail);
@@ -62,7 +69,9 @@ const Detail = (props) => {
               _length: data.target.value,
             });
           }}
+          
         />
+        {error && error.errorKey == '_length'? (<p style={{ color: "red" }}>Length Field is required</p>):<></>}
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Make :</Form.Label>
@@ -81,6 +90,7 @@ const Detail = (props) => {
               });
             }}
           />
+          {error && error.errorKey == '_make'? (<p style={{ color: "red" }}>Make Field is required</p>):<></>}
         </div>
       </Form.Group>
       
@@ -100,6 +110,7 @@ const Detail = (props) => {
           }}
         />
       </Form.Group>
+      {error && error.errorKey == '_hours'? (<p style={{ color: "red" }}>Hours Field is required</p>):<></>}
       <div className="d-flex justify-content-space-between">
         <Button
           right
