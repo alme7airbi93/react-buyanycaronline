@@ -3,10 +3,12 @@ import {
 	createUserWithEmailAndPassword, GoogleAuthProvider,
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	signOut
+	signOut,
+	getAuth, 
+	updateEmail
 } from "firebase/auth";
 
-import {getUserByUsername, saveUser} from "../common/repository/UserDB.js";
+import {getUserByUsername, saveUser,updateUser} from "../common/repository/UserDB.js";
 import User from "../common/models/User";
 import {User_Roles} from "../common/data/User_Roles";
 
@@ -99,3 +101,20 @@ export const GoogleSignin = async () => {
 			return {profile: "", error: error.message, token: credential};
 		});
 };
+
+export const updateEmailAddress = (email,uid) =>{
+	console.log(email,uid,'email')
+	const auth = getAuth();
+	console.log(auth,'auth')
+	return updateEmail(auth.currentUser, email).then((res) => {
+		console.log(res)
+		return updateUser({_username:email},uid);
+		
+		// Email updated!
+		// ...
+	  }).catch((error) => {
+		alert(error)
+		// An error occurred
+		// ...
+	  });
+} 

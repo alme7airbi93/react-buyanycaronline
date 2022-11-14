@@ -8,17 +8,22 @@ import { BsPencilSquare } from "react-icons/bs";
 import "./AccountSetting.css";
 import User from "../../../common/models/User";
 import UpdatePasswordModal from "../../../components/Modal/UpdatePasswordModal/UpdatePasswordModal";
+import EditProfile from "../../../components/Modal/Editprofile/EditProfile";
+import { updateEmailAddress,logOut} from "../../../controllers/AuthController";
+import { useNavigate } from "react-router-dom";
 
 const AccountSettings = () => {
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
+	const navigate = useNavigate();
 
   const [dbUser, setDbUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useState({
 	phone:false,
-	password:false
+	password:false,
+  email:false,
 
   });
 
@@ -61,16 +66,40 @@ const AccountSettings = () => {
 			}
 			
 		})
+	}
+  const deleteCookie = (name) => {
+		document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+	};
 
-
+  const updateDetail = (email,password)=>{
+    const updatedData =  Object.assign(new User(),{...dbUser})
+    setLoading(true)
+		updateEmailAddress(email,updatedData._id)
+		.then((res)=>{
+      console.log(res,'res1')
+			if(res.success){
+        logOut();
+        deleteCookie("userToken");
+        ctx.clearUserData();
+        alert('Data updated Successfully please login again.')
+        setLoading(false)
+        navigate("/");
+				handleclose('email')
+			}
+			
+		}).catch(error => {
+      alert('Somthing went wrong')
+      setLoading(false)
+    })
 	}
 
   const UserAccountDisplay = () => {
+    console.log(dbUser,'dbUser')
     if (dbUser._signInMethod[0] == "email") {
-		console.log(dbUser,'dbUser')
+		
       return (
         <>
-          <p>Linked Account Type: Email</p>
+          <p><span>Linked Account Type: Email</span></p>
           <p>
             Username : <span>{dbUser.username}</span>
           </p>
@@ -86,8 +115,13 @@ const AccountSettings = () => {
     } else {
       return (
         <>
-          <p>Linked Account Type: Google</p>
-          <p>Change Email/Update Sign method</p>
+          <p><span>Linked Account Type: Google</span></p>
+          <p className="d-flex justify-content-between"><span>Email: {dbUser._username}</span>
+            <BsPencilSquare
+              className="cs_pointer text-light"
+              onClick={()=>handleOpen('email')}
+            />
+          </p>
         </>
       );
     }
@@ -100,13 +134,14 @@ const AccountSettings = () => {
           <h5>Account Settings</h5>
           <hr />
           {UserAccountDisplay()}
-		  <p>Phone:<span>{dbUser._phone}</span>
+          <div className="d-flex justify-content-between">
+		      <div>Phone:<span> {dbUser._phone}</span> </div>
 		  <BsPencilSquare
                 className="cs_pointer text-light"
                 onClick={()=>handleOpen('phone')}
               />
-		  
-		  </p>
+		  </div>
+		 
         </>
       )}
 
@@ -118,6 +153,12 @@ const AccountSettings = () => {
       <UpdatePasswordModal 
 	  open={open.password} 
 	  handleclose={handleclose} />
+
+    <EditProfile
+    open={open.email}
+    updateDetail = {updateDetail}
+    handleclose={handleclose} />
+
     </React.Fragment>
   );
 };

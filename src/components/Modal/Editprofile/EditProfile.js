@@ -18,8 +18,16 @@ const EditProfile = (props) => {
 const user = ctx.getUserData();
 
 
+
+
   const [email, setEmail] = useState(user.username);
-  const [phone, setPhone] = useState(user.phone);
+  const [password, setPassword] = useState();
+
+  const updateDetails = ()=>{
+    props.updateDetail(email,password)
+}
+
+
   return (
     <Modal className="EditProfile" show={props.open} onHide={props.handleclose}>
       <div className="modal_main_div">
@@ -48,8 +56,8 @@ const user = ctx.getUserData();
                     />
                   </InputGroup>
                 </div>
-              </div>
-              <div className="d-flex align-items-center">
+               </div>
+             {/* <div className="d-flex align-items-center">
                 <div className="col-md-4">
                   <p className="text-light">Password :</p>
                 </div>
@@ -65,8 +73,8 @@ const user = ctx.getUserData();
                     />
                   </InputGroup>
                 </div>
-              </div>
-              <div className="d-flex align-items-center">
+              </div> */}
+              {/* <div className="d-flex align-items-center">
                 <div className="col-md-4">
                   <p className="text-light">Mobile :</p>
                 </div>
@@ -82,9 +90,9 @@ const user = ctx.getUserData();
                     />
                   </InputGroup>
                 </div>
-              </div>
+              </div> */}
               <div className="d-flex justify-content-center">
-                <Button type="submit" className="w-25 modal_btn">
+                <Button type="button" onClick={updateDetails} className="w-25 modal_btn">
                   Update
                 </Button>
               </div>

@@ -36,6 +36,18 @@ export const updateUserProfile = async (userId = null, value) => {
 	}
 };
 
+export const updateUser = async(user,id) => {
+	try{
+		let docRef = doc(db, doc_collection, id);
+		let update_doc = await updateDoc(docRef, user);
+		console.log("Response for update ", update_doc);
+		return {success: true, data: update_doc};
+
+	} catch (e) {
+		return {success: false, data: e};
+	}
+}
+
 export const changeUserRole = async (userId = null, value) => {
 	console.log("================= Update user role =================");
 	console.log("Updating : ", userId);
