@@ -11,6 +11,7 @@ import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionT
 import { useLocation } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
 import { makes, models} from "../../common/data";
+import { SearchAdvertisement } from "../../controllers/SearchController";
 
 const height = window.innerHeight;
 const CarSearch = () => {
@@ -47,7 +48,7 @@ const CarSearch = () => {
 	let models_options = models();
 
 
-	useEffect(() => {
+	useEffect(async() => {
 		console.log(state,'state')
 
 		state.forEach(function(item){
@@ -89,14 +90,17 @@ const CarSearch = () => {
 		})
 
 
-		getSearchAdvertisement(state).then(res => {
-			console.log(res,'res')
-			setResultData(res.data)
+		let result = await SearchAdvertisement(state);
+		if(result.data){
+			setResultData(result.data)
 			setLoading(false)
-		}).catch(err => {
-			alert("No data found")
+		}
+		else{
+			alert(result.msg)
 			setLoading(false)
-		})
+		}
+	
+	
 
 	},[])
 
@@ -167,14 +171,19 @@ const CarSearch = () => {
 			searchArr.push(condition)
 		}
 		console.log('searchArr',searchArr)
-		getSearchAdvertisement(searchArr).then(res => {
-			console.log(res,'res')
-			setResultData(res.data)
+
+
+		let result = await SearchAdvertisement(searchArr);
+		if(result.data){
+			setResultData(result.data)
 			setLoading(false)
-		}).catch(err => {
-			alert(err)
+		}
+		else{
+			alert(result.msg)
 			setLoading(false)
-		})
+		}
+
+		
 	}
 	const clearFilter = async() => {
 		setLoading(true)
@@ -190,14 +199,18 @@ const CarSearch = () => {
 		setTransmissionType("");
 
 		var searchArr = [];
-		getSearchAdvertisement(searchArr).then(res => {
-			console.log(res,'res')
-			setResultData(res.data)
+
+		let result = await SearchAdvertisement(searchArr);
+		if(result.data){
+			setResultData(result.data)
 			setLoading(false)
-		}).catch(err => {
-			alert(err)
+		}
+		else{
+			alert(result.msg)
 			setLoading(false)
-		})
+		}
+
+		
 	}
 
 	const setMakeHandle = (value ) => {
