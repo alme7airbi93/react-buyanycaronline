@@ -99,7 +99,6 @@ const AccountSettings = () => {
 		
       return (
         <>
-          <p><span>Linked Account Type: Email</span></p>
           <p>
             Username : <span>{dbUser.username}</span>
           </p>
@@ -109,7 +108,7 @@ const AccountSettings = () => {
               onClick={()=>handleOpen('password')}
               className="cs_pointer text-light"
             /> */}
-            <a onClick={()=>handleOpen('password')}>
+            <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('password')}>
             <img src="./assets/img/edit.png"/>
             </a>
           </p>
@@ -118,13 +117,10 @@ const AccountSettings = () => {
     } else {
       return (
         <>
-          <p><span>Linked Account Type: Google</span></p>
+        
           <p className="d-flex justify-content-between"><span>Email: {dbUser._username}</span>
-            {/* <BsPencilSquare
-              className="cs_pointer text-light"
-              onClick={()=>handleOpen('email')}
-            /> */}
-            <a onClick={()=>handleOpen('email')}>
+           
+            <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('email')}>
             <img src="./assets/img/edit.png"/>
             </a>
           </p>
@@ -141,15 +137,21 @@ const AccountSettings = () => {
           <hr />
           {UserAccountDisplay()}
           <div className="d-flex justify-content-between">
+		      <div>Name:<span> {dbUser._surename}</span> </div>
+		  
+		  </div>
+      
+          <div className="d-flex justify-content-between">
 		      <div>Phone:<span> {dbUser._phone}</span> </div>
 		  {/* <BsPencilSquare
                 className="cs_pointer text-light"
                 onClick={()=>handleOpen('phone')}
               /> */}
-              <a onClick={()=>handleOpen('phone')}>
+              <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('phone')}>
             <img src="./assets/img/edit.png"/>
             </a>
 		  </div>
+      
 		 
         </>
       )}

@@ -80,7 +80,7 @@ const CarDetails = () => {
 			}
 		  })
 	}
-
+	setLoading(false)
    }
 
 

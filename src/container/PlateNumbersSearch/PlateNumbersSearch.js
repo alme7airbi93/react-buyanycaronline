@@ -34,7 +34,7 @@ const PlateNumbersSearch = () => {
 	];
 
 	useEffect(() => {
-		console.log(state)
+		console.log(state,'state')
 		getSearchAdvertisement(state).then(res => {
 			console.log(res,'res')
 			setResultData(res.data)

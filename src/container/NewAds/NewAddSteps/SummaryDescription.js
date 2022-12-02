@@ -29,6 +29,7 @@ const SummaryDescription = (props) => {
 	let [type, setType] = useState(advertisement._advertisement_type);
 
 	let [errors, setErrors] = useState({
+		errors:false,
 		titleError:'',
 		priceError:'',
 		descriptionError:'',
@@ -54,7 +55,7 @@ const SummaryDescription = (props) => {
 	
 
 	const handler=()=>{
-		if (!title.length) {
+		if (!title) {
 			alert("please enter title");
 			return;
 		}
@@ -75,12 +76,12 @@ const SummaryDescription = (props) => {
 	};
 
 	useEffect(() => {
-		if(!title){
-			setErrors({...errors,titleError:true})
-		}
-		else{
-			setErrors({...errors,titleError:false})
-		}
+		// if(!title){
+		// 	setErrors({...errors,titleError:true})
+		// }
+		// else{
+		// 	setErrors({...errors,titleError:false})
+		// }
 	},[setTitle])
 
 	const handleValidate = (value,label) => {
@@ -127,10 +128,11 @@ const SummaryDescription = (props) => {
 							setTitle(data.target.value);
 							handleValidate(data.target.value,'title')
 						}}/>
-						{errors.titleError === true ? (
+						{errors && errors.titleError === true ? (
 							<small style={{color:'red'}}>Please enter title.</small>
 						):(<></>)}
 					</Form.Group>
+
 
 					<Form.Group className="md-3">
 						<Form.Label style={{color: "#fff"}}>Select Advertisement Category :</Form.Label>

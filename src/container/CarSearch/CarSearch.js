@@ -48,64 +48,22 @@ const CarSearch = () => {
 	let models_options = models();
 
 
-	useEffect(async() => {
+
+	useEffect(() => {
 		console.log(state,'state')
-
-		state.forEach(function(item){
-			if(item.key === '_advertisement_type'){
-				setVehicleHandle(item)
-			}
-			if(item.key === '_make'){
-				setMakeHandle({value:item.label,label:item.label})
-			}
-			if(item.key === '_modal'){
-				setFirstModelHandle(item)
-			}
-
-			if(makeValue){
-				searchArr.push({value:makeValue.label,label:makeValue.label,key:'_make'})
-			}
-			if(modelFirstValue){
-				modelFirstValue.key = '_modal'; 
-				searchArr.push({value:modelFirstValue.label,label:modelFirstValue.label,key:'_modal'})
-			}
-			if(item.key === '_price'){
-				setPriceType(item)
-			}
-			if(item.key === '_year'){
-				setYear(item)
-			}
-			if(item.key === '_color'){
-				setColorType(item)
-			}
-			if(item.key === '_fuel_type'){
-				setFuelType(item)
-			}
-			if(item.key === '_transmission'){
-				setTransmissionType(item)
-			}
-			if(item.key === '_condition'){
-				setConditions(item)
-			}
+		getSearchAdvertisement(state).then(res => {
+			console.log(res,'res')
+			setResultData(res.data)
+			setLoading(false)
+		}).catch(err => {
+			alert(err)
+			setLoading(false)
 		})
-
-
-		let result = await SearchAdvertisement(state);
-		if(result.data){
-			setResultData(result.data)
-			setLoading(false)
-		}
-		else{
-			alert(result.msg)
-			setLoading(false)
-		}
-	
-	
 
 	},[])
 
 	const setVehicleHandle = (value) => {
-		setLoading(true)
+		// setLoading(true)
 		setVehicle(value);
 		let makesArray = [];
 		if(value.key === 'Cars'){
@@ -133,7 +91,7 @@ const CarSearch = () => {
 	};
 
 	const getSearch = async() => {
-		setLoading(true)
+		// setLoading(true)
 		var searchArr = [];
 		if(vehicleValue){
 			vehicleValue.key = '_advertisement_type'; 
@@ -244,7 +202,7 @@ const CarSearch = () => {
 								options={AdvertisementOptions()}
 								// set "vehicleValue" as e
 								onChange={(e) => setVehicleHandle(e)}
-								isSearchable={false}
+								isSearchable={true}
 								value={vehicleValue}
 							/>
 								</div>
@@ -258,7 +216,7 @@ const CarSearch = () => {
 									options={filterMakes}
 									onChange={(e) => setMakeHandle(e)}
 									value= {makeValue}
-									isSearchable={false}
+									isSearchable={true}
 								/>
 								
 								</div>
@@ -273,7 +231,7 @@ const CarSearch = () => {
 										onChange={(e) => setFirstModelHandle(e)}
 										options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
 										value= {modelFirstValue}
-										isSearchable={false}
+										isSearchable={true}
 									/>
 									
 								</div>
@@ -285,6 +243,7 @@ const CarSearch = () => {
 									placeholder={"Select Price"}
 									options={PriceTypes()}
 									value={priceType}
+									isSearchable={true}
 									onChange = {(e) => setPriceType(e)}
 								/>
 								</div>
@@ -295,6 +254,7 @@ const CarSearch = () => {
 									placeholder={"Select Year"}
 									options={ManufacturingYearsOptions()}
 									value={year}
+									isSearchable={true}
 									onChange = {(e) => setYear(e)}
 								/>
 								</div>
@@ -305,6 +265,7 @@ const CarSearch = () => {
 									placeholder={"Select Color"}
 									options={ColorTypes()}
 									value={colorType}
+									isSearchable={true}
 									onChange = {(e) => setColorType(e)}
 								/>
 								</div>
@@ -315,6 +276,7 @@ const CarSearch = () => {
 									placeholder={"Select Transmission"}
 									options={TransmitionTypes()}
 									value={transmissionType}
+									isSearchable={true}
 									onChange = {(e) => setTransmissionType(e)}
 								/>
 								</div>
@@ -325,6 +287,7 @@ const CarSearch = () => {
 									placeholder={"Select FuelType"}
 									options={FuelTypes()}
 									value={fuelType}
+									isSearchable={true}
 									onChange = {(e) => setFuelType(e)}
 								/>
 								</div>

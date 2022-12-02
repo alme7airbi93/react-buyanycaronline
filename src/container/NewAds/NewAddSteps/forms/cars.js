@@ -62,7 +62,7 @@ const Detail = (props) => {
             value={makes_option.find(
               (obj) => obj.value === advertisement._make
             )}
-            isSearchable={false}
+            isSearchable={true}
             onChange={(data) => {
               setCarDetails({
                 ...carDetails,
@@ -163,3 +163,4 @@ const Detail = (props) => {
 };
 
 export default Detail;
+
