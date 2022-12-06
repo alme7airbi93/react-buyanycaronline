@@ -15,6 +15,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { updateAdsById } from "../common/repository/AdvertisementDB";
+import { getSearchAdvertisement } from "../common/repository/AdvertisementDB";
+
 
 export const AdsStepVerfication = (adSelected, data) => {
   const isFormValid = FormDataValidation(data)
@@ -96,4 +98,13 @@ export const updateAds = async (adsId, ads) => {
   }).catch(err => {
     return { success: false, msg: 'Something went wrong' }
   })
+}
+
+export const SearchAdvertisement = async(data) => {
+	return await getSearchAdvertisement(data).then(res => {
+       return res;
+    }).catch(err => {
+        alert("No data found")
+        return {msg:"No data found",success:false}
+    })
 }

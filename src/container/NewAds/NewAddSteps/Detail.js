@@ -1,9 +1,8 @@
 import { Button, Col, Row, Form } from "react-bootstrap";
 import React, { useState, useContext, useEffect } from "react";
 import { StepsStateInMainCategory, StepsStateInPhoto } from "../stepsState";
-import { NewAdvertisement, UserContext } from "../../../context/Context";
+import { UserContext } from "../../../context/Context";
 import Select from "react-select";
-import Car from "../../../common/models/Car";
 
 import {
   FuelTypes,
@@ -11,24 +10,20 @@ import {
   ColorTypes,
   BodyCondition,
   WarrantyTypes,
-  SteeringTypes,
 } from "../../../common/data/SelectOptions.js";
 import { AdsStepVerfication } from "../../../controllers/AdsController";
 
 import "./scrollbar.css";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { ManufacturingYearsOptions } from "../../../common/data/SelectOptions.js";
-import { FormDataValidation } from "../../../common/validations/FormDataValidation";
-import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations";
 
 const Detail = (props) => {
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
   const [error,setError] = useState({
     error:false,
-    errorKey:''
-
-  })
+    errorKey:"",
+  });
 
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
@@ -39,7 +34,7 @@ const Detail = (props) => {
     _color:advertisement._color,
     _year: advertisement._bodyType,
     _fuel_type: advertisement._Fuel_Types,
-    _region:'',
+    _region:"",
     _condition:advertisement._Body_Condition,
     _warranty:advertisement._Warranty_Types,
     // steeringside:advertisement._Steering_Types
@@ -47,20 +42,21 @@ const Detail = (props) => {
   });
 
   const updateData = () => {
-    const resp = AdsStepVerfication(advertisement,carDetails)
+    const resp = AdsStepVerfication(advertisement,carDetails);
     if(resp.success){
       adsCtx.setAds(resp.data);
+      // eslint-disable-next-line react/prop-types
       props.nextStep(StepsStateInPhoto);
     }
     else{
-      console.log(resp,'ShowError Message')
-      setError({error:true,errorKey:resp.errorField})
+      console.log(resp,"ShowError Message");
+      setError({error:true,errorKey:resp.errorField});
     }
   };
 
 
   useEffect(()=>{
-  },[])
+  },[]);
 
 
   
@@ -74,8 +70,8 @@ const Detail = (props) => {
         <Row className="justify-content-center">
           <Col md={12}>
             {advertisement._advertisement_type !== "Plate Numbers" && (
-              <Form id="center-col">
-                <Form.Group className="mb-3">
+              <Form id="center-col" className="row">
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>Color :</Form.Label>
                   <Select
                     placeholder={"Color"}
@@ -88,8 +84,8 @@ const Detail = (props) => {
                   />
                  
                 </Form.Group>
-                {error && error.errorKey == '_color'? (<p style={{ color: "red" }}>Color Field is required</p>):<></>}
-                <Form.Group className="mb-3">
+                {error && error.errorKey == "_color"? (<p style={{ color: "red" }}>Color Field is required</p>):<></>}
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>
                     Manufacturing Year :
                   </Form.Label>
@@ -105,8 +101,8 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                {error && error.errorKey == '_year'? (<p style={{ color: "red" }}>Year Field is required</p>):<></>}
-                <Form.Group className="mb-3">
+                {error && error.errorKey == "_year"? (<p style={{ color: "red" }}>Year Field is required</p>):<></>}
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>Fuel Type :</Form.Label>
                   <div>
                     <Select
@@ -119,9 +115,10 @@ const Detail = (props) => {
                       }}
                     />
                   </div>
-                  {error && error.errorKey == '_fuel_type'? (<p style={{ color: "red" }}>Fuel Type Field is required</p>):<></>}
+                  {error && error.errorKey == "_fuel_type"? (<p style={{ color: "red" }}>Fuel Type Field is required</p>):<></>}
                 </Form.Group>
-                <Form.Group className="mb-3">
+
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>Region :</Form.Label>
                   <Select
                     placeholder={"Manufacturing Region"}
@@ -133,9 +130,9 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                {error && error.errorKey == '_region'? (<p style={{ color: "red" }}>Region Type Field is required</p>):<></>}
+                {error && error.errorKey == "_region"? (<p style={{ color: "red" }}>Region Type Field is required</p>):<></>}
 
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>Condition :</Form.Label>
                   <Select
                     placeholder={"Body Condition"}
@@ -149,9 +146,9 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                {error && error.errorKey == '_condition'? (<p style={{ color: "red" }}>Condition Type Field is required</p>):<></>}
+                {error && error.errorKey == "_condition"? (<p style={{ color: "red" }}>Condition Type Field is required</p>):<></>}
 
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3 col-md-6">
                   <Form.Label style={{ color: "#fff" }}>Warranty :</Form.Label>
                   <Select
                     placeholder={"Enter Warrenty"}
@@ -165,10 +162,10 @@ const Detail = (props) => {
                     }}
                   />
                 </Form.Group>
-                {error && error.errorKey == '_warranty'? (<p style={{ color: "red" }}>Warranty Type Field is required</p>):<></>}
+                {error && error.errorKey == "_warranty"? (<p style={{ color: "red" }}>Warranty Type Field is required</p>):<></>}
 
                 {user.phone === undefined && (
-                  <Form.Group className="mb-3">
+                  <Form.Group className="mb-3 col-md-6">
                     <Form.Label style={{ color: "#fff" }}>Phone :</Form.Label>
                     <Form.Control
                       as="textarea"
@@ -182,10 +179,10 @@ const Detail = (props) => {
                     />
                   </Form.Group>
                 )}
-                {error && error.errorKey == 'onwer_phone'? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
+                {error && error.errorKey == "onwer_phone"? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
                 {advertisement._advertisement_type == "Used Cars for sale" && (
                   <div>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-6">
                       <Form.Label style={{ color: "#fff" }}>
                         Distance :
                       </Form.Label>
@@ -202,10 +199,10 @@ const Detail = (props) => {
                           });
                         }}
                       />
-                     {error && error.errorKey == 'onwer_phone'? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
+                     {error && error.errorKey == "onwer_phone"? (<p style={{ color: "red" }}>Phone Type Field is required</p>):<></>}
 
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-6">
                       <Form.Label style={{ color: "#fff" }}>
                         Body Type :
                       </Form.Label>
@@ -223,7 +220,7 @@ const Detail = (props) => {
                         }}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-6">
                       <Form.Label style={{ color: "#fff" }}>
                         Transmition :
                       </Form.Label>
@@ -241,7 +238,7 @@ const Detail = (props) => {
                         }}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-6">
                       <Form.Label style={{ color: "#fff" }}>hp :</Form.Label>
                       <Form.Control
                         as="textarea"
@@ -257,7 +254,7 @@ const Detail = (props) => {
                         }}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-3 col-md-6">
                       <Form.Label style={{ color: "#fff" }}>
                         num_cylinders :
                       </Form.Label>
@@ -278,12 +275,11 @@ const Detail = (props) => {
                   </div>
                 )}
 
-              
-
                
               </Form>
             )}
           </Col>
+          
           <Col
             md={10}
             className="btn-group"

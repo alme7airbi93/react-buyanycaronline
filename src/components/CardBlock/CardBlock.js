@@ -15,7 +15,7 @@ console.log(item,'item')
                         <p className="m-0"><b>Year {item._year}</b></p>
                     </div>
                     <div>
-                        <h4>{item._price}/-</h4>
+                        <h4>{item._price} AED</h4>
                     </div>
                 </div>
 

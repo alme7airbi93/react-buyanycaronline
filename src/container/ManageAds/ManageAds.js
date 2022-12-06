@@ -10,7 +10,7 @@ const ManageAds = () => {
 					<Row>
 						<Col md={3} className='car_details'>
 							<p>Title: <span> car.title </span> </p>
-							<p>Price: <span>car.price </span> </p>
+							<p>Price: <span>car.price AED</span> </p>
 							<p>Description: <span>car.description</span></p> <br/>
 
 							<h5>VEHICLE DETAILS</h5>

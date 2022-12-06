@@ -11,8 +11,7 @@ import {AdvertisementOptions, BodyCondition, ColorTypes, FuelTypes, TransmitionT
 import { useLocation } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
 import { makes, models} from "../../common/data";
-import { SearchAdvertisement } from "../../controllers/SearchController";
-
+import { SearchAdvertisement } from "../../controllers/AdsController";
 const height = window.innerHeight;
 const CarSearch = () => {
 

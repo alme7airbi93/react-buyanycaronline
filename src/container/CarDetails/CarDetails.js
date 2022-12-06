@@ -19,7 +19,7 @@ const CarDetails = () => {
 	const [openmodification, setOpenmodification] = useState(false);
 	const [close, setClose] = useState(false);
 	const [imageModal,setImageModal] = useState(false);
-	const [loading,setLoading] = useState(false);
+	const [loading,setLoading] = useState(true);
 
 	const id = params.Id
 
@@ -32,6 +32,7 @@ const CarDetails = () => {
 			const newdata = Object.assign(instance,{...ads})
 			const modifyData = newdata.getAlldata()
 			setData(modifyData)
+			setLoading(false)
 		})
 
 	}, [id,setData,close,setAllData]);
@@ -91,7 +92,7 @@ const CarDetails = () => {
 					<Col md={3} className={"car_title"}>
 						<h5>{data.title}</h5>
 						<hr />
-						<p> Price: <span> {data.price} </span> </p>
+						<p> Price: <span> {data.price} AED</span> </p>
 						<p> Type: <span> {data.advertisement_type} </span> </p>
 						{/* <p> Created Date: <span> car.create_at</span></p> */}
 					</Col>
@@ -99,7 +100,7 @@ const CarDetails = () => {
 						<div className={"d-flex justify-content-around flex-wrap"}>
 							{Object.keys(data).map((key) => (
                               <div key={key} style={{flex:'50%',display:(key === 'title' || key === 'Price' || key === 'views' || key === 'advertisement_type') ? 'none' : 'flex'}}>
-							  <p>{key.toUpperCase()}: <span>  &nbsp;{data[key]} </span></p>
+							  <p>{key.toUpperCase()}: <span>  &nbsp;{data[key]} {key.toUpperCase() === 'PRICE' ? 'AED' : ''} </span></p>
 							  </div>
 							))}
 						</div>
@@ -118,7 +119,7 @@ const CarDetails = () => {
 				{allData && allData._photos ? (
 				<Row className={"all-images"}>
 						{allData._photos.map((item,key) =>(
-							<Col md={3}>
+							<Col md={2}>
 								<div className="image-block">
 									<img src={item} key={"photo"+key}/>
 									<a className="delete-link" onClick={()=>handleDelete(key)}>
@@ -129,9 +130,9 @@ const CarDetails = () => {
 								</div>
 							</Col>
 						))}		
-						<Col md={3}>
-							<div className="image-block pt-95">
-								<button className="search_btn" onClick={() => setImageModal(true)}>
+						<Col md={2}>
+							<div className="image-block pt-5">
+								<button className="search_btn mt-3" onClick={() => setImageModal(true)}>
 								Add Image
 								</button>
 							</div>

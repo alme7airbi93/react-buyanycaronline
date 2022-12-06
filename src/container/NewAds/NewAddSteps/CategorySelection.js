@@ -1,10 +1,6 @@
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 // import Select from "react-select";
-import React, { useState, useContext } from "react";
-// import {AdvertisementOptions} from "../../../common/data/SelectOptions.js";
-import { StepsStateInSummary, StepsStateInDetail } from "../stepsState";
-// import { makes, models ,models_second} from "../../../common/data";
-import { NewAdvertisement } from "../../../context/Context";
+import React, { useContext } from "react";
 import Carsform from "./forms/cars";
 import Motorcycleform from "./forms/motorcycle";
 import Plate_Numberform from "./forms/Plate_Number";
@@ -49,10 +45,6 @@ const CategorySelection = (props) => {
             ) : null}
           </Col>
 
-          {/* <Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.nextStep(StepsStateInSummary)} >Back</Button>
-						<Button className="next_btn" onClick={() => { handler();props.nextStep(StepsStateInDetail);}} >Next</Button>
-					</Col> */}
         </Row>
       </Col>
     </React.Fragment>

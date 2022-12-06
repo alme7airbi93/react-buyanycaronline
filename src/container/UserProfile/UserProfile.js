@@ -99,7 +99,7 @@ const UserProfile = () => {
                         Title: <span>{ad._title}</span>
                       </p>
                       <p>
-                        Price: <span>{ad._price}</span>
+                        Price: <span>{ad._price} AED</span>
                       </p>
                       <p>
                         Description: <span>{ad._description}</span>

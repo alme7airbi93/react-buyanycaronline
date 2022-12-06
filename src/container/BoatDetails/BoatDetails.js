@@ -9,7 +9,7 @@ const BoatDetails = () => {
 					<Col md={3} className={"car_title"}>
 						<h5>boat.title</h5>
 						<hr />
-						<p> Price: <span> boat.price </span> </p>
+						<p> Price: <span> boat.price AED</span> </p>
 						<p> Created Date: <span> boat.create_at</span></p>
 					</Col>
 					<Col md={6} className={"car_title"}>
@@ -18,7 +18,7 @@ const BoatDetails = () => {
 								<p>Make: <span> boat.make </span></p>
 								<p>Model: <span> boat.model </span></p>
 								<p>Year: <span> boat.year </span></p>
-								<p>Price: <span> boat.price </span></p>
+								<p>Price: <span> boat.price AED</span></p>
 								<p>Transmission: <span> boat.transmission </span></p>
 								<p>FuelType: <span> boat.fuelType </span></p>
 							</div>
