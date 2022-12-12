@@ -2,7 +2,6 @@ import { Card } from "react-bootstrap"
 import "./style.css";
 const CardBlock = ({item}) => {
 
-console.log(item,'item')
     return(
         <Card className="p-3 card-block d-flex">
             <div>

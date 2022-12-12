@@ -28,8 +28,6 @@ const Detail = (props) => {
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
-
-
   const [carDetails, setCarDetails] = useState({
     _color:advertisement._color,
     _year: advertisement._bodyType,
@@ -58,8 +56,6 @@ const Detail = (props) => {
   useEffect(()=>{
   },[]);
 
-
-  
 
 
   return (

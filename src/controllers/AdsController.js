@@ -48,7 +48,6 @@ export const createAd = async (advertisement, photos) => {
       await savePhotosNew(res.data, photos).then(() => {
         return { success: true, msg: 'Advertisment posted successfully' }
 
-
       })
 
     }
@@ -67,6 +66,7 @@ export const saveAdsPhotos = async (adsId, photos) => {
 
 const savePhotosNew = async (id, photos) => {
   const url = [];
+
   for (let i = 0; i < photos.length; i++) {
     await uploadImageToStorage(photos[i], id).then((res) => url.push(res));
   }

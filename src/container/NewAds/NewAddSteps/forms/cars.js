@@ -1,5 +1,5 @@
 import { Form, Button } from "react-bootstrap";
-import React, { useContext } from "react";
+import React, { useContext,useRef } from "react";
 import { NewAdvertisement } from "../../../../context/Context";
 import Select from "react-select";
 import {
@@ -49,7 +49,7 @@ const Detail = (props) => {
 
   };
   console.log(error.errorKey)
-
+ 
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
@@ -67,7 +67,9 @@ const Detail = (props) => {
               setCarDetails({
                 ...carDetails,
                 _make: data.label,
+                _modal: -1,
               });
+              console.log(carDetails,'carDetails')
               setMakeValue(data)
             }}
           />
@@ -80,7 +82,11 @@ const Detail = (props) => {
           <div className="mb-3">
             <Select
               placeholder={"Select Modal"}
-              options={models_options.filter(item => (item.value === "0" || (item.parent_id === makeValue.value )))}
+              options={
+                models_options.filter(item => (
+                  item.value === "0" || (item.parent_id === makeValue.value )
+                  ))
+              }
               defaultValue={carDetails._modal}
               value={models_options.find(
                 (obj) => obj.value === advertisement._modal

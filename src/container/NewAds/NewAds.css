@@ -30,6 +30,10 @@
   background-color: #d11717;
   color: #fff;
 }
+.search_btn:hover{
+  background-color: transparent;
+  color:#d11717;
+}
 
 .next_btn {
   width: 100%;

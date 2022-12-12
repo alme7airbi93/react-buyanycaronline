@@ -24,6 +24,7 @@ const UploadAndDisplayImage = (props) => {
 	const advertisement = adsCtx.ads;
   
 	const onDrop = (pictures, pictureUrl) => {
+		console.log(pictureUrl,photos)
 		setphotos([...photos,pictureUrl])
 	};
 	const [error,setError] = useState({

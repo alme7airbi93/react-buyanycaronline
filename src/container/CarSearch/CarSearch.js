@@ -34,6 +34,7 @@ const CarSearch = () => {
 	const [resultData,setResultData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [filterMakes,setFilterMakes] = useState([]);
+	const [sortData,setSort] = useState(false);
 
 	const { state } = useLocation();
 
@@ -60,6 +61,11 @@ const CarSearch = () => {
 		})
 
 	},[])
+	useEffect(() => {
+		//console.log(resultData)
+		
+
+	},[resultData,setResultData])
 
 	const setVehicleHandle = (value) => {
 		// setLoading(true)
@@ -185,6 +191,23 @@ const CarSearch = () => {
 	const setFirstModelHandle = (value) => {
 		setModelFirst(value);
 	};
+	const sortBy = () => {
+		setLoading(true)
+		if(sortData === false){
+		const Asending = [...resultData].sort((a, b) => a._title > b._title ? 1 : -1,);
+  		setResultData(Asending)
+		console.log(Asending,'Asending')
+		setSort(!sortData)
+		setLoading(false)
+		}
+		else{
+			const Desending = [...resultData].sort((a, b) => a._title > b._title ? -1 : 1,);
+			setResultData(Desending)
+			console.log(Desending,'Desending')
+			setSort(false)
+			setLoading(false)
+		}
+	}
 
 	return (
 		<div className="main-carSearch-div">
@@ -305,7 +328,11 @@ const CarSearch = () => {
 						</div>
 					</div>
 					<div className="col-md-6 carSearch-result-div" style={{height:height - 180,overflow:'auto',minHeight: '510px'}}>
-						<h3 className="d-flex justify-content-between"><span>Search Result</span><span>({resultData.length})</span></h3>
+						<h3 className="d-flex justify-content-between"><span>Search Result({resultData.length})</span>
+						<span style={{cursor:'pointer'}} onClick={() => sortBy()}>
+							<img src='./assets/img/sort.png' style={{width:24}}/>
+						</span>
+						</h3>
 						<hr/>
 
 						{resultData.map((item) => (
