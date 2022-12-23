@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext,useEffect } from "react";
 import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
@@ -8,6 +8,8 @@ import Dropdown from "../Dropdown";
 import LoginModal from "../Modal/Login/LoginModal";
 import SignupModal from "../Modal/Signup/SignupModal";
 import { UserContext } from "../../context/Context";
+import { useLocation } from 'react-router-dom'
+
 
 
 const Header = () => {
@@ -16,6 +18,8 @@ const Header = () => {
 	const [signupShow, setSignupShow] = useState(false);
 	const ctx = useContext(UserContext);
 	const user = ctx.getUserData();
+	const location = useLocation();
+	console.log(location,'location')
 	// const [user]  = useContext(UserContext);
 
 	const closeLogin = ()=>{
@@ -83,6 +87,11 @@ const Header = () => {
 	return (
 		<React.Fragment>
 			{/*header*/}
+			<div style={location.pathname ==='/car-search'?{
+				position:"fixed",
+				width: "100%",
+				zIndex:99
+			}:{}}>
 			<div className="header-div">
 				<div className="container">
 					<div className="row header-row">
@@ -112,6 +121,7 @@ const Header = () => {
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
+			</div>
 		</React.Fragment>
 	);
 };

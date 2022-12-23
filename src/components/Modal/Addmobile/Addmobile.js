@@ -18,19 +18,19 @@ import './addMobile.css'
 const Addmobile = (props) => {
 
   const [addPhone, setAddPhone] = useState('');
-  
-  const updatePhoneNumber = ()=>{
-    if(addPhone !=''){
+
+  const updatePhoneNumber = () => {
+    if (addPhone != '' && window.confirm('Are you sure you want to change your phone number ?')) {
       props.updatePhone(addPhone)
     }
   }
 
   return (
-    <Modal className="EditProfile" show={props.open} onHide={()=>props.handleclose('phone')}>
+    <Modal className="EditProfile" show={props.open} onHide={() => props.handleclose('phone')}>
       <div className="modal_main_div">
         <Modal.Header className="modal_header">
           <Modal.Title>Modify data</Modal.Title>
-          <h3 onClick={()=>props.handleclose('phone')} style={{ cursor: "pointer" }}>
+          <h3 onClick={() => props.handleclose('phone')} style={{ cursor: "pointer" }}>
             x
           </h3>
         </Modal.Header>
@@ -42,7 +42,7 @@ const Addmobile = (props) => {
                   <p className="text-light">Mobile :</p>
                 </div>
                 <div className="col-md-8">
-                  {}
+                  { }
                   <InputGroup className="mb-3 phone-input-group">
                     {/* <FormControl
                       type={"telephone"}
@@ -53,10 +53,10 @@ const Addmobile = (props) => {
                       aria-describedby="basic-addon1"
                     /> */}
                     <PhoneInput
-                    placeholder="Enter phone number"
-                    value={addPhone}
-                    country="US"
-                    onChange={setAddPhone}/>
+                      placeholder="Enter phone number"
+                      value={addPhone}
+                      country="US"
+                      onChange={setAddPhone} />
                   </InputGroup>
                 </div>
               </div>

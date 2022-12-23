@@ -69,7 +69,7 @@ const Detail = (props) => {
         <Form.Control
           as="input"
           type="number"
-          placeholder="Enter capacity_weight"
+          placeholder="Enter capacity weight"
           onChange={(data) => {
             setDetails({
               ...details,

@@ -29,6 +29,7 @@ const AccountSettings = () => {
 
 
   const handleOpen = (type) => {
+    
     setOpen({...open,[type]:true});
   };
 

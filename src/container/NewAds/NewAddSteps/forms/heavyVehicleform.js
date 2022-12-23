@@ -127,7 +127,7 @@ const Detail = (props) => {
           as="input"
           type="number"
           className="input-fields-theme"
-          placeholder="Enter capacity_weight"
+          placeholder="Enter capacity weight"
           onChange={(data) => {
             setDetails({
               ...details,

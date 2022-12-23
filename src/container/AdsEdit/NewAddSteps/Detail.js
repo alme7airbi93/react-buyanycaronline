@@ -149,7 +149,7 @@ const Detail = (props) => {
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "#fff" }}>Warranty :</Form.Label>
                   <Select
-                    placeholder={"Enter Warrenty"}
+                    placeholder={"Enter Warranty"}
                     options={WarrantyTypes()}
                     value={WarrantyTypes().find(
                       (obj) => obj.label === carDetails.warrantyTypes
@@ -231,11 +231,11 @@ const Detail = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
-                        Transmition :
+                        Transmission :
                       </Form.Label>
                       <Form.Control
                         as="textarea"
-                        placeholder="Enter Transmition"
+                        placeholder="Enter Transmission"
                         onChange={(data) => {
                           setAdvertisement({
                             ...advertisement,
@@ -265,11 +265,11 @@ const Detail = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label style={{ color: "#fff" }}>
-                        num_cylinders :
+                        Num Cylinders :
                       </Form.Label>
                       <Form.Control
                         as="textarea"
-                        placeholder="Enter num_cylinders"
+                        placeholder="Enter num cylinders"
                         onChange={(data) => {
                           setAdvertisement({
                             ...advertisement,

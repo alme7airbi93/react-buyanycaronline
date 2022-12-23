@@ -18,7 +18,7 @@ const UserProfile = () => {
 
   //State
   const [adsData, setAdsData] = useState([]);
-  const [ads,setAds] = useState({})
+  const [ads, setAds] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,15 +26,11 @@ const UserProfile = () => {
     getUsersAdvertisement(user._id).then((res) => {
       setLoading(false);
       if (res.success) {
-        // console.log(res.data);
+        console.log(res.data);
         setAdsData(res.data);
       }
     });
   }, []);
-
-
-
-
 
   const profileHandler = () => {
     navigate("/new-ads");
@@ -51,17 +47,15 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    console.log(ads,openmodification,'adsss')
-   }, [ads,openmodification,Modify]);
+    console.log(ads, openmodification, "adsss");
+  }, [ads, openmodification, Modify]);
 
-
-  const Modifyication = (val,ad) => {
-       console.log(ad,ad._id,'ad');
-    setAds(ad)
+  const Modifyication = (val, ad) => {
+    console.log(ad, ad._id, "ad");
+    setAds(ad);
     // navigate("/ads-edit/"+ad._id);
-    navigate("/car-detail/"+ad._id);
-   // setOpenmodification(val);
-  
+    navigate("/car-detail/" + ad._id);
+    // setOpenmodification(val);
   };
   const closemodification = () => {
     setOpenmodification(false);
@@ -71,59 +65,73 @@ const UserProfile = () => {
     <div className={"user_info_main"}>
       <Container>
         <Row>
-         <Col md={6} >
-          <Col md={12} className="user_info">
-            <AccountSettings />
-            {/* <button className="search_btn" onClick={() => handleOpen(true)}>
+          <Col md={6}>
+            <Col md={12} className="user_info">
+              <AccountSettings />
+              {/* <button className="search_btn" onClick={() => handleOpen(true)}>
               Edit
             </button> */}
+            </Col>
+
+            <Col md={12} className="user_info">
+              <h5>New Ad?</h5>
+              <button className="search_btn" onClick={profileHandler}>
+                Click Here
+              </button>
+            </Col>
           </Col>
-         
-          <Col md={12} className="user_info">
-            <h5>New Ad?</h5>
-            <button className="search_btn" onClick={profileHandler}>
-              Click Here
-            </button>
-          </Col>
-        </Col>
-        <Col md={6} >
-          <Col md={12} className="user_info">
-            <h5>Manage Ads</h5>
-            <hr />
-            <div className=" ad_list">
-              {adsData && adsData.length ? (
-                adsData.map((ad) => (
-                  <div className="ad_data d-flex justify-content-between">
-                    <div>
-                      <p>
-                        Title: <span>{ad._title}</span>
-                      </p>
-                      <p>
-                        Price: <span>{ad._price} AED</span>
-                      </p>
-                      <p>
-                        Description: <span>{ad._description}</span>
-                      </p>
+          <Col md={6}>
+            <Col md={12} className="user_info">
+              <h5>Manage Ads</h5>
+              <hr />
+              <div className=" ad_list">
+                {adsData && adsData.length ? (
+                  adsData.map((ad) => (
+                    <div className="ad_data d-flex flex-wrap">
+                      <div className="col-md-2 pb-3 col-sm-12">
+                        <div className="item_photos">
+                          <img
+                            src={
+                              ad._photos.length
+                                ? ad._photos[0]
+                                : "https://cdn-icons-png.flaticon.com/512/16/16096.png"
+                            }
+                            width="100%"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-10 col-sm-12 d-flex justify-content-between">
+                        <div>
+                          <p>
+                            Title: <span>{ad._title}</span>
+                          </p>
+                          <p>
+                            Price: <span>{ad._price} AED</span>
+                          </p>
+                          <p>
+                            Description: <span>{ad._description}</span>
+                          </p>
+                        </div>
+                        <div>
+                          <button
+                            className="search_btn mb-3"
+                            onClick={() => Modifyication(true, ad)}
+                          >
+                            Modify
+                          </button>
+                          <button className="search_btn">Mark as Sold</button>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <button
-                        className="search_btn mb-3"
-                        onClick={() => Modifyication(true,ad)}
-                      >
-                        Modify
-                      </button>
-                      <button className="search_btn">Mark as Sold</button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <>
-                  <h5>You have not published any advertisement yet</h5>
-                  <br />
-                </>
-              )}
-            </div>
-          </Col>
+                  ))
+                ) : (
+                  <>
+                    <h5>You have not published any advertisement yet</h5>
+                    <br />
+                  </>
+                )}
+              </div>
+            </Col>
           </Col>
         </Row>
         <EditProfile open={open} handleclose={handleclose} />
@@ -134,7 +142,7 @@ const UserProfile = () => {
         (
          <></>
         )} */}
-        </Container>
+      </Container>
       {loading && <Loder />}
     </div>
   );

@@ -85,11 +85,11 @@ const Detail = (props ) => {
       {error && error.errorKey == '_number'? (<p style={{ color: "red" }}>Number Type Field is required</p>):<></>}
 
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>number_code :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Number Code :</Form.Label>
         <Form.Control
           as="input"
           type="number"
-          placeholder="Enter number_code"
+          placeholder="Enter number code"
           className="input-fields-theme"
           onChange={(data) => {
             setPlateData({

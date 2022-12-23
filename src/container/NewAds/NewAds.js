@@ -17,7 +17,7 @@ const NewAds = () => {
 	},[stepsState]);
 	return (
 		<AdvertismentProvider>
-			<div style={{height: "100vh"}}>
+			<div style={{minHeight: "100vh"}}>
 				<Container>
 					<Row className={"justify-content-center"}>
 						{stepsState.inSummary && <SummaryDescription nextStep={(step) => setStepsState(step)}/> }

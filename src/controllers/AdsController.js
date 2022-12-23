@@ -75,12 +75,15 @@ const savePhotosNew = async (id, photos) => {
 
 
 const uploadImageToStorage = async (file, id) => {
+  const stringArray = file.split(';')
+  const base64String = stringArray[stringArray.length-1]
+  const base64Image =  base64String.split(',')[1]
   const imagePath = "advertisement/" + id;
   const date = new Date();
   const filename = Math.floor(date.getTime() / 1000);
   const storage = getStorage();
   const storageRef = ref(storage, imagePath + `/${filename}`);
-  await uploadString(storageRef, file[0], "data_url").then((res) =>
+  await uploadString(storageRef, base64Image, "base64").then((res) =>
     console.log(res.ref)
   );
   const url = await getDownloadURL(storageRef);

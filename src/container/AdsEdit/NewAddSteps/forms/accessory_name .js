@@ -18,10 +18,10 @@ const Detail = (props) => {
   return (
     <React.Fragment>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>accessory_name </Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Accessory Name </Form.Label>
         <Form.Control
           as="input"
-          placeholder="Enter accessory_name"
+          placeholder="Enter accessory name"
           className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
@@ -31,18 +31,18 @@ const Detail = (props) => {
         />
       </Form.Group>
       <Form.Group className="mb-3" >
-            <Form.Label style={{color: "#fff"}}>vehicle_year :</Form.Label>
+            <Form.Label style={{color: "#fff"}}>Vehicle Year :</Form.Label>
             <Form.Control type="date" 
             className="input-fields-theme"
-            placeholder="Enter vehicle_year" onChange={data => {
+            placeholder="Enter vehicle year" onChange={data => {
                 setAdvertisement({...advertisement, vehicle_year : data.target.value});
             }}/>
         </Form.Group>       
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>vehicle_model  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Vehicle Model  :</Form.Label>
         <Form.Control
           as="input"
-          placeholder="Enter vehicle_model"
+          placeholder="Enter vehicle model"
           className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({
@@ -52,10 +52,10 @@ const Detail = (props) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>vehicle_make  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Vehicle Make  :</Form.Label>
         <Form.Control
           as="textarea"
-          placeholder="Enter vehicle_make"
+          placeholder="Enter vehicle make"
           className="input-fields-theme"
           onChange={(data) => {
             setAdvertisement({

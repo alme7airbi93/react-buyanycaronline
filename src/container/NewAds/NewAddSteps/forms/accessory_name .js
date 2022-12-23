@@ -75,10 +75,10 @@ const Detail = (props) => {
 
 
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>accessory_name </Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Accessory Name </Form.Label>
         <Form.Control
           as="input"
-          placeholder="Enter accessory_name"
+          placeholder="Enter accessory name"
           className="input-fields-theme"
           onChange={(data) => {
             setDetail({
@@ -89,20 +89,20 @@ const Detail = (props) => {
       </Form.Group>
       {error && error.errorKey == '_accessory_name'? (<p style={{ color: "red" }}>Accessory Name Type Field is required</p>):<></>}
       <Form.Group className="mb-3" >
-            <Form.Label style={{color: "#fff"}}>vehicle_year :</Form.Label>
+            <Form.Label style={{color: "#fff"}}>Vehicle Year :</Form.Label>
             <Form.Control type="date" 
             className="input-fields-theme"
-            placeholder="Enter vehicle_year" onChange={data => {
+            placeholder="Enter vehicle year" onChange={data => {
               setDetail({
                 ...detail, _vehicle_year : data.target.value});
             }}/>
         </Form.Group>    
         {error && error.errorKey == '_vehicle_year'? (<p style={{ color: "red" }}>Vehicle Year Type Field is required</p>):<></>}   
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>vehicle_model  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Vehicle Model  :</Form.Label>
         <Form.Control
           as="input"
-          placeholder="Enter vehicle_model"
+          placeholder="Enter vehicle model"
           className="input-fields-theme"
           onChange={(data) => {
             setDetail({
@@ -113,10 +113,10 @@ const Detail = (props) => {
       </Form.Group>
       {error && error.errorKey == '_vehicle_model'? (<p style={{ color: "red" }}>Make Type Field is required</p>):<></>}
       <Form.Group className="mb-3">
-        <Form.Label style={{ color: "#fff" }}>vehicle_make  :</Form.Label>
+        <Form.Label style={{ color: "#fff" }}>Vehicle Make  :</Form.Label>
         <Form.Control
           as="textarea"
-          placeholder="Enter vehicle_make"
+          placeholder="Enter vehicle make"
           className="input-fields-theme"
           onChange={(data) => {
             setDetail({

@@ -19,6 +19,7 @@
     "react-js-google-maps": "1.5.2",
     "react-phone-number-input": "^3.2.12",
     "react-redux": "^7.2.6",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-scrollbar": "^0.5.6",

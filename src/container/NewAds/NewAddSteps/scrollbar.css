@@ -1,18 +1,41 @@
-
 #center-col {
   flex: 1;
 
-  overflow-y: scroll;  
-  height: 70vh;  
+  overflow-y: scroll;
+  height: 70vh;
 }
- 
+
 #center-pos {
   align-items: center;
   justify-content: center;
 }
-
+.photo-wrapper {
+  position: relative;
+  padding: 10px;
+  background: #b1b1b1;
+  border-radius: 3px;
+  height: 200px;
+  margin: 40px 25px 0px 15px;
+  /* width: 250px; */
+  display: flex;
+  justify-content: center;
+}
+.photo-remove {
+  position: absolute !important;
+  top: 0px;
+  right: 0px;
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  background: #edf4ff8a;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 2px;
+}
 .fileUploader .fileContainer {
-	background: #b1b1b1;
+  background: #b1b1b1;
   box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 5%);
   position: relative;
   border-radius: 10px;
@@ -24,4 +47,3 @@
   margin: 10px auto;
   transition: all 0.3s ease-in;
 }
-

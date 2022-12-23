@@ -15,7 +15,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../../context/Context";
 const EditProfile = (props) => {
   const ctx = useContext(UserContext)
-const user = ctx.getUserData();
+  const user = ctx.getUserData();
 
 
 
@@ -23,17 +23,19 @@ const user = ctx.getUserData();
   const [email, setEmail] = useState(user.username);
   const [password, setPassword] = useState();
 
-  const updateDetails = ()=>{
-    props.updateDetail(email,password)
-}
+  const updateDetails = () => {
+    if (window.confirm('Are you sure you want to change your phone number ?')) {
+      props.updateDetail(email, password)
+    }
+  }
 
 
   return (
-    <Modal className="EditProfile" show={props.open} onHide={()=>props.handleclose('email')}>
+    <Modal className="EditProfile" show={props.open} onHide={() => props.handleclose('email')}>
       <div className="modal_main_div">
         <Modal.Header className="modal_header">
           <Modal.Title>Edit Profile</Modal.Title>
-          <h3 onClick={()=>props.handleclose('email')} style={{ cursor: "pointer" }}>
+          <h3 onClick={() => props.handleclose('email')} style={{ cursor: "pointer" }}>
             x
           </h3>
         </Modal.Header>
@@ -56,8 +58,8 @@ const user = ctx.getUserData();
                     />
                   </InputGroup>
                 </div>
-               </div>
-             {/* <div className="d-flex align-items-center">
+              </div>
+              {/* <div className="d-flex align-items-center">
                 <div className="col-md-4">
                   <p className="text-light">Password :</p>
                 </div>
