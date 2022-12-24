@@ -49,16 +49,21 @@
   position: absolute;
   top: 0;
   right: 0;
-  color: white;
-  font-size: 16px;
+  color: #df1d1c;
   font-weight: 600;
-  width: 20px;
-  height: 20px;
-  background: #1c262aa6;
+  width: 39px;
+  height: 39px;
+  border-left: 2px solid #df1d1c;
+  border-bottom: 2px solid #df1d1c;
+  border-bottom-left-radius: 11px;
+  line-height: 28px;
+  font-size: 20px;
+  cursor: pointer;
 }
 .delete-link:hover {
   color: white;
   text-decoration: none;
+  border-color: #fff;
 }
 /* .carousel.carousel-slider .control-arrow:hover {
   background: none !important;

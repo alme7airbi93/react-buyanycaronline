@@ -15,6 +15,7 @@ import { Region } from "./Region.js";
 import { Cylinder_Types } from "./Cylinder_Types.js";
 import { Steering_Types } from "./Steering_Types.js";
 import { Price_Types } from "./Price_Types.js";
+
 export const AdvertisementOptions = () => {
   let options = [];
   for (const [key, val, index] of Object.entries(Advertisement_Types)) {

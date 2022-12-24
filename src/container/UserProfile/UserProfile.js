@@ -88,7 +88,7 @@ const UserProfile = () => {
                 {adsData && adsData.length ? (
                   adsData.map((ad) => (
                     <div className="ad_data d-flex flex-wrap">
-                      <div className="col-md-2 pb-3 col-sm-12">
+                      <div className="col-md-3 pb-3 col-sm-12">
                         <div className="item_photos">
                           <img
                             src={
@@ -100,7 +100,7 @@ const UserProfile = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-10 col-sm-12 d-flex justify-content-between">
+                      <div className="col-md-9 col-sm-12 d-flex justify-content-between">
                         <div>
                           <p>
                             Title: <span>{ad._title}</span>

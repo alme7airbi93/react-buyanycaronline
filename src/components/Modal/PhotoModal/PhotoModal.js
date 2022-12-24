@@ -24,9 +24,18 @@ const PhotoModal = (props) => {
 
   const [photos, setphotos] = useState([]);
 
+  // const onDrop = (pictures, pictureUrl) => {
+  //   setphotos([...photos, pictureUrl])
+  //   //setphotos(pictureUrl)
+  // };
+
   const onDrop = (pictures, pictureUrl) => {
-    setphotos([...photos, pictureUrl])
-    //setphotos(pictureUrl)
+    if(pictureUrl.length >1){
+      setphotos([...photos,pictureUrl[pictureUrl.length-1]]);
+    }
+    else{
+      setphotos(pictureUrl);
+    }
   };
 
   const updateAdvertise = async () => {

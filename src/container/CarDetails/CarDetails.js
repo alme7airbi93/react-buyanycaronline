@@ -30,7 +30,9 @@ const CarDetails = () => {
       let ads = res.data;
       let instance = checkAdvertisemntType(ads);
       const newdata = Object.assign(instance, { ...ads });
+     
       const modifyData = newdata.getAlldata();
+      console.log(modifyData,'modifyData')
       setData(modifyData);
       setLoading(false);
     });
@@ -103,7 +105,8 @@ const CarDetails = () => {
                         className="delete-link"
                         onClick={() => handleDelete(key)}
                       >
-                        <BsFillTrashFill className="cs_pointer text-light" />
+                        x
+                        {/* <BsFillTrashFill className="cs_pointer text-light" /> */}
                       </a>
                     </div>
                   </Col>
@@ -111,7 +114,7 @@ const CarDetails = () => {
               </Carousel>
             </div>
             <Col md={12}>
-              <div className="image-add-block my-5">
+              <div className="image-add-block">
                 <button
                   className="add_btn"
                   onClick={() => setImageModal(true)}

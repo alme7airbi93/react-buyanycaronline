@@ -10,6 +10,7 @@
   margin-bottom: 10px;
   position: fixed;
   width: 20%;
+  max-width: 250px;
 }
 
 .carSearch-result-div {
@@ -51,6 +52,19 @@
   font-weight: 600;
 }
 /*responsive*/
+
+@media only screen and (max-width: 996px) and (min-width: 768px) {
+  .carSearch-find-div {
+      width: 20%;
+      max-width: 160px;
+  }
+  .main-carSearch-div .col-md-6{
+      padding-right: 0px !important;
+  }
+  .carSearch-result-div {
+    margin-right: 0px;
+}
+}
 @media (max-width: 768px) {
   .carSearch-find-div {
     position: relative;

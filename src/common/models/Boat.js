@@ -10,6 +10,7 @@ class Boat extends Vehicle {
 			make, modal, features, color, year, condition, fuel_type, warranty, region);
 
 		this._make = make;
+		this._modal = modal;
 		this._length = length;
 		this._hours = hours;
 		Object.preventExtensions(this);
@@ -22,6 +23,14 @@ class Boat extends Vehicle {
 
 	set make(value) {
 		this._make = value;
+	}
+
+	get modal() {
+		return this._modal;
+	}
+
+	set modal(value) {
+		this._modal = value;
 	}
 
 	get length() {
@@ -45,6 +54,7 @@ class Boat extends Vehicle {
 			title:this.title,
 			advertisement_type: this.advertisement_type,
 			make : this.make,
+			modal : this.modal,
 			length:this.length,
 			_hours:this._hours,
 			price:this.price,

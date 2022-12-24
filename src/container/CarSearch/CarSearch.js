@@ -215,7 +215,7 @@ const CarSearch = () => {
   };
 
   return (
-    <div className="main-carSearch-div">
+    <div className="main-carSearch-div pt-5">
       <div className="container">
         <div className="row">
           <div className="col-md-3 position-relative">
