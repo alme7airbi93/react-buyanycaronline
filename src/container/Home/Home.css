@@ -6,7 +6,9 @@
     background-position: center center;
     padding-bottom: 30px;
 }
-
+.home-select-div1{
+    padding: 0px 30px;
+}
 .first-section-btn{
     padding: 8px 40px;
     border: 1px solid #D11717;

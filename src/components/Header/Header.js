@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect } from "react";
 import "./Header.css";
 import { Nav, Navbar } from "react-bootstrap";
 import Logo from "../../assets/img/logo.jpg";
@@ -7,13 +7,19 @@ import { logOut } from "../../controllers/AuthController.js";
 import Dropdown from "../Dropdown";
 import LoginModal from "../Modal/Login/LoginModal";
 import SignupModal from "../Modal/Signup/SignupModal";
+import { UserContext } from "../../context/Context";
+import { useLocation } from 'react-router-dom'
+
 
 
 const Header = () => {
 	const navigate = useNavigate();
 	const [loginShow, setLoginShow] = useState(false);
 	const [signupShow, setSignupShow] = useState(false);
-
+	const ctx = useContext(UserContext);
+	const user = ctx.getUserData();
+	const location = useLocation();
+	console.log(location,'location')
 	// const [user]  = useContext(UserContext);
 
 	const closeLogin = ()=>{
@@ -37,16 +43,19 @@ const Header = () => {
 	const logoutHandler = ()=>{
 		logOut();
 		deleteCookie("userToken");
+		ctx.clearUserData();
 		navigate("/");
 	};
 
 	const getCookie = (cookieName) => {
-		let cookie = {};
-		document.cookie.split(";").forEach(function(el) {
-			let [key,value] = el.split("=");
-			cookie[key.trim()] = value;
-		});
-		return cookie[cookieName];
+		// let cookie = {};
+		// document.cookie.split(";").forEach(function(el) {
+		// 	let [key,value] = el.split("=");
+		// 	cookie[key.trim()] = value;
+		// });
+		// return cookie[cookieName];
+
+		
 	};
 
 	const deleteCookie = (name) => {
@@ -57,7 +66,7 @@ const Header = () => {
 
 	let btn;
 
-	if(userToken) {
+	if(user && user._id) {
 		btn = (
 			<div className="col-md-5 d-flex justify-content-end headers-button">
 				<Dropdown onClick={logoutHandler}/>
@@ -78,6 +87,11 @@ const Header = () => {
 	return (
 		<React.Fragment>
 			{/*header*/}
+			<div style={location.pathname ==='/car-search'?{
+				position:"fixed",
+				width: "100%",
+				zIndex:99
+			}:{}}>
 			<div className="header-div">
 				<div className="container">
 					<div className="row header-row">
@@ -107,6 +121,7 @@ const Header = () => {
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
+			</div>
 		</React.Fragment>
 	);
 };

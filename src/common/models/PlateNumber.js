@@ -36,5 +36,19 @@ class PlateNumber extends Advertisement {
 	set numberCode(value) {
 		this._numberCode = value;
 	}
+
+	getAlldata (){
+		return{
+			title:this.title,
+			description: this.description,
+			advertisement_type: this.advertisement_type,
+			price:this.price,
+			views:this.views,
+			city:this.city,
+			number:this.number,
+			numberCode: this.numberCode
+		}
+
+	}
 }
 export default PlateNumber;

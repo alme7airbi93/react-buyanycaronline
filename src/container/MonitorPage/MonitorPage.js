@@ -9,7 +9,7 @@ const MonitorPage = () => {
 				<Col md={3} className='monitor_main'>
 					<p>Ad Number: <span> 222 </span> </p>
 					<p>Title: <span> ad.title </span> </p>
-					<p>Price: <span> ad.price </span></p>
+					<p>Price: <span> ad.price AED</span></p>
 					<p>Created Date: <span>ad.created_at</span></p>
 					<div className={"d-flex"}>
 						<button className="search_btn mr-2">Approved</button>

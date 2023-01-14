@@ -1,51 +1,104 @@
-import React, {useState, useContext, Component} from "react";
-import {Button, Col, Row, Form} from "react-bootstrap";
-import {StepsStateInPhoto, StepsStateInDetail} from "../stepsState";
-import {NewAdvertisement} from "../../../context/Context";
+import React, { useState, useContext, Component, useEffect } from "react";
+import { Button, Col, Row, Form } from "react-bootstrap";
+import { StepsStateInPhoto, StepsStateInDetail } from "../stepsState";
+import { NewAdvertisement } from "../../../context/Context";
 import GoogleMapReact from "google-map-react";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import UserProfile from "../../UserProfile/UserProfile";
+import { useNavigate } from "react-router-dom";
 
 import "./scrollbar.css";
+import {
+  createAdvertisement,
+  updateAdvertisement,
+  updateArrayField
+} from "../../../common/repository/AdvertisementDB";
+import { createAd } from "../../../controllers/AdsController";
+import {
+  getDownloadURL,
+  uploadString,
+  uploadBytes,
+  getStorage,
+  listAll,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import Loder from "../../../common/loder/Loder";
 
 const GoogleMap = (props) => {
-  
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
-	const center = { lat: 24.4539, lng: 54.3773 };
-	const zoom = 4;    
+  let navigate = useNavigate();
+  const adsCtx = useContext(AdvertismentCtx);
+  const advertisement = adsCtx.ads;
+  const [photos, setPhotos] = useState();
+  const [loading, setLoading] = useState(false);
 
-	const print=()=>{
-		const adv_JSONstring = JSON.stringify(advertisement); 
-		console.log(advertisement);        
-		// console.log(adv_JSONstring);        
-	};  
-    
-	return (    
-		<React.Fragment>     
-			<Col md={5} className="find_details">
-				<h5>Select location</h5>
-				<hr/>
-				<Row className="justify-content-center">
-					<Col md={10} id="center-pos">
-						<div style={{ height: "60vh", width: "100%" }}>
-							<GoogleMapReact
-								bootstrapURLKeys={{ key: "AIzaSyDnZHCNVuYH8lZSMZtuHzJ4677eUi6AE8w" }}
-								defaultCenter={center}
-								defaultZoom={zoom}
-								onClick={ev => {
-									setAdvertisement({...advertisement, "location":{"lat":ev.lat, "long":ev.lng}});                                                                
-								}}
-							>
-							</GoogleMapReact>            
-						</div>
-						<br /> 
-					</Col>
-					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInPhoto)} >Back</Button>
-						<Button className="next_btn" onClick={()=>{print();}}>Done</Button>
-					</Col> 
-				</Row>
-			</Col>            
-		</React.Fragment>
-	);     
+  const center = { lat: 24.4539, lng: 54.3773 };
+  const zoom = 4;
+
+  useEffect(() => {
+    setPhotos(advertisement.photos);
+    //console.log(advertisement,'in Map')
+  }, []);
+
+
+
+  
+
+  const saveData = () => {
+    setLoading(true);
+    var dt = advertisement;
+    dt.photos = [];
+    createAd(advertisement,photos).then((res) => {
+      console.log(res,'resresres')
+      
+         navigate("/user-profile");
+        alert("Data uploaded successfully");
+      
+    });
+  };
+
+
+  return (
+    <React.Fragment>
+      <Col md={5} className="find_details">
+        <h5>Select location</h5>
+        <hr />
+        <Row className="justify-content-center">
+          <Col md={10} id="center-pos">
+            <div style={{ height: "60vh", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{
+                  key: "AIzaSyDnZHCNVuYH8lZSMZtuHzJ4677eUi6AE8w",
+                }}
+                defaultCenter={center}
+                defaultZoom={zoom}
+                onClick={(ev) => {
+                  setAdvertisement({
+                    ...advertisement,
+                    location: { lat: ev.lat, long: ev.lng },
+                  });
+                }}
+              ></GoogleMapReact>
+            </div>
+            <br />
+          </Col>
+          <Col md={10} className="btn-group">
+            <Button
+              right
+              className="back_btn"
+              onClick={() => props.onClick(StepsStateInPhoto)}
+            >
+              Back
+            </Button>
+            <Button className="next_btn" onClick={saveData}>
+              Done
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+      {loading && <Loder />}
+    </React.Fragment>
+  );
 };
 
 export default GoogleMap;

@@ -11,9 +11,17 @@ class Motorcycle extends Vehicle {
 		this._engineSize = engineSize;
 		this._distance = distance;
 		this._category = category;
+		this._make = make;
 		Object.preventExtensions(this);
 	}
 
+	get make() {
+		return this._make;
+	}
+
+	set make(value) {
+		this._make = value;
+	}
 
 	get engineSize() {
 		return this._engineSize;
@@ -37,6 +45,27 @@ class Motorcycle extends Vehicle {
 
 	set category(value) {
 		this._category = value;
+	}
+
+	getAlldata (){
+		return{
+			title:this.title,
+			advertisement_type: this.advertisement_type,
+			make:this.make,
+			modal:this.modal,
+			year:this.year,
+			price:this.price,
+			views:this.views,
+			fuel_type: this.fuel_type,
+			distance:this.distance,
+			color: this.color,
+			condition: this.condition,
+			region:this.region,
+			warranty:this.warranty,
+			description: this.description,
+			
+		}
+
 	}
 }
 

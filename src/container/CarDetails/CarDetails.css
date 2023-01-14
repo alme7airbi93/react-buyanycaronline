@@ -1,20 +1,96 @@
 .car_details_main {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }
-.car_title{
-    background-color: rgba(22, 30, 33, 1);
-    border: 1px solid rgb(36, 49, 54);
-    padding: 20px;
-    margin: 0 10px 10px 0;
-    height: 100%;
+.car_title {
+  background-color: rgba(22, 30, 33, 1);
+  border: 1px solid rgb(36, 49, 54);
+  padding: 20px;
+  margin: 0 10px 10px 0;
+  height: 100%;
 }
-.car_title p , .car_desc p{
-    font-size: 15px;
-    color: #555555;
+.car_title p,
+.car_desc p {
+  font-size: 15px;
+  color: #555555;
 }
-.car_title span , .car_desc span{
-    color: #fff;
+.car_title span,
+.car_desc span {
+  color: #fff;
+}
+.search_btn {
+  max-width: 120px;
+}
+
+.image-block img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: scale-down;
+  height: auto;
+}
+
+.all-images {
+  margin-bottom: 22px;
+}
+
+.all-images .image-block {
+  background: #161e21;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+  height: 260px;
+  object-fit: scale-down;
+}
+.delete-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #df1d1c;
+  font-weight: 600;
+  width: 39px;
+  height: 39px;
+  border-left: 2px solid #df1d1c;
+  border-bottom: 2px solid #df1d1c;
+  border-bottom-left-radius: 11px;
+  line-height: 28px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.delete-link:hover {
+  color: white;
+  text-decoration: none;
+  border-color: #fff;
+}
+/* .carousel.carousel-slider .control-arrow:hover {
+  background: none !important;
+} */
+.control-next {
+  background: none !important;
+  padding-right: 15px !important;
+}
+.control-prev {
+  background: none !important;
+  padding-left: 15px !important;
+}
+.search_btn {
+  display: block;
+  margin: auto;
+}
+.pt-95 {
+  padding-top: 95px;
+}
+.add_btn {
+  width: 100%;
+  border: 1px solid #d11717;
+  background-color: #d11717;
+  color: #fff;
+  max-width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
 }

@@ -3,6 +3,8 @@ import {checkTypeOfUser} from "../validations/ClassesTypeOfValidations.js";
 import {preSaveOrUpdateAClass} from "../validations/PreSave.js";
 import {db} from "./main.js";
 import User from "../models/User.js";
+import { getAuth, updatePassword,reauthenticateWithCredential,EmailAuthProvider } from "firebase/auth";
+import { async } from "@firebase/util";
 
 const doc_collection = "users";
 
@@ -33,6 +35,18 @@ export const updateUserProfile = async (userId = null, value) => {
 		return {success: false, data: e};
 	}
 };
+
+export const updateUser = async(user,id) => {
+	try{
+		let docRef = doc(db, doc_collection, id);
+		let update_doc = await updateDoc(docRef, user);
+		console.log("Response for update ", update_doc);
+		return {success: true, data: update_doc};
+
+	} catch (e) {
+		return {success: false, data: e};
+	}
+}
 
 export const changeUserRole = async (userId = null, value) => {
 	console.log("================= Update user role =================");
@@ -94,5 +108,30 @@ export const getAllUsers = async () => {
 	});
 
 };
+
+
+export const updateUserPassword =  async(email,oldpassword, newPassword) =>{
+	console.log(email)
+	const auth = getAuth();
+	const user = auth.currentUser;
+	const credentials =  EmailAuthProvider.credential(email,oldpassword)
+	return reauthenticateWithCredential(user,credentials)
+	.then(()=>{
+		updatePassword(user,newPassword)
+		.then(()=>{
+			return {success: true};
+		})
+		.catch(()=>{
+			console.log(err)
+		})
+
+	})
+	.catch((err)=>{
+		alert('Old password is wrong')
+		console.log(err)
+		return {success: false,};
+
+	})
+}
 
 

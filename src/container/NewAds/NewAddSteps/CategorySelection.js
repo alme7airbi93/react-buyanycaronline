@@ -1,71 +1,54 @@
-import {Button, Col, Row} from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 // import Select from "react-select";
-import React, {useState, useContext} from "react";
-// import {AdvertisementOptions} from "../../../common/data/SelectOptions.js";
-import {StepsStateInSummary, StepsStateInDetail} from "../stepsState";
-// import { makes, models ,models_second} from "../../../common/data";
-import {NewAdvertisement} from "../../../context/Context";
-import Carsform from "./forms/cars"
-import Motorcycleform from "./forms/motorcycle"
-import Plate_Numberform from "./forms/Plate_Number"
-import Accessory_nameform from "./forms/accessory_name "
-import Boatform from "./forms/boat"
-import Vehicleform from "./forms/vehicle"
+import React, { useContext } from "react";
+import Carsform from "./forms/cars";
+import Motorcycleform from "./forms/motorcycle";
+import Plate_Numberform from "./forms/Plate_Number";
+import Accessory_nameform from "./forms/accessory_name ";
+import Boatform from "./forms/boat";
+import HeavyVehicleform from "./forms/heavyVehicleform";
+import { useEffect } from "react";
+import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
+import { Advertisement_Types } from "../../../common/data/Advertisement_Types";
 
 const CategorySelection = (props) => {
-	const [advertisement, setAdvertisement] = useContext(NewAdvertisement);
+  const adsCtx = useContext(AdvertismentCtx);
+  const advertisement = adsCtx.ads;
 
-	// let makes_options = makes();
-	// let models_options = models();
-	// let models_second_options = models_second();
+  useEffect(() => {
+    console.log(advertisement, "adasdasd, in advertisement");
+  }, []);
 
-	// let [isMakeDropdown, setMakeDropdown] = useState(false);
-	// let [isTypeDropdown, setTypeDropdown] = useState(false);
-	// let [isModelDropdown, setModelDropdown] = useState(false);
+  const handler = () => {
+    if (advertisement.type === undefined) {
+      adsCtx.setAds({ ...advertisement, type: { kind: " " } });
+    }
+  };
+  return (
+    <React.Fragment>
+      <Col md={5} className="find_details">
+ 
+        <Row className="">
+          <Col md="12">
+            {advertisement._advertisement_type === Advertisement_Types.Cars ? (
+              <Carsform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.HeavyVehicles ? (
+              <HeavyVehicleform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.Motorcycles ? (
+              <Motorcycleform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.PlateNumber ? (
+              <Plate_Numberform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.Accessories ? (
+              <Accessory_nameform nextStep={props.nextStep} />
+            ) : advertisement._advertisement_type === Advertisement_Types.Boats ? (
+              <Boatform nextStep={props.nextStep} />
+            ) : null}
+          </Col>
 
-	// const [vehicleValue, setVehicle] = useState("");
-	// const [makeValue, setMake] = useState("");
-	// const [modelFirstValue, setModelFirst] = useState("");
-	// const [modelSecondValue, setModelSecond] = useState("");
-
-	const handler=()=>{
-		if (advertisement.type===undefined)
-		{
-			setAdvertisement({...advertisement, "type":{"kind": " "}});
-		}
-	};
-	console.log(advertisement,"--advertisement--")
-	return(
-		<React.Fragment>
-			<Col md={5} className="find_details">
-				<h5>FIND</h5>
-				<hr/>
-				<Row className="">
-					<Col md="12">
-					{
-						advertisement._advertisement_type === "Cars"?
-						<Carsform /> :
-						advertisement._advertisement_type === "Heavy Vehicles"?
-						<Vehicleform /> :
-						advertisement._advertisement_type === "Motorcycles"?
-						<Motorcycleform /> :
-						advertisement._advertisement_type === "Plate Numbers"?
-						<Plate_Numberform /> :
-						advertisement._advertisement_type === "Accessories"?
-						<Accessory_nameform /> :
-						advertisement._advertisement_type === "Boats"?
-						<Boatform /> : null
-					}
-					</Col>
-					
-					<Col md={10} className="btn-group" >
-						<Button right className="back_btn" onClick={() => props.onClick(StepsStateInSummary)} >Back</Button>
-						<Button className="next_btn" onClick={() => { handler();props.onClick(StepsStateInDetail);}} >Next</Button>
-					</Col>
-				</Row>
-			</Col>
-		</React.Fragment>
-	);
+        </Row>
+      </Col>
+    </React.Fragment>
+  );
 };
 
 export default CategorySelection;

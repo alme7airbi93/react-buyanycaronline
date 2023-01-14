@@ -13,7 +13,9 @@ const UserLogin = () => {
 	const [loginError, setloginError] = useState("");
 	const navigate = useNavigate();
 
-	const [user, setUser]  = useContext(UserContext);
+	// const [user, setUser]  = useContext(UserContext);
+	const ctx = useContext(UserContext);
+	const user =  ctx.getUserData()
 
 	const loginDataHandler = (e) => {
 		e.preventDefault();
@@ -23,7 +25,9 @@ const UserLogin = () => {
 					setloginError(data.error);
 				}
 				else{
-					setUser(data.profile);
+					console.log(data.profile,'profilee')
+					ctx.setUserData(data.profile)
+					// setUser(data.profile);
 					document.cookie=`userToken=${data.token}`;
 					navigate("/user-profile");
 				}

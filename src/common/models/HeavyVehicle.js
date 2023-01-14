@@ -12,10 +12,17 @@ class HeavyVehicle extends Vehicle {
 		this._numberOfCylinders = numberOfCylinders;
 		this._capacityWeight = capacityWeight;
 		this._category = category;
+		this._make = make;
 		Object.preventExtensions(this);
 	}
 
+	get make() {
+		return this._make;
+	}
 
+	set make(value) {
+		this._make = value;
+	}
 	get numberOfCylinders() {
 		return this._numberOfCylinders;
 	}
@@ -38,6 +45,27 @@ class HeavyVehicle extends Vehicle {
 
 	set category(value) {
 		this._category = value;
+	}
+
+	getAlldata (){
+		return{
+			title:this.title,
+			make : this.make,
+			advertisement_type: this.advertisement_type,
+			modal:this.modal,
+			year:this.year,
+			price:this.price,
+			views:this.views,
+			fuel_type: this.fuel_type,
+			numberOfCylinders : this.numberOfCylinders,
+			color: this.color,
+			condition: this.condition,
+			region:this.region,
+			warranty:this.warranty,
+			description: this.description,
+			
+		}
+
 	}
 }
 

@@ -1,4 +1,4 @@
-import {doc, addDoc, getDoc, collection, updateDoc, getDocs} from "firebase/firestore";
+import {doc, addDoc, getDoc, collection, updateDoc, getDocs,arrayUnion,query,where} from "firebase/firestore";
 import {
 	checkAdvertisemntType,
 	checkTypeOfAdvertisement
@@ -39,6 +39,7 @@ export const advertisementStatusChange = async (advertId = null, value) => {
 export const updateAdvertisement = async (advertId = null, value) => {
 	console.log("================= Update Advertisement=================");
 	console.log("Updating : ", advertId);
+	console.log(value);
 	checkTypeOfAdvertisement(value);
 	try {
 		let update_doc = await updateDoc(doc(db, doc_collection, advertId), preSaveOrUpdateAClass(value));
@@ -48,6 +49,22 @@ export const updateAdvertisement = async (advertId = null, value) => {
 		return {success: false, data: e};
 	}
 };
+
+export const updateAdsById = async (advertId = null, value) => {
+
+	try{
+		console.log(value,'value')
+		let docRef = doc(db, doc_collection, advertId);
+		let update_doc = await updateDoc(docRef, value);
+		console.log("Response for update ", update_doc);
+		return {success: true, data: update_doc};
+	}
+	catch(e){
+		return{ success:false, msg:e}
+
+	}
+
+}
 
 
 export const getAdvertisementById = async (advertId = null) => {
@@ -69,6 +86,76 @@ export const getAllAdvertisement = async () => {
 	if (docs.size !== 0) {
 		docs.forEach((data) => {
 			ads.push(Object.assign(checkAdvertisemntType(data.data()), {...data.data(), _id: data.id}));
+		});
+
+		console.log(ads);
+		return {success: true, data: ads};
+	} else {
+		throw Error("Advertisement not found");
+	}
+};
+
+export const updateArrayField = async (advertId = null, value) =>{
+	console.log("================= UPDATING ARRAY FIELD =================");
+	console.log(value)
+	try{
+		let docRef = doc(db, doc_collection, advertId);
+		let update_doc = await updateDoc(docRef, {
+			_photos: arrayUnion(...value)
+		});
+		return{success:"success", msg:"data updated successfully"}
+	}
+	catch(e){
+		return{ success:false, msg:e}
+
+	}
+}
+
+export const getUsersAdvertisement = async(userId)=>{
+	try{
+		console.log(userId,'userId')
+		const q = query(collection(db,doc_collection ), where("_owner._id", '==', userId))
+		const querySnapshot = await getDocs(q);
+		let ads = [];
+		querySnapshot.forEach((doc) => {
+			ads.push({...doc.data(),_id:doc.id})
+		});
+		return{success:true,data:ads}
+
+	}
+	catch(e){
+		return{success:false,msg:e}
+
+	}
+}
+
+
+export const getSearchAdvertisement = async (filterData) => {
+console.log(filterData,'sdfsdfsf');
+
+	const qr = collection(db,doc_collection );
+	const queryConstraints = []
+	if(filterData){
+		filterData.forEach((item) => {
+			if(item.key == '_price'){
+				queryConstraints.push(where(item.key,"<=",parseInt(item.value)));
+			}else{
+				queryConstraints.push(where(item.key, '==', item.value));
+			}
+			
+		});
+	}
+	
+
+	const q = query(qr,...queryConstraints)
+	
+
+	const querySnapshot = await getDocs(q);
+	let ads = [];
+
+	if (querySnapshot.size !== 0) {
+		querySnapshot.forEach((data) => {
+			ads.push({...data.data(), _id: data.id});
 		});
 
 		console.log(ads);
