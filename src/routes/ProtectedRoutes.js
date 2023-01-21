@@ -8,7 +8,7 @@ import {checkTypeUserRoles} from "../common/validations/EnumsValidation.js";
 export const UserRoutes = ({Component}) => {
 
 	const ctx  = useContext(UserContext);
-	const user =  ctx.getUserData()
+	const user =  ctx.getUserData();
 
 	console.log("In User Routes ", user);
 	if (checkTypeUserRoles(user.role)) {
@@ -24,7 +24,7 @@ export const UserRoutes = ({Component}) => {
 // eslint-disable-next-line react/prop-types
 export const AdminModeratorRoutes = ({Component}) => {
 	const ctx  = useContext(UserContext);
-	const user =  ctx.getUserData()
+	const user =  ctx.getUserData();
 
 	// const [user]  = useContext(UserContext);
 

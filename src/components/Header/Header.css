@@ -6,6 +6,7 @@
 .header-div{
     padding: 25px 15px 25px 15px;
     background-color: #0e1315;
+    height: 82px;
 }
 .headers-button button{
     text-transform: uppercase;

@@ -1,7 +1,7 @@
 .home-main-div{
     background-image: url(../../assets/img/bg.jpg);
     width: 100%;
-    min-height: 100vh;
+    min-height: calc( 100vh - 212px );
     background-size: cover;
     background-position: center center;
     padding-bottom: 30px;
@@ -27,6 +27,8 @@
     background-color: rgba(22, 30, 33, 0.9);
     color: #fff;
     margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #333;
 }
 
 .css-26l3qy-menu div  {
@@ -58,7 +60,7 @@
     padding: 30px;
 }
 .home-row-div{
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 .adv_search_btn{
@@ -79,4 +81,9 @@
 }
 .hide_search{
     display: none;
+}
+
+.year-between {
+    display: flex;
+    column-gap: 5px;
 }

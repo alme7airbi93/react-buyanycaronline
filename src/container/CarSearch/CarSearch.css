@@ -1,5 +1,22 @@
+.main-wrapper {
+    width: 100%;
+    padding: 0px 30px;
+}
+
+.search-side {
+    width: 300px;
+}
+
+.search-section {
+    width: calc(100% - 600px);
+}
+
+.detail-side {
+    width: 300px;
+}
+
 .main-carSearch-div{
-    min-height: 100vh;
+    min-height: calc( 100vh - 212px );
     margin-top: 130px !important;
 }
 .carSearch-find-div{
@@ -8,12 +25,14 @@
     padding: 20px;
     margin-right: 10px;
     margin-bottom: 10px;
+    position: sticky;
+    top: 150px;
 }
 .carSearch-result-div{
     background-color: rgba(22, 30, 33, 1);
     border: 1px solid rgb(36, 49, 54);
     padding: 20px;
-    height: 100px;
+    height: fit-content;
     margin-right: 10px;
     margin-bottom: 10px;
 }
@@ -24,7 +43,9 @@
     text-align: center;
     height: 500px;
     margin-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 150px;
 }
 .car-select-btn{
     height: 40px;
@@ -44,6 +65,31 @@
     border:0px;
     font-size: 12px;
     font-weight: 600;
+}
+.search-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.button-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-linker {
+    margin: 10px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.card-linker:hover {
+    /* background-color: #555; */
+    box-shadow: 4px 4px 8px #999;
+    text-decoration: none;
 }
 /*responsive*/
 @media (max-width: 768px) {

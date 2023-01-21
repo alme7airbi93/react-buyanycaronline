@@ -141,11 +141,12 @@ const SummaryDescription = (props) => {
 								placeholder = {"Select Motors"}
 								options={AdvertisementOptions()}
 								value={AdvertisementOptions().find(obj=> obj.label === type)}
-								isSearchable={true}
+								// isSearchable={true}
+								isClearable={true}
 								onChange={data => {
-									setType(data.label);
-									handleValidate(data.target.value,"category");	
-								}
+										setType(data.label);
+										handleValidate(data.target.value,"category");	
+									}
 								}
 							/>
 						</div>

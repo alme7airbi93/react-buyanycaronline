@@ -86,8 +86,8 @@ const UserProfile = () => {
               <hr />
               <div className=" ad_list">
                 {adsData && adsData.length ? (
-                  adsData.map((ad) => (
-                    <div className="ad_data d-flex flex-wrap">
+                  adsData.map((ad, idx) => (
+                    <div key={idx} className="ad_data d-flex flex-wrap">
                       <div className="col-md-3 pb-3 col-sm-12">
                         <div className="item_photos">
                           <img
@@ -101,7 +101,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                       <div className="col-md-9 col-sm-12 d-flex justify-content-between">
-                        <div>
+                        <div className="description">
                           <p>
                             Title: <span>{ad._title}</span>
                           </p>
@@ -112,7 +112,7 @@ const UserProfile = () => {
                             Description: <span>{ad._description}</span>
                           </p>
                         </div>
-                        <div>
+                        <div className="button-wrapper">
                           <button
                             className="search_btn mb-3"
                             onClick={() => Modifyication(true, ad)}

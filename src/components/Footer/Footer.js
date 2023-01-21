@@ -6,19 +6,19 @@ const Footer = () => {
 		<div className='footer-main'>
 			<div className="container">
 				<div className="row">
-					<div className="col-md-6 d-flex justify-content-center footer-button">
-						<button > Home </button>
+					<div className="col-md-6 d-flex justify-content-center align-items-center footer-button">
+						<a href="#" className="footer-link"> Home </a>
 						<span> | </span>
-						<button > Cars </button>
+						<a href="#" className="footer-link"> Cars </a>
 						<span> | </span>
-						<button > Boats </button>
+						<a href="#" className="footer-link"> Boats </a>
 						<span> | </span>
-						<button > About </button>
+						<a href="#" className="footer-link"> About </a>
 						<span> | </span>
-						<button > Contact </button>
+						<a href="#" className="footer-link"> Contact </a>
 					</div>
 					<div className="col-md-6 d-flex justify-content-center align-items-center">
-						<p style={{color: "#fff", fontSize: "12px"}}>Â© 2019 BUYANYCARONLINE</p>
+						<span className="copyright">Â© 2019 BUYANYCARONLINE</span>
 					</div>
 				</div>
 			</div>

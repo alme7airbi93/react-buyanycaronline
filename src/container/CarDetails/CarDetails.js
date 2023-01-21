@@ -32,7 +32,7 @@ const CarDetails = () => {
       const newdata = Object.assign(instance, { ...ads });
      
       const modifyData = newdata.getAlldata();
-      console.log(modifyData,'modifyData')
+      console.log(modifyData, "modifyData");
       setData(modifyData);
       setLoading(false);
     });
@@ -98,7 +98,7 @@ const CarDetails = () => {
                 showThumbs ={false}
               >
                 {allData._photos.map((item, key) => (
-                  <Col md={12}>
+                  <Col md={12} key={key}>
                     <div className="image-block">
                       <img src={item} key={"photo" + key} />
                       <a

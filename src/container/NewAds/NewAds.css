@@ -26,13 +26,14 @@
 
 .search_btn {
   width: 100%;
-  border: 1px solid #d11717;
-  background-color: #d11717;
-  color: #fff;
+  background-color: white;
+  border: 1px solid white;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
 }
 .search_btn:hover{
-  background-color: transparent;
-  color:#d11717;
+  background-color: #777;
 }
 
 .next_btn {
