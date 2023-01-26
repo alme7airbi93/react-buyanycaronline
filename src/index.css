@@ -53,7 +53,7 @@ hr{
 ::-webkit-scrollbar-thumb {
   background: #333; 
   border-radius: 10px;
-  border-color: 1px solid #999;
+  border: 1px solid #999;
 }
 
 /* Handle on hover */

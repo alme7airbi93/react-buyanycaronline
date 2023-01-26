@@ -67,7 +67,19 @@ const CarSearch = () => {
         setLoading(false);
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
+        Store.addNotification({
+          title: "Error",
+          message: err.toString(),
+          type: "danger",
+          insert: "danger",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+          },
+        });
         setLoading(false);
       });
   }, []);
@@ -163,7 +175,19 @@ const CarSearch = () => {
       setResultData(result.data);
       setLoading(false);
     } else {
-      alert(result.msg);
+      // alert(result.msg);
+      Store.addNotification({
+        title: "Error",
+        message: result.msg,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+        },
+      });
       setLoading(false);
     }
   };
@@ -239,7 +263,6 @@ const CarSearch = () => {
       animationOut: ["animate__animated", "animate__fadeOut"],
       dismiss: {
         duration: 5000,
-        // onScreen: true
       },
     });
   };

@@ -17,6 +17,7 @@ import {
 } from "firebase/storage";
 import { updateAdsById } from "../common/repository/AdvertisementDB";
 import { getSearchAdvertisement } from "../common/repository/AdvertisementDB";
+import { Store } from "react-notifications-component";
 
 export const AdsStepVerfication = (adSelected, data) => {
   const isFormValid = FormDataValidation(data);
@@ -97,7 +98,19 @@ export const SearchAdvertisement = async (data) => {
       return res;
     })
     .catch((err) => {
-      alert("No data found");
+      Store.addNotification({
+        title: "Error",
+        message: "No data found",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+        },
+      });
+      // alert("No data found");
       return { msg: "No data found", success: false };
     });
 };

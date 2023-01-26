@@ -32,6 +32,12 @@
   padding: 5px;
   border-radius: 5px;
 }
+
+.search_btn:disabled {
+  background-color: #777;
+  border: 1px solid #777;
+}
+
 .search_btn:hover{
   background-color: #777;
 }

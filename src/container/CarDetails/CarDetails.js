@@ -12,6 +12,7 @@ import { saveAdsPhotos } from "../../controllers/AdsController";
 import Spinner from "react-bootstrap/Spinner";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { Store } from "react-notifications-component";
 
 const CarDetails = () => {
   const params = useParams();
@@ -30,7 +31,7 @@ const CarDetails = () => {
       let ads = res.data;
       let instance = checkAdvertisemntType(ads);
       const newdata = Object.assign(instance, { ...ads });
-     
+
       const modifyData = newdata.getAlldata();
       console.log(modifyData, "modifyData");
       setData(modifyData);
@@ -53,7 +54,19 @@ const CarDetails = () => {
     await saveAdsPhotos(id, allPhotos).then((res) => {
       console.log(res, "res");
       if (res.success === true) {
-        alert(res.msg);
+        // alert(res.msg);
+        Store.addNotification({
+          title: "Success",
+          message: res.msg,
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+          },
+        });
         setImageModal();
         setClose(!close);
         propSetLoading(false);
@@ -72,7 +85,19 @@ const CarDetails = () => {
       await updateAds(id, data).then((res) => {
         console.log(res, "res");
         if (res.success === true) {
-          alert("Image Deleted successfully");
+          Store.addNotification({
+            title: "Success",
+            message: "Image Deleted successfully",
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+            },
+          });
+          // alert("Image Deleted successfully");
           setClose(!close);
           setLoading(false);
         } else {
@@ -89,13 +114,14 @@ const CarDetails = () => {
         {allData && allData._photos ? (
           <Row className={"all-images"}>
             <div className="col-md-12">
-              <Carousel emulateTouch
+              <Carousel
+                emulateTouch
                 autoPlay
                 infiniteLoop
                 showArrows={true}
                 showStatus={false}
                 // centerMode
-                showThumbs ={false}
+                showThumbs={false}
               >
                 {allData._photos.map((item, key) => (
                   <Col md={12} key={key}>
@@ -115,10 +141,7 @@ const CarDetails = () => {
             </div>
             <Col md={12}>
               <div className="image-add-block">
-                <button
-                  className="add_btn"
-                  onClick={() => setImageModal(true)}
-                >
+                <button className="add_btn" onClick={() => setImageModal(true)}>
                   Add Image
                 </button>
               </div>
@@ -161,9 +184,9 @@ const CarDetails = () => {
                     flex: "50%",
                     display:
                       key === "title" ||
-                        key === "Price" ||
-                        key === "views" ||
-                        key === "advertisement_type"
+                      key === "Price" ||
+                      key === "views" ||
+                      key === "advertisement_type"
                         ? "none"
                         : "flex",
                   }}
