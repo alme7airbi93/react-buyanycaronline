@@ -10,8 +10,11 @@ import HeavyVehicleform from "./forms/heavyVehicleform";
 import { useEffect } from "react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { Advertisement_Types } from "../../../common/data/Advertisement_Types";
+import PropTypes from "prop-types";
 
 const CategorySelection = (props) => {
+  
+
   const adsCtx = useContext(AdvertismentCtx);
   const advertisement = adsCtx.ads;
 
@@ -19,11 +22,7 @@ const CategorySelection = (props) => {
     console.log(advertisement, "adasdasd, in advertisement");
   }, []);
 
-  const handler = () => {
-    if (advertisement.type === undefined) {
-      adsCtx.setAds({ ...advertisement, type: { kind: " " } });
-    }
-  };
+
   return (
     <React.Fragment>
       <Col md={5} className="find_details">
@@ -49,6 +48,10 @@ const CategorySelection = (props) => {
       </Col>
     </React.Fragment>
   );
+};
+
+CategorySelection.propTypes   = {
+  nextStep : PropTypes.any
 };
 
 export default CategorySelection;

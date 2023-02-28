@@ -1,32 +1,25 @@
 import { Button, Col, Form } from "react-bootstrap";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Select from "react-select";
 import { Advertisement_states } from "../../../common/data/Advertisement_states.js";
 import { AdvertisementOptions } from "../../../common/data/SelectOptions.js";
 import { StepsStateInMainCategory } from "../stepsState";
 import { UserContext } from "../../../context/Context";
-
-import Accessories from "../../../common/models/Accessories.js";
-import Boat from "../../../common/models/Boat.js";
-import Car from "../../../common/models/Car.js";
-import HeavyVehicle from "../../../common/models/HeavyVehicle.js";
-import Motorcycle from "../../../common/models/Motorcycle.js";
-import PlateNumber from "../../../common/models/PlateNumber.js";
-import { Advertisement_Types } from "../../../common/data/Advertisement_Types.js";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import { Store } from "react-notifications-component";
+import Advertisement from "../../../common/models/Advertisement.js";
+import { checkAdvertisemntType } from "../../../common/validations/ClassesTypeOfValidations.js";
+import PropTypes from "prop-types";
+
 
 const SummaryDescription = (props) => {
   // eslint-disable-next-line no-unused-vars
   const adsCtx = useContext(AdvertismentCtx);
-  const advertisement = adsCtx.ads;
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
 
-  let [title, setTitle] = useState(advertisement._title);
-  let [price, setPrice] = useState(advertisement._price);
-  let [desc, setDesc] = useState(advertisement._description);
-  let [type, setType] = useState(advertisement._advertisement_type);
+  let [ad, setAd] = useState(new Advertisement());
+
 
   let [errors, setErrors] = useState({
     errors: false,
@@ -36,85 +29,9 @@ const SummaryDescription = (props) => {
     typeError: "",
   });
 
-  const checkAdvertisemntType = () => {
-    console.log(type);
-    if (type === Advertisement_Types.Cars) {
-      return new Car(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else if (type === Advertisement_Types.Motorcycles) {
-      return new Motorcycle(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else if (type === Advertisement_Types.HeavyVehicles) {
-      return new HeavyVehicle(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else if (type === Advertisement_Types.Boats) {
-      return new Boat(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else if (type === Advertisement_Types.PlateNumber) {
-      return new PlateNumber(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else if (type === Advertisement_Types.Accessories) {
-      return new Accessories(
-        title,
-        desc,
-        price,
-        {},
-        user,
-        [],
-        type,
-        0,
-        Advertisement_states.Pending
-      );
-    } else throw Error("Not an Advertisement" + JSON.stringify(type));
-  };
 
   const handler = () => {
-    if (!title || !price || !type) {
+    if (!ad.title || !ad.price || !ad.advertisement_type) {
       Store.addNotification({
         title: "Warning",
         message: "Please fill required fields!",
@@ -127,33 +44,18 @@ const SummaryDescription = (props) => {
           duration: 5000,
         },
       });
-      //alert("please enter title");
       return;
     }
 
-    // if (!price) {
-    // 	alert("please enter price");
-    // 	return;
-    // }
-    // if (!type) {
-    // 	alert("please select type");
-    // 	return;
-    // }
-
-    let adver = checkAdvertisemntType();
-    adsCtx.setAds(adver);
-    console.log(adver);
+    
+    let obj = ad;
+    obj.owner = user;
+    obj.status = Advertisement_states.Pending;
+    setAd(obj);
+    adsCtx.setAds(Object.assign(checkAdvertisemntType(ad), {...ad}));
     props.nextStep(StepsStateInMainCategory);
   };
 
-  useEffect(() => {
-    // if(!title){
-    // 	setErrors({...errors,titleError:true})
-    // }
-    // else{
-    // 	setErrors({...errors,titleError:false})
-    // }
-  }, [setTitle]);
 
   const handleValidate = (value, label) => {
     if (value === "") {
@@ -190,10 +92,12 @@ const SummaryDescription = (props) => {
             <Form.Control
               className="input-fields-theme"
               type="text"
-              value={title}
+              value={ad.title}
               placeholder="Enter Title"
               onChange={(data) => {
-                setTitle(data.target.value);
+                let obj = ad;
+                obj.title = data.target.value;
+                setAd(obj);
                 handleValidate(data.target.value, "title");
               }}
             />
@@ -212,12 +116,16 @@ const SummaryDescription = (props) => {
               <Select
                 placeholder={"Select Motors"}
                 options={AdvertisementOptions()}
-                value={AdvertisementOptions().find((obj) => obj.label === type)}
+                value={AdvertisementOptions().find((obj) => obj.label === ad.advertisement_type)}
                 // isSearchable={true}
                 isClearable={true}
                 onChange={(data) => {
-                  setType(data.label);
-                  handleValidate(data.target.value, "category");
+                  let obj = ad;
+                  obj.advertisement_type = data.label;
+                  console.log("Type change : " + obj);
+                  setAd(obj);
+                  console.log("Type change : " + ad);
+                  handleValidate(data.label, "category");
                 }}
               />
             </div>
@@ -233,9 +141,11 @@ const SummaryDescription = (props) => {
               className="input-fields-theme"
               type="number"
               placeholder="Enter Price"
-              value={price}
+              value={ad.price}
               onChange={(data) => {
-                setPrice(parseFloat(data.target.value));
+                let obj = ad;
+                obj.price = data.target.value;
+                setAd(obj);
                 handleValidate(data.target.value, "price");
               }}
             />
@@ -251,10 +161,12 @@ const SummaryDescription = (props) => {
               className="input-fields-theme"
               as="textarea"
               rows={3}
-              value={desc}
+              value={ad.description}
               placeholder="Description"
               onChange={(data) => {
-                setDesc(data.target.value);
+                let obj = ad;
+                obj.description = data.target.value;
+                setAd(obj);
                 handleValidate(data.target.value, "desc");
               }}
             />
@@ -280,5 +192,7 @@ const SummaryDescription = (props) => {
     </React.Fragment>
   );
 };
-
+SummaryDescription.propTypes   = {
+  nextStep : PropTypes.any
+};
 export default SummaryDescription;

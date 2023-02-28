@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Container, Row} from "react-bootstrap";
 import "./NewAds.css";
-import {NewAdvertisement} from "../../context/Context";
 import CategorySelection from "./NewAddSteps/CategorySelection";
 import SummaryDescription from "./NewAddSteps/SummaryDescription";
 import Detail from "./NewAddSteps/Detail";
@@ -13,6 +12,7 @@ import AdvertismentProvider from "../../context/AdvertismentContext";
 const NewAds = () => {
 
 	const [stepsState, setStepsState]  = useState(StepsStateInSummary);
+
 	useEffect(() => {
 	},[stepsState]);
 	return (
@@ -31,4 +31,6 @@ const NewAds = () => {
 		</AdvertismentProvider>
 	);
 };
+
+
 export default NewAds;

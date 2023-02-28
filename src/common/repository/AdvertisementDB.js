@@ -119,7 +119,7 @@ export const updateArrayField = async (advertId = null, value) => {
   console.log(value);
   try {
     let docRef = doc(db, doc_collection, advertId);
-    let update_doc = await updateDoc(docRef, {
+    await updateDoc(docRef, {
       _photos: arrayUnion(...value),
     });
     return { success: "success", msg: "data updated successfully" };
