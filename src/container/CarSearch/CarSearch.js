@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Store } from "react-notifications-component";
 import "./CarSearch.css";
 import { Button } from "react-bootstrap";
 import Select from "react-select";
@@ -26,12 +27,15 @@ const CarSearch = () => {
   // 	const [searchParams, setSearchParams] = useSearchParams();
   //    const query = JSON.parse(searchParams.get("result"))
 
+  const [advSearch, setAdvSearch] = useState(false);
   const [vehicleValue, setVehicle] = useState("");
   const [makeValue, setMake] = useState("");
   const [modelFirstValue, setModelFirst] = useState("");
   let [isTypeDropdown, setTypeDropdown] = useState(false);
 
   const [year, setYear] = useState("");
+  const [fromYear, setFromYear] = useState("");
+  const [toYear, setToYear] = useState("");
   const [colorType, setColorType] = useState("");
 
   const [priceType, setPriceType] = useState(0);
@@ -63,30 +67,48 @@ const CarSearch = () => {
         setLoading(false);
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
+        Store.addNotification({
+          title: "Error",
+          message: err.toString(),
+          type: "danger",
+          insert: "danger",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+          },
+        });
         setLoading(false);
       });
   }, []);
+
   useEffect(() => {
     //console.log(resultData)
   }, [resultData, setResultData]);
 
   const setVehicleHandle = (value) => {
     // setLoading(true)
-    setVehicle(value);
+    setVehicle(value || "");
     let makesArray = [];
-    if (value.key === "Cars") {
-      makesArray = makes_options.filter((item) => item.parent_id === "1");
-    } else if (value.key === "Motorcycles") {
-      makesArray = makes_options.filter((item) => item.parent_id === "2");
-    } else if (value.key === "HeavyVehicles") {
-      makesArray = makes_options.filter((item) => item.parent_id === "4");
-    } else if (value.key === "Boats") {
-      makesArray = makes_options.filter((item) => item.parent_id === "5");
-    } else if (value.key === "Accessories") {
-      makesArray = makes_options.filter((item) => item.parent_id === "3");
-    } else if (value.key === "PlateNumber") {
-      makesArray = makes_options.filter((item) => item.parent_id === "6");
+    if(value) {
+      if (value.key === "Cars") {
+        makesArray = makes_options.filter((item) => item.parent_id === "1");
+      } else if (value.key === "Motorcycles") {
+        makesArray = makes_options.filter((item) => item.parent_id === "2");
+      } else if (value.key === "HeavyVehicles") {
+        makesArray = makes_options.filter((item) => item.parent_id === "4");
+      } else if (value.key === "Boats") {
+        makesArray = makes_options.filter((item) => item.parent_id === "5");
+      } else if (value.key === "Accessories") {
+        makesArray = makes_options.filter((item) => item.parent_id === "3");
+      } else if (value.key === "PlateNumber") {
+        makesArray = makes_options.filter((item) => item.parent_id === "6");
+      }
+    }
+    else {
+      setTypeDropdown(false);
     }
     setFilterMakes(makesArray);
 
@@ -124,6 +146,12 @@ const CarSearch = () => {
       year.key = "_year";
       searchArr.push(year);
     }
+    if(fromYear) {
+      fromYear.key = "_fromYear";
+    }
+    if(toYear) {
+      toYear.key = "_toYear";
+    }
     if (colorType) {
       colorType.key = "_color";
       searchArr.push(colorType);
@@ -147,36 +175,49 @@ const CarSearch = () => {
       setResultData(result.data);
       setLoading(false);
     } else {
-      alert(result.msg);
+      // alert(result.msg);
+      Store.addNotification({
+        title: "Error",
+        message: result.msg,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+        },
+      });
       setLoading(false);
     }
   };
-  const clearFilter = async () => {
-    setLoading(true);
-    setVehicle("");
-    setPriceType("");
-    setTypeDropdown(false);
-    setMake("");
-    setFirstModelHandle("");
-    setYear("");
-    setColorType("");
-    setConditions("");
-    setFuelType("");
-    setTransmissionType("");
+  // const clearFilter = async () => {
+  //   setLoading(true);
+  //   setVehicle("");
+  //   setPriceType("");
+  //   setTypeDropdown(false);
+  //   setMake("");
+  //   setFirstModelHandle("");
+  //   setYear("");
+  //   setColorType("");
+  //   setConditions("");
+  //   setFuelType("");
+  //   setTransmissionType("");
 
-    var searchArr = [];
+  //   var searchArr = [];
 
-    let result = await SearchAdvertisement(searchArr);
-    if (result.data) {
-      setResultData(result.data);
-      setLoading(false);
-    } else {
-      alert(result.msg);
-      setLoading(false);
-    }
-  };
+  //   let result = await SearchAdvertisement(searchArr);
+  //   if (result.data) {
+  //     setResultData(result.data);
+  //     setLoading(false);
+  //   } else {
+  //     alert(result.msg);
+  //     setLoading(false);
+  //   }
+  // };
 
   const setMakeHandle = (value) => {
+    value = value || "";
     const modelFirstLevelArrays = models_options.filter(
       (item) => item.parent_id === value.value
     );
@@ -212,15 +253,27 @@ const CarSearch = () => {
       setSort(false);
       setLoading(false);
     }
+    Store.addNotification({
+      title: "Wonderful!",
+      message: "teodosii@react-notifications-component",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 5000,
+      },
+    });
   };
 
   return (
     <div className="main-carSearch-div pt-5">
-      <div className="container">
+      <div className="main-wrapper">
         <div className="row">
-          <div className="col-md-3 position-relative">
+          <div className="search-side">
             <div className="carSearch-find-div">
-              <h5>FIND</h5>
+              <h5>SEARCH</h5>
               <hr />
               <div className="row">
                 <div className="col-md-12">
@@ -231,11 +284,12 @@ const CarSearch = () => {
                       // set "vehicleValue" as e
                       onChange={(e) => setVehicleHandle(e)}
                       isSearchable={true}
+                      isClearable
                       value={vehicleValue}
                     />
                   </div>
                 </div>
-                {vehicleValue ? (
+                {vehicleValue && (
                   <div className="col-md-12">
                     <div className={"mb-3"}>
                       <Select
@@ -248,15 +302,14 @@ const CarSearch = () => {
                         }
                         options={filterMakes}
                         onChange={(e) => setMakeHandle(e)}
+                        isClearable
                         value={makeValue}
                         isSearchable={true}
                       />
                     </div>
                   </div>
-                ) : (
-                  <></>
                 )}
-                {isTypeDropdown ? (
+                {isTypeDropdown && (
                   <div className="col-md-12">
                     <div className={"mb-3"}>
                       <Select
@@ -275,68 +328,94 @@ const CarSearch = () => {
                         )}
                         value={modelFirstValue}
                         isSearchable={true}
+                        isClearable
                       />
                     </div>
                   </div>
-                ) : (
-                  <></>
                 )}
-                <div className="col-md-12">
-                  <div className={"mb-3"}>
-                    <Select
-                      placeholder={"Select Price"}
-                      options={PriceTypes()}
-                      value={priceType}
-                      isSearchable={true}
-                      onChange={(e) => setPriceType(e)}
-                    />
+                {!advSearch && (
+                  <div className="col-md-12">
+                    <div className={"mb-3"}>
+                      <Select
+                        placeholder={"Select Year"}
+                        options={ManufacturingYearsOptions()}
+                        value={year}
+                        isSearchable={true}
+                        isClearable
+                        onChange={(e) => setYear(e)}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-12">
-                  <div className={"mb-3"}>
-                    <Select
-                      placeholder={"Select Year"}
-                      options={ManufacturingYearsOptions()}
-                      value={year}
-                      isSearchable={true}
-                      onChange={(e) => setYear(e)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className={"mb-3"}>
-                    <Select
-                      placeholder={"Select Color"}
-                      options={ColorTypes()}
-                      value={colorType}
-                      isSearchable={true}
-                      onChange={(e) => setColorType(e)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className={"mb-3"}>
-                    <Select
-                      placeholder={"Select Transmission"}
-                      options={TransmitionTypes()}
-                      value={transmissionType}
-                      isSearchable={true}
-                      onChange={(e) => setTransmissionType(e)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className={"mb-3"}>
-                    <Select
-                      placeholder={"Select FuelType"}
-                      options={FuelTypes()}
-                      value={fuelType}
-                      isSearchable={true}
-                      onChange={(e) => setFuelType(e)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-12">
+                )}
+                {advSearch && (
+                  <>
+                    <div className="col-md-12">
+                      <div className={"mb-3"}>
+                        <Select
+                          placeholder={"Select Price"}
+                          options={PriceTypes()}
+                          value={priceType}
+                          isSearchable={true}
+                          isClearable
+                          onChange={(e) => setPriceType(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-12 year-between">
+                      <Select
+                        placeholder={"Year from"}
+                        options={ManufacturingYearsOptions()}
+                        value={fromYear}
+                        isClearable
+                        onChange={(e) => setFromYear(e)}
+                      />
+                      <Select
+                        placeholder={"Year to"}
+                        options={ManufacturingYearsOptions()}
+                        value={toYear}
+                        isClearable
+                        onChange={(e) => setToYear(e)}
+                      />
+                    </div>
+                    <div className="col-md-12">
+                      <div className={"mb-3"}>
+                        <Select
+                          placeholder={"Select Color"}
+                          options={ColorTypes()}
+                          value={colorType}
+                          isSearchable={true}
+                          isClearable
+                          onChange={(e) => setColorType(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className={"mb-3"}>
+                        <Select
+                          placeholder={"Select Transmission"}
+                          options={TransmitionTypes()}
+                          value={transmissionType}
+                          isSearchable={true}
+                          isClearable
+                          onChange={(e) => setTransmissionType(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className={"mb-3"}>
+                        <Select
+                          placeholder={"Select FuelType"}
+                          options={FuelTypes()}
+                          value={fuelType}
+                          isSearchable={true}
+                          isClearable
+                          onChange={(e) => setFuelType(e)}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+                <div className="col-md-12 button-center">
                   <div className={"mb-3"}>
                     <Button
                       type="button"
@@ -347,29 +426,22 @@ const CarSearch = () => {
                     </Button>
                   </div>
                 </div>
-                <div className="col-md-12">
+                <div className="col-md-12 button-center">
                   <div className={"mb-3"}>
                     <Button
                       type="button"
-                      onClick={() => clearFilter()}
-                      className="clear-btn"
+                      onClick={() => setAdvSearch(!advSearch)}
+                      className="first-section-btn"
                     >
-                      Clear Filter
+                      Advanced
                     </Button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-md-6">
-            <div
-              className="carSearch-result-div"
-            //   style={{
-            //     height: height - 180,
-            //     overflow: "auto",
-            //     minHeight: "510px",
-            //   }}
-            >
+          <div className="search-section">
+            <div className="carSearch-result-div">
               <h3 className="d-flex justify-content-between">
                 <span>Search Result({resultData.length})</span>
                 <span style={{ cursor: "pointer" }} onClick={() => sortBy()}>
@@ -378,14 +450,16 @@ const CarSearch = () => {
               </h3>
               <hr />
 
-              {resultData.map((item) => (
-                <div className="col-md-12 mb-3" key={item._id}>
-                  <CardBlock item={item} />
-                </div>
-              ))}
+              <div className="search-wrapper">
+                {resultData.map((item, key) => (
+                  <a key={key} className="card-linker">
+                    <CardBlock item={item} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="col-md-3 position-relative">
+          <div className="position-relative detail-side">
             <div className="carSearch-block-div">
               <p>Empty block for ads</p>
               <hr />

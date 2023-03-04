@@ -15,6 +15,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { Store } from "react-notifications-component";
 
 const UploadAndDisplayImage = (props) => {
   const [photos, setphotos] = useState([]);
@@ -23,16 +24,13 @@ const UploadAndDisplayImage = (props) => {
   const advertisement = adsCtx.ads;
 
   const onDrop = (pictures, pictureUrl) => {
-	if(pictureUrl.length >1){
-		setphotos([...photos,pictureUrl[pictureUrl.length-1]]);
+    if (pictureUrl.length > 1) {
+      setphotos([...photos, pictureUrl[pictureUrl.length - 1]]);
+    } else {
+      setphotos(pictureUrl);
+    }
 
-	}
-	else{
-		setphotos(pictureUrl)
-	}
-	
     // console.log(pictureUrl,photos)
-    
   };
   const [error, setError] = useState({
     error: false,
@@ -50,16 +48,28 @@ const UploadAndDisplayImage = (props) => {
       adsCtx.setAds(d);
       props.nextStep(StepsStateInMap);
     } else {
-      console.log(resp, "ShowError Message");
-      setError({ error: true, errorKey: resp.errorField });
+      // console.log(resp, "ShowError Message");
+      // setError({ error: true, errorKey: resp.errorField });
+      Store.addNotification({
+        title: "Warning",
+        message: "Please choose images",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+        },
+      });
     }
   };
 
   const RemovePhoto = (index) => {
-	console.log(photos,'photoooos')
-	const photoCopy = [...photos]
-	 photoCopy.splice(index, 1)
-	setphotos(photoCopy)
+    console.log(photos, "photoooos");
+    const photoCopy = [...photos];
+    photoCopy.splice(index, 1);
+    setphotos(photoCopy);
     // // setphotos([...photos,...photos[lastIndex][photoCopy]]);
   };
 
@@ -69,10 +79,22 @@ const UploadAndDisplayImage = (props) => {
         {photos &&
           photos.map((photo, index) => (
             <div key={index} className="col-md-3 photo-wrapper">
-              <span onClick={()=>RemovePhoto(index)} className="position-absolute photo-remove">
+              <span
+                onClick={() => RemovePhoto(index)}
+                className="position-absolute photo-remove"
+              >
                 X
               </span>
-              <img key={index} src={photo} style={{width:"auto",maxWidth:"100%",height:"auto",maxHeight:"100%"}}  />
+              <img
+                key={index}
+                src={photo}
+                style={{
+                  width: "auto",
+                  maxWidth: "100%",
+                  height: "auto",
+                  maxHeight: "100%",
+                }}
+              />
             </div>
           ))}
       </div>

@@ -87,11 +87,11 @@ const Header = () => {
 	return (
 		<React.Fragment>
 			{/*header*/}
-			<div style={location.pathname ==='/car-search'?{
+			<div style={location.pathname ==='/car-search' || location.pathname ==='/user-profile' ? {
 				position:"fixed",
 				width: "100%",
 				zIndex:99
-			}:{}}>
+			} : {}}>
 			<div className="header-div">
 				<div className="container">
 					<div className="row header-row">

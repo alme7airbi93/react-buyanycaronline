@@ -6,6 +6,7 @@ import GoogleMapReact from "google-map-react";
 import { AdvertismentCtx } from "../../../context/AdvertismentContext.js";
 import UserProfile from "../../UserProfile/UserProfile";
 import { useNavigate } from "react-router-dom";
+import { Store } from "react-notifications-component";
 
 import "./scrollbar.css";
 import {
@@ -74,7 +75,18 @@ const GoogleMap = (props) => {
         savePhotos(res.data);
         setLoading(false);
         // navigate("/user-profile");
-        alert("Data uploaded successfully");
+        Store.addNotification({
+          title: "Success",
+          message: "Data uploaded successfully",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000
+          }
+        });
       }
     });
   };

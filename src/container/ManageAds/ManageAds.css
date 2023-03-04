@@ -1,5 +1,5 @@
 .main_manage_ads{
-    min-height: 100vh;
+    min-height: calc( 100vh - 212px );
     color: #fff;
 }
 

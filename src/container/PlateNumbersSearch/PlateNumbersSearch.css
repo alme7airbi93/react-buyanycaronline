@@ -1,16 +1,6 @@
 .main-carSearch-div {
-  min-height: 100vh;
+  min-height: calc( 100vh - 212px );
   margin-top: 40px;
-}
-.carSearch-find-div {
-  background-color: rgba(22, 30, 33, 1);
-  border: 1px solid rgb(36, 49, 54);
-  padding: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  position: fixed;
-  width: 20%;
-  max-width: 250px;
 }
 
 .carSearch-result-div {
@@ -21,17 +11,7 @@
   margin-right: 10px;
   margin-bottom: 10px;
 }
-.carSearch-block-div {
-  background-color: rgba(22, 30, 33, 1);
-  border: 1px solid rgb(36, 49, 54);
-  padding: 20px;
-  text-align: center;
-  height: 500px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  position: fixed;
-  width: 20%;
-}
+
 .car-select-btn {
   height: 40px;
   border: 0;

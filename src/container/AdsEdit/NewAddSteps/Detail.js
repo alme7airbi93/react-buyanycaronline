@@ -4,6 +4,7 @@ import { StepsStateInMainCategory, StepsStateInPhoto } from "../stepsState";
 import { NewAdvertisement, UserContext } from "../../../context/Context";
 import Select from "react-select";
 import Car from "../../../common/models/Car";
+import { Store } from "react-notifications-component";
 
 import {
   FuelTypes,
@@ -56,7 +57,19 @@ const Detail = (props) => {
       adsCtx.setAds(d);
       props.nextStep(StepsStateInPhoto);
     } else {
-      alert("Please enter required fields");
+      // alert("Please enter required fields");
+      Store.addNotification({
+        title: "Warning",
+        message: "Please enter required fields",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+        },
+      });
     }
   };
 

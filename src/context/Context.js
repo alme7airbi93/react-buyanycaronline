@@ -1,10 +1,10 @@
 import { createContext, useContext } from "react";
-import  User from '../common/models/User'
+import  User from "../common/models/User";
 
 export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
-    console.log('childer in context')
+    console.log("childer in context");
 
     const setUserData = (data)=>{
         const {username, phone, role, surename,id} = data;

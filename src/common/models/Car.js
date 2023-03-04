@@ -59,28 +59,6 @@ class Car extends Vehicle {
 		this._horsePower = value;
 	}
 
-	getAlldata (){
-		return{
-			title:this.title,
-			
-			advertisement_type: this.advertisement_type,
-			make:this.make,
-			modal:this.modal,
-			year:this.year,
-			price:this.price,
-			views:this.views,
-			transmission : this.transmission,
-			fuel_type: this.fuel_type,
-			horsePower : this.horsePower,
-			color: this.color,
-			condition: this.condition,
-			region:this.region,
-			warranty:this.warranty,
-			description: this.description,
-			
-		}
-
-	}
 }
 
 export default Car;

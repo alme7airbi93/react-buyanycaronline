@@ -81,6 +81,7 @@ const Detail = (props) => {
           <Form.Label style={{ color: "#fff" }}>Modal :</Form.Label>
           <div className="mb-3">
             <Select
+              name="modal"
               placeholder={"Select Modal"}
               options={
                 models_options.filter(item => (
@@ -98,6 +99,7 @@ const Detail = (props) => {
                   _modal: data.label,
                 });
               }}
+              {...error.modal}
             />
            {error && error.errorKey == '_modal'? (<p style={{ color: "red" }}>Model Field is required</p>):<></>}
           </div>
@@ -117,6 +119,7 @@ const Detail = (props) => {
           }}
         /> */}
         <Select
+          name="transmition"
           placeholder={"Select"}
           options={TransmitionTypes()}
           defaultValue={carDetails._transmission}
@@ -130,12 +133,14 @@ const Detail = (props) => {
               _transmission: data.value,
             });
           }}
+          {...error.transmission}
         />
          {error && error.errorKey == '_transmission'? (<p style={{ color: "red" }}>Transmition Field is required</p>):<></>}
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label style={{ color: "#fff" }}>Engine Horse Power :</Form.Label>
         <Select
+          name="horse_power"
           placeholder={"Select"}
           options={HorsePowerOptions()}
           defaultValue={carDetails._horsePower}
@@ -149,6 +154,7 @@ const Detail = (props) => {
               _horsePower: data.value,
             });
           }}
+          {...error.horse_power}
         />
         {error && error.errorKey == '_horsePower'? (<p style={{ color: "red" }}>Engine Horse Power Field is required</p>):<></>}
       </Form.Group>

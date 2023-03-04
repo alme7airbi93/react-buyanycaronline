@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
-import { getUserByUsername, updateUserProfile } from "../../../common/repository/UserDB";
+import {
+  getUserByUsername,
+  updateUserProfile,
+} from "../../../common/repository/UserDB";
 import Addmobile from "../../../components/Modal/Addmobile/Addmobile";
 import { UserContext } from "../../../context/Context";
 import { updateUserPassword } from "../../../common/repository/UserDB";
@@ -9,95 +12,129 @@ import "./AccountSetting.css";
 import User from "../../../common/models/User";
 import UpdatePasswordModal from "../../../components/Modal/UpdatePasswordModal/UpdatePasswordModal";
 import EditProfile from "../../../components/Modal/Editprofile/EditProfile";
-import { updateEmailAddress,logOut} from "../../../controllers/AuthController";
+import {
+  updateEmailAddress,
+  logOut,
+} from "../../../controllers/AuthController";
 import { useNavigate } from "react-router-dom";
+import { Store } from "react-notifications-component";
 
 const AccountSettings = () => {
   const ctx = useContext(UserContext);
   const user = ctx.getUserData();
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [dbUser, setDbUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useState({
-	phone:false,
-	password:false,
-  email:false,
-
+    phone: false,
+    password: false,
+    email: false,
   });
 
-
   const handleOpen = (type) => {
-    
-    setOpen({...open,[type]:true});
+    setOpen({ ...open, [type]: true });
   };
 
   const handleclose = (type) => {
-    setOpen({...open,[type]:false});
-  };	
-
+    setOpen({ ...open, [type]: false });
+  };
 
   //Fetching Live user from databse
 
-	useEffect(() => {
-		setLoading(true)
-		getUserByUsername(user.username)
-			.then((res) => {
-				if (res.success) {
-					setDbUser(res.data)
-					setLoading(false)
-				}
-			})
-			.catch((e) => {
-				console.log(e)
-				setLoading(false)
+  useEffect(() => {
+    setLoading(true);
+    getUserByUsername(user.username)
+      .then((res) => {
+        if (res.success) {
+          setDbUser(res.data);
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+  }, []);
 
-			})
-	}, [])
-
-
-	const updatePhone = (phoneNumber)=>{
-		const updatedData =  Object.assign(new User(),{...dbUser,_phone:phoneNumber})
-		updateUserProfile(updatedData._id,updatedData)
-		.then((res)=>{
-			if(res.success){
-				alert('Data updated Successfully')
-				handleclose('phone')
-			}
-			
-		})
-	}
+  const updatePhone = (phoneNumber) => {
+    const updatedData = Object.assign(new User(), {
+      ...dbUser,
+      _phone: phoneNumber,
+    });
+    updateUserProfile(updatedData._id, updatedData).then((res) => {
+      if (res.success) {
+        Store.addNotification({
+          title: "Success",
+          message: "Data updated Successfully",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+          },
+        });
+        // alert("Data updated Successfully");
+        handleclose("phone");
+      }
+    });
+  };
   const deleteCookie = (name) => {
-		document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-	};
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  };
 
-  const updateDetail = (email,password)=>{
-    const updatedData =  Object.assign(new User(),{...dbUser})
-    setLoading(true)
-		updateEmailAddress(email,updatedData._id)
-		.then((res)=>{
-      console.log(res,'res1')
-			if(res.success){
-        logOut();
-        deleteCookie("userToken");
-        ctx.clearUserData();
-        alert('Data updated Successfully please login again.')
-        setLoading(false)
-        navigate("/");
-				handleclose('email')
-			}
-			
-		}).catch(error => {
-      alert('Somthing went wrong')
-      setLoading(false)
-    })
-	}
+  const updateDetail = (email, password) => {
+    const updatedData = Object.assign(new User(), { ...dbUser });
+    setLoading(true);
+    updateEmailAddress(email, updatedData._id)
+      .then((res) => {
+        console.log(res, "res1");
+        if (res.success) {
+          logOut();
+          deleteCookie("userToken");
+          ctx.clearUserData();
+          Store.addNotification({
+            title: "Success",
+            message: "Data updated Successfully please login again.",
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+            },
+          });
+            // alert("Data updated Successfully please login again.");
+          setLoading(false);
+          navigate("/");
+          handleclose("email");
+        }
+      })
+      .catch((error) => {
+        Store.addNotification({
+          title: "error",
+          message: "Somthing went wrong",
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+          },
+        });
+            // alert("Somthing went wrong");
+        setLoading(false);
+      });
+  };
 
   const UserAccountDisplay = () => {
-    console.log(dbUser,'dbUser')
+    console.log(dbUser, "dbUser");
     if (dbUser._signInMethod[0] == "email") {
-		
       return (
         <>
           <p>
@@ -109,8 +146,11 @@ const AccountSettings = () => {
               onClick={()=>handleOpen('password')}
               className="cs_pointer text-light"
             /> */}
-            <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('password')}>
-            <img src="./assets/img/edit.png"/>
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => handleOpen("password")}
+            >
+              <img src="./assets/img/edit.png" />
             </a>
           </p>
         </>
@@ -118,11 +158,14 @@ const AccountSettings = () => {
     } else {
       return (
         <>
-        
-          <p className="d-flex justify-content-between"><span>Email: {dbUser._username}</span>
-           
-            <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('email')}>
-            <img src="./assets/img/edit.png"/>
+          <p className="d-flex justify-content-between">
+            <span>Email: {dbUser._username}</span>
+
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => handleOpen("email")}
+            >
+              <img src="./assets/img/edit.png" />
             </a>
           </p>
         </>
@@ -138,39 +181,42 @@ const AccountSettings = () => {
           <hr />
           {UserAccountDisplay()}
           <div className="d-flex justify-content-between">
-		      <div>Name:<span> {dbUser._surename}</span> </div>
-		  
-		  </div>
-      
+            <div>
+              Name:<span> {dbUser._surename}</span>{" "}
+            </div>
+          </div>
+
           <div className="d-flex justify-content-between">
-		      <div>Phone:<span> {dbUser._phone}</span> </div>
-		  {/* <BsPencilSquare
+            <div>
+              Phone:<span> {dbUser._phone}</span>{" "}
+            </div>
+            {/* <BsPencilSquare
                 className="cs_pointer text-light"
                 onClick={()=>handleOpen('phone')}
               /> */}
-              <a style={{ cursor: 'pointer' }} onClick={()=>handleOpen('phone')}>
-            <img src="./assets/img/edit.png"/>
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => handleOpen("phone")}
+            >
+              <img src="./assets/img/edit.png" />
             </a>
-		  </div>
-      
-		 
+          </div>
         </>
       )}
 
-      <Addmobile 
-	  open={open.phone} 
-	  updatePhone = {updatePhone}
-	  handleclose={handleclose} />
+      <Addmobile
+        open={open.phone}
+        updatePhone={updatePhone}
+        handleclose={handleclose}
+      />
 
-      <UpdatePasswordModal 
-	  open={open.password} 
-	  handleclose={handleclose} />
+      <UpdatePasswordModal open={open.password} handleclose={handleclose} />
 
-    <EditProfile
-    open={open.email}
-    updateDetail = {updateDetail}
-    handleclose={handleclose} />
-
+      <EditProfile
+        open={open.email}
+        updateDetail={updateDetail}
+        handleclose={handleclose}
+      />
     </React.Fragment>
   );
 };

@@ -24,6 +24,14 @@ class Advertisement {
 		this._id = value;
 	}
 
+	get status() {
+		return this._status;
+	}
+
+	set status(value) {
+		this._status = value;
+	}
+
 	get title() {
 		return this._title;
 	}
@@ -79,6 +87,7 @@ class Advertisement {
 	set advertisement_type(value) {
 		this._advertisement_type = value;
 	}
+
 
 }
 
